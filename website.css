@@ -1,0 +1,122 @@
+html{
+    background-color: lavender;
+    /*text-shadow: 1px 1px 1px black;*/
+    /*height: 100%;*/
+    /*background-image: url("wallpaperflare.com_wallpaper.jpg");*/
+    /*background-size: cover;*/
+    /*background-position: center center;*/
+    /*background-repeat: no-repeat;*/
+}
+
+h1{
+    text-align: center;
+}
+
+.announcement{
+    background-color: lightsteelblue;
+}
+/*Menu*/
+.topnav {
+    background-color: darkslateblue;
+    overflow: hidden;
+}
+
+/* Onglets */
+.topnav a {
+    float: left;
+    color: #f2f2f2; /*couleur texte du menu*/
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none; /*pas de surlignement*/
+    font-size: 17px;
+}
+
+/* Quand on passe la souris sur onglet changement de couleur*/
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Onglet actif*/
+.topnav a.active {
+    background-color: slateblue;
+    text-decoration: underline;
+    color: white;
+}
+/*Boutons s'éclaircissent quand on passe souris dessus */
+button:hover {
+    opacity: 0.8;
+}
+
+/*Bouton pour se log out*/
+.LogOut{
+    float: right
+}
+/*Container centré pour center sur la page les formulaires*/
+.center{
+    padding: 5%;
+    font-size: large;
+}
+
+/*Champs à remplir*/
+input{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/*Champs pour ajouter fichier*/
+input[type=file]{
+    border: none;
+}
+
+/*Message de bienvenue sur loginPage*/
+.Welcome{
+    display: block;
+    font-size: larger;
+    text-align: center;
+}
+
+/*Boutons de login*/
+.login_button {
+    background-color: cornflowerblue;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px auto;
+    border: none;
+    cursor: pointer;
+    display: block;
+    width: 50%;
+}
+
+.error_login{
+    color: red;
+
+}
+/*Oubli de mot de passe*/
+.Forgotten_Password{
+    text-align: right;
+}
+
+
+/*Container du formulaire pour ajouter les fichiers de génome*/
+.container_add_genome{
+    text-align: justify-all;
+    margin: auto;
+    background-color: lightsteelblue;
+    box-shadow: 2px 2px 5px steelblue;
+}
+
+/*Container du formulaire de login*/
+.container_login{
+    padding: 16px;
+    background-color: lightsteelblue;
+    box-shadow: 2px 2px 5px steelblue;
+}
+
+.
+
+

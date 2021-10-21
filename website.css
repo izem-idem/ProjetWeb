@@ -1,27 +1,43 @@
+*{ /*Reset les paramètres par défaut du browser*/
+    margin: 0;
+    padding: 0;
+}
 html{
     background-color: lavender;
-    /*text-shadow: 1px 1px 1px black;*/
-    /*height: 100%;*/
-    /*background-image: url("wallpaperflare.com_wallpaper.jpg");*/
-    /*background-size: cover;*/
-    /*background-position: center center;*/
-    /*background-repeat: no-repeat;*/
 }
-
+body{
+    margin: 0;
+    padding: 0;
+}
+header{
+    background: darkslateblue;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+    min-height: 10vh;
+}
 h1{
     text-align: center;
+    font-size: xxx-large;
+}
+h2{
+    text-align: center;
+    margin-bottom: 9px;
 }
 
 .announcement{
+    font-weight: bold;
+    text-align: center;
     background-color: lightsteelblue;
 }
-/*Menu*/
+
+
+
+/* NAVIGATION TABS*/
 .topnav {
     background-color: darkslateblue;
     overflow: hidden;
 }
-
-/* Onglets */
 .topnav a {
     float: left;
     color: #f2f2f2; /*couleur texte du menu*/
@@ -30,35 +46,32 @@ h1{
     text-decoration: none; /*pas de surlignement*/
     font-size: 17px;
 }
-
-/* Quand on passe la souris sur onglet changement de couleur*/
-.topnav a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-/* Onglet actif*/
+/* Active tab*/
 .topnav a.active {
     background-color: slateblue;
     text-decoration: underline;
     color: white;
 }
-/*Boutons s'éclaircissent quand on passe souris dessus */
-button:hover {
-    opacity: 0.8;
-}
 
-/*Bouton pour se log out*/
-.LogOut{
-    float: right
-}
-/*Container centré pour center sur la page les formulaires*/
+
+
+/*CONTAINERS*/
+/*Centered container*/
 .center{
     padding: 5%;
     font-size: large;
 }
 
-/*Champs à remplir*/
+/*Form container*/
+.container{
+    margin: 0 auto;
+    width: 70%;
+    padding: 16px;
+    background-color: lightsteelblue;
+    box-shadow: 2px 2px 5px steelblue;
+}
+
+/*FIELDS*/
 input{
     width: 100%;
     padding: 12px 20px;
@@ -68,20 +81,15 @@ input{
     box-sizing: border-box;
 }
 
-/*Champs pour ajouter fichier*/
+input[type="checkbox"]{
+    width: auto;
+}
 input[type=file]{
     border: none;
 }
 
-/*Message de bienvenue sur loginPage*/
-.Welcome{
-    display: block;
-    font-size: larger;
-    text-align: center;
-}
-
-/*Boutons de login*/
-.login_button {
+/*BUTTONS*/
+.big_submit_button {
     background-color: cornflowerblue;
     color: white;
     padding: 14px 20px;
@@ -91,32 +99,59 @@ input[type=file]{
     display: block;
     width: 50%;
 }
+.little_submit_button {
+    background-color: cornflowerblue;
+    color: white;
+}
 
+/*Buttons and links go lighter when the mouse go over them */
+button:hover, .topnav a:hover, .menu_button input:hover {
+    opacity: 0.8;
+}
+/*Buttons on home page*/
+.menu_button input{
+    background-color: darkslateblue;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px auto;
+    border: none;
+    cursor: pointer;
+    display: block;
+    width: 50%;
+}
+/*Button to log out*/
+.LogOut{
+    float: right
+}
+
+/*Error message when wrong password/login combination*/
 .error_login{
+    text-align: center;
     color: red;
 
 }
-/*Oubli de mot de passe*/
+/*Welcoming message */
+.Welcome{
+    display: block;
+    font-size: larger;
+    text-align: center;
+}
+
+/*div for forgotten password link */
 .Forgotten_Password{
     text-align: right;
 }
 
-
-/*Container du formulaire pour ajouter les fichiers de génome*/
-.container_add_genome{
-    text-align: justify-all;
-    margin: auto;
-    background-color: lightsteelblue;
-    box-shadow: 2px 2px 5px steelblue;
+/*Div class for the genetic localisations*/
+.localisation{
+    display: inline-block;
+    width: 49%;
 }
 
-/*Container du formulaire de login*/
-.container_login{
-    padding: 16px;
-    background-color: lightsteelblue;
-    box-shadow: 2px 2px 5px steelblue;
+/*Cell margin*/
+td{
+    padding-bottom: 9px;
 }
 
-.
 
 

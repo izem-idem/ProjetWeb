@@ -6,15 +6,18 @@
     <link rel="stylesheet" type="text/css" href="website.css">
 </head>
 <body>
+<header>
+    <h1>CALI</h1>
+</header>
 <div class="center">
-    <h1> Registration Form</h1>
-    <div class="container_login">
+    <h2> Registration Form</h2>
+    <div class="container">
         <label for="email"><b>Email</b></label><br>
         <input type="text" placeholder="Email" id="email" required><br> <!--Vérification que l'adresse mail a l'air valide-->
         <label for="psw"><b>Password</b></label><br>
         <input type="password" placeholder="Password" id="psw" required><br>
         <label for="psw2"><b>Confirm Password</b></label><br>
-        <input type="password2" placeholder="Confirm password" id="psw2" required><br> <!--Vérification que les mots de passe correspondent-->
+        <input type="password" placeholder="Confirm password" id="psw2" required><br> <!--Vérification que les mots de passe correspondent-->
         <label for="first_name"><b>First Name</b></label><br>
         <input type="text" placeholder="First Name" id="first_name" required><br>
         <label for="last_name"><b>Last Name</b></label><br>
@@ -29,7 +32,7 @@
                 <option value="Validator">Validator</option>
             </select>
         </div>
-        <button class="login_button" type="submit">Register</button> <!--Crée utilisateur dans la base de données avec rôle reader par défaut et envoie mail à administrateur pour prévenir qu'il y a un nouveau utilisateur avec le rôle voulu-->
+        <button class="big_submit_button" type="submit">Register</button> <!--Crée utilisateur dans la base de données avec rôle reader par défaut et envoie mail à administrateur pour prévenir qu'il y a un nouveau utilisateur avec le rôle voulu-->
     </div>
 </div>
 

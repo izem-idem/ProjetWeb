@@ -6,16 +6,20 @@
     <link rel="stylesheet" type="text/css" href="website.css">
 </head>
 <body>
-<span class ="Welcome">Welcome on our site</span>
+<header>
+    <h1>CALI</h1>
+</header>
 <div class="center">
-    <h1> Log in </h1>
-    <div class="container_login">
+    <h2> Log in </h2>
+    <div class="container">
         <label for="email"><b>Email</b></label><br>
         <input type="text" placeholder="Enter email" id="email" required><br>
         <label for="psw"><b>Password</b></label><br>
         <input type="password" placeholder="Enter Password" id="psw" required><br>
-        <button class="login_button" type="submit">Login</button>
-        <div class="error_login"></div>
+        <button class="big_submit_button" type="submit">Login</button>
+        <div class="error_login" hidden>
+            <p> Wrong login/password combination </p>
+        </div>
         <div class="Sign up">
             <span>Don't have an account ?</span>
             <a href="AccountCreation.html"> Sign up </a>

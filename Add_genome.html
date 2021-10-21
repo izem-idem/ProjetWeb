@@ -7,25 +7,29 @@
 
 </head>
 <body>
+<header>
+    <h1>CALI</h1>
+</header>
 <div class="topnav">
-    <a href="#Home">Home</a>
+    <a href="menu.html">Home</a>
+    <a href="#Annotation"> Annotations</a>
+    <a href="#Validation"> Validation</a>
+    <a href="#Assign_annotation"> Annotations assignment</a>
+    <a href="usermanag.html"> User management</a>
     <a class= "active" href="Add_genome.html"> Add genome</a> <!--Page active-->
-    <a href="#User gestion"> User database</a>
-    <a href="#Annotation"> Annotation database</a>
-    <a href="#Annotation"> Annotation to affect</a>
-    <button type="button" class="LogOut"> <span class="glyphicon glyphicon-log-out"></span> Log out</button>
+    <button type="button" class="LogOut"> <span></span> Log out</button>
 </div>
 
-<h1> Adding of a genome</h1>
+<h2> Adding of a genome</h2>
 <div class="center">
-    <div class="container_add_genome">
+    <div class="container">
         <label for="fasta">Please add the fasta file of the genome :</label><br>
         <input type="file" id="fasta" accept=".fa, .fasta, .fas" required><br>
         <label for="cds">Please add the cds description file for the genome :</label><br>
         <input type="file" id="cds" accept=".fa, .fasta, .fas" required><br>
         <label for="pep">Please add the peptide description file for the genome :</label><br>
         <input type="file" id="pep" accept=".fa, .fasta, .fas" required><br>
-        <button type="submit" class="login_button">Add genome</button>
+        <button type="submit" class="big_submit_button">Add genome</button>
     </div>
 
 </div>

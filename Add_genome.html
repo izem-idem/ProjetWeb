@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add genome</title>
+    <link rel="stylesheet" type="text/css" href="website.css">
+
+</head>
+<body>
+<div class="topnav">
+    <a href="#Home">Home</a>
+    <a class= "active" href="Add_genome.html"> Add genome</a> <!--Page active-->
+    <a href="#User gestion"> User database</a>
+    <a href="#Annotation"> Annotation database</a>
+    <a href="#Annotation"> Annotation to affect</a>
+    <button type="button" class="LogOut"> <span class="glyphicon glyphicon-log-out"></span> Log out</button>
+</div>
+
+<h1> Adding of a genome</h1>
+<div class="center">
+    <div class="container_add_genome">
+        <label for="fasta">Please add the fasta file of the genome :</label><br>
+        <input type="file" id="fasta" accept=".fa, .fasta, .fas" required><br>
+        <label for="cds">Please add the cds description file for the genome :</label><br>
+        <input type="file" id="cds" accept=".fa, .fasta, .fas" required><br>
+        <label for="pep">Please add the peptide description file for the genome :</label><br>
+        <input type="file" id="pep" accept=".fa, .fasta, .fas" required><br>
+        <button type="submit" class="login_button">Add genome</button>
+    </div>
+
+</div>
+
+
+</body>
+</html>

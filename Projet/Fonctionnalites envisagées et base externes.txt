@@ -1,0 +1,21 @@
+﻿				Liste des fonctionnalités qu’on a prévu de faire
+
+
+1) Lorsqu'un utilisateur créé son compte, il est automatiquement assigné en tant que lecteur. Un mail est envoyé à l'administrateur, l'informant qu'un nouvel utilisateur a été créé et quel rôle il souhaite. Il lui assigne ou non ce rôle
+
+2)Un email est envoyé aux annotateurs pour les informer qu'une liste de séquences à annoter leur a été attribuée
+
+3)Un email est envoyé aux annotateurs ayant contribué pour les informer de la décision.
+
+4)Visualisation des domaines protéiques d'une séquence donnée.
+
+
+
+
+				Liens vers autres bases:
+- Bacteria.ensembl
+- BioCyc
+- NCBIprot
+- Uniprot
+- PFAM
+

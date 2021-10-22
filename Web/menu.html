@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Menu </title>
+    <link rel="stylesheet" type="text/css" href="website.css">
+</head>
+<body>
+<header>
+    <h1>CALI</h1>
+</header>
+<br><br>
+<div class="menu_button">
+    <h2> Menu </h2>
+    <input type="button" value="Annotations">
+    <input type="button" value="Validation">
+    <input type="button" value="Annotations assignment">
+    <input type="button" onclick="window.location.href = 'usermanag.html' " value="User management">
+    <input type="button" onclick="window.location.href= 'Add_genome.html'" value="Add genome">
+</div><br><br>
+
+<div class="center">
+    <h2> Search </h2>
+    <div class="container">
+        <p> You can use multiple arguments per search area by using "AND". </p>
+        <p> To use pattern search for the sequences you can use % before or after the pattern</p><br>
+        <label for="genome_name"><b>Species name</b> </label>
+        <input type="text" id="genome_name" placeholder="Species name"><br>
+
+        <label for="strain_name"><b>Strain name</b></label>
+        <input type="text" id="strain_name" placeholder="Strain name"><br>
+
+        <label for="genetic_support"><b>Genetic support (bacterial or plasmid typically)</b></label>
+        <input type="text" id="genetic_support" placeholder="Genetic support"><br>
+
+        <label for="chr_ID"><b>Chromosome ID</b></label>
+        <input type="text" id="chr_ID" placeholder="Chromosome ID"><br>
+
+        <label for="strand"><b>Strand</b></label>
+        <select id="strand">
+            <option value="-1"> -1 </option>
+            <option value="+1"> +1 </option>
+        </select><br><br>
+
+        <b> Gene localisation</b><br>
+        <div class="localisation">
+            <label for="gene_beg">Beginning :</label><br>
+            <input class="localisation_input" type="text" id="gene_beg" placeholder="Begin">
+        </div>
+        <div class="localisation">
+            <label for="gene_end">Ending :</label><br>
+            <input class="localisation_input" type="text" id="gene_end" placeholder="End">
+        </div><br>
+
+        <label for="gene_id"><b>Gene ID</b></label>
+        <input type="text" id="gene_id" placeholder="Gene ID"><br>
+
+        <label for="gene_symbol"><b>Gene symbol</b></label>
+        <input type="text" id="gene_symbol" placeholder="Gene symbol"><br>
+
+        <label for="sequence_nt"><b>Nucleotide sequence or pattern</b></label>
+        <input type="text" id="sequence_nt" placeholder="Nucleotide pattern"><br>
+
+        <label for="prot_id"><b>Protein ID</b> </label>
+        <input type="text" id="prot_id" placeholder="Protein ID"><br>
+
+        <label for="description"><b>Function</b></label>
+        <input type="text" id="description" placeholder="Function"><br>
+
+        <label for="prot_seq"><b>Protein sequence or pattern</b></label>
+        <input type="text" id="prot_seq" placeholder="Protein pattern"><br><br>
+
+        <label for="result_type"><b>Select type of results</b></label>
+        <select id="result_type">
+            <option value="gene_prot"> Gene / Protein</option>
+            <option value="Genome"> Genome</option>
+        </select><br><br>
+        <button class="big_submit_button" type="submit" value="Submit"> Submit</button>
+    </div>
+
+</div>
+<footer>
+    <a href="Contact.html">Contact</a><br>
+    <p>© CALI 2021</p>
+</footer>
+</body>
+</html>

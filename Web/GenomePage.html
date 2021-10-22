@@ -12,10 +12,8 @@
     <h1>CALI</h1>
 </header>
 <div class="topnav">
-    <a href="menu.html">Home</a>
-    <a href="#Annotation"> Annotations</a>
-    <a href="#Validation"> Validation</a>
-    <a href="#Assign_annotation"> Annotations assignment</a>
+    <a href="AnnotatorArea.html"> Annotator area</a>
+    <a href="ValidatorArea.html"> Validator area</a>
     <a href="usermanag.html"> User management</a>
     <a href="Add_genome.html"> Add genome</a>
     <button type="button" class="LogOut" onclick="window.location.href = 'LoginPage.html'">Log out </button>
@@ -25,14 +23,15 @@
 
     <h2>Genome Information</h2>
 
-    <p class="titre"><b>Genome ID</b></p>
-    <p class="p1">
-
-        Organism name: XXXXXX<br><br>
-        Strain : XXXXXXX<br><br>
-        Genetic support: XXXXXXX<br><br>
-        Sequence Length : XXXXXX <br><br>
-    </p>
+    <input class="info title" value="Genome ID" disabled><br>
+    <label for="organism_name"> Organism name:</label>
+    <input class="info" id="organism_name" type="text" value="XXXXXX" disabled><br>
+    <label for="strain"> Strain:</label>
+    <input class="info" id="strain" type="text" value="XXXXXX" disabled><br>
+    <label for="genetic_support"> Genetic support:</label>
+    <input class="info" id="genetic_support" type="text" value="XXXXXX" disabled><br>
+    <label for="seq_length"> Sequence length(nt):</label>
+    <input class="info" id="seq_length" type="text" value="XXXXXX" disabled><br>
     <svg alt="download" class="dlbtn-icon" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 60 60"
          enable-background="new 0 0 60 60" xml:space="preserve">
         <g>

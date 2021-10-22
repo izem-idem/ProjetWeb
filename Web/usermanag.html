@@ -11,9 +11,8 @@
 </header>
 <div class="topnav">
     <a href="menu.html">Home</a>
-    <a href="#Annotation"> Annotations</a>
-    <a href="#Validation"> Validation</a>
-    <a href="#Assign_annotation"> Annotations assignment</a>
+    <a href="AnnotatorArea.html"> Annotator area</a>
+    <a href="ValidatorArea.html"> Validator area</a>
     <a class="active" href="usermanag.html"> User management</a> <!--Page active-->
     <a href="Add_genome.html"> Add genome</a>
     <button type="button" class="LogOut" onclick="window.location.href = 'LoginPage.html'">Log out </button>
@@ -23,7 +22,10 @@
     <br> <br>
     <table>
         <tr>
-            <td><b>User1:</b></td>
+            <td>
+                <label for="user1"></label>
+                <input class ="title" id="user1" value="User1">
+            </td>
             <td>
                 <label for="Role">Role</label>
                 <select id="Role">
@@ -31,12 +33,17 @@
                     <option value="Annotator"> Annotator</option>
                     <option value="Validator"> Validator</option>
                 </select>
+            </td>
+            <td>
                 <button class="little_submit_button" type="submit"> Delete user</button>
                 <button class="little_submit_button" type="submit"> Show last connection</button>
             </td>
         </tr>
         <tr>
-            <td><b>User2:</b></td>
+            <td>
+                <label for="user2"></label>
+                <input class ="title" id="user2" value="User2">
+            </td>
             <td>
                 <label for="Role2">Role</label>
                 <select id="Role2">
@@ -44,12 +51,17 @@
                     <option value="Annotator"> Annotator</option>
                     <option value="Validator"> Validator</option>
                 </select>
+            </td>
+            <td>
                 <button class="little_submit_button" type="submit"> Delete user</button>
                 <button class="little_submit_button" type="submit"> Show last connection</button>
             </td>
         </tr>
         <tr>
-            <td><b>User3:</b></td>
+            <td>
+                <label for="user3"></label>
+                <input class ="title" id="user3" value="User3">
+            </td>
             <td>
                 <label for="Role3">Role</label>
                 <select id="Role3">
@@ -57,8 +69,11 @@
                     <option value="Annotator"> Annotator</option>
                     <option value="Validator"> Validator</option>
                 </select>
+            </td>
+            <td>
                 <button class="little_submit_button" type="submit"> Delete user</button>
                 <button class="little_submit_button" type="submit"> Show last connection</button>
+            </td>
         </tr>
     </table>
     <br>

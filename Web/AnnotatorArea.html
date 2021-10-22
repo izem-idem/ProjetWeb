@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AnnotatorArea</title>
+    <link href="website.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<header>
+    <h1>CALI</h1>
+</header>
+<div class="topnav">
+    <a href="menu.html">Home</a>
+    <a class="active" href="AnnotatorArea.html"> Annotator area</a> <!--Page active-->
+    <a href="ValidatorArea.html"> Validator area</a>
+    <a href="usermanag.html"> User management</a>
+    <a href="Add_genome.html"> Add genome</a>
+    <button class="LogOut" onclick="window.location.href = 'LoginPage.html'" type="button">Log out</button>
+</div>
+
+<h2> Annotations</h2>
+<div class="center">
+    <div class="double">
+        <h3> Annotations to do</h3>
+        <table>
+            <tr>
+                <td class="t3">
+                    Transcript ID
+                </td>
+                <td class="t3">
+                    Sequences
+                </td>
+                <td class="t3">
+                    Description
+                </td>
+            </tr>
+            <tr>
+                <td class="t3">
+                    <a href="Gene-ProtPage.html"> Temporary page for transcript 1</a>
+                </td>
+                <td class="t3">
+                    <label for="p_seq1"></label>
+                    <input class="cell_input" disabled id="p_seq1" value="Protein sequence"><br>
+                    <label for="n_seq1"></label>
+                    <input class="cell_input" disabled id="n_seq1" value="Nucleotidic sequence">
+                </td>
+                <td class="t3">
+                    <label for="annot"></label>
+                    <input id="annot" value="XXXXX"><br>
+                    <button class="little_submit_button" type="submit"> Submit</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="t3">
+                    <a href="Gene-ProtPage.html"> Temporary page for transcript 2</a>
+                </td>
+                <td class="t3">
+                    <label for="p_seq2"></label>
+                    <input class="cell_input" disabled id="p_seq2" value="Protein sequence"><br>
+                    <label for="n_seq2"></label>
+                    <input class="cell_input" disabled id="n_seq2" value="Nucleotidic sequence">
+
+                </td>
+                <td class="t3">
+                    <label for="annot2"></label>
+                    <input id="annot2" value="XXXXX"><br>
+                    <button class="little_submit_button" type="submit"> Submit</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="double">
+        <h3>Annotations status</h3>
+        <table>
+            <tr>
+                <td class="td4">
+                    Transcript ID
+                </td>
+                <td class="td4">
+                    Validator
+                </td>
+                <td class="td4">
+                    Description
+                </td>
+                <td class="td4">
+                    Status
+                </td>
+            </tr>
+            <tr>
+                <td class="td4">
+                    <a href="Gene-ProtPage.html"> Temporary page for transcript 3</a>
+                </td>
+                <td class="td4">
+                    <label for="user1"></label>
+                    <input class="cell_input" disabled id="user1" value="User1">
+                </td>
+                <td class="td4">
+                    <label for="desc1"></label>
+                    <input class="cell_input" disabled id="desc1" value="Description">
+                </td>
+                <td class="td4">
+                    Rejected
+                    <label for="comment1"></label>
+                    <input class="cell_input" id="comment1" value="XXXXXX" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td class="td4">
+                    <a href="Gene-ProtPage.html"> Temporary page for transcript 4</a>
+                </td>
+                <td class="td4">
+                    <label for="user2"></label>
+                    <input class="cell_input" disabled id="user2" value="User2">
+                </td>
+                <td class="td4">
+                    <label for="desc2"></label>
+                    <input class="cell_input" disabled id="desc2" value="Description">
+                </td>
+                <td class="td4">
+                    Waiting for validation
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<footer class="footer_2">
+    <a href="Contact.html">Contact</a><br>
+    <p>© CALI 2021</p>
+</footer>
+</body>
+</html>

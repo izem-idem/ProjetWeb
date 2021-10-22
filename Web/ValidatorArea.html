@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assign annotations</title>
+    <link href="website.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<header>
+    <h1>CALI</h1>
+</header>
+<div class="topnav">
+    <a href="menu.html">Home</a>
+    <a href="AnnotatorArea.html"> Annotator area</a>
+    <a class="active" href="ValidatorArea.html"> Validator area</a> <!--Page active-->
+    <a href="usermanag.html"> User management</a>
+    <a href="Add_genome.html"> Add genome</a>
+    <button class="LogOut" onclick="window.location.href = 'LoginPage.html'" type="button">Log out</button>
+</div>
+
+<h2> Assign annotations</h2>
+<div class="onethird">
+    <h3> Annotations to assign</h3>
+    <table>
+        <tr>
+            <td class="td3">
+                Transcript ID
+            </td>
+            <td class="td3">
+                Sequences
+            </td>
+            <td class="td3">
+                User
+            </td>
+        </tr>
+        <tr>
+            <td class="td3">
+                <a href="Gene-ProtPage.html"> Temporary page for transcript 1</a>
+            </td>
+            <td class="td3">
+                <label for="p_seq1"></label>
+                <input class="cell_input" disabled id="p_seq1" value="Protein sequence"><br>
+                <label for="n_seq1"></label>
+                <input class="cell_input" disabled id="n_seq1" value="Nucleotidic sequence">
+
+            </td>
+            <td class="td3">
+                <label for="Transcript"></label>
+                <select id="Transcript">
+                    <option value="User1"> User1</option>
+                    <option value="User2"> User2</option>
+                    <option value="User3"> User3</option>
+                </select>
+                <button class="little_submit_button" type="submit"> Affect transcript</button>
+            </td>
+        </tr>
+        <tr>
+            <td class="td3">
+                <a href="Gene-ProtPage.html"> Temporary page for transcript 2</a>
+            </td>
+            <td class="td3">
+                <label for="p_seq2"></label>
+                <input class="cell_input" disabled id="p_seq2" value="Protein sequence"><br>
+                <label for="n_seq2"></label>
+                <input class="cell_input" disabled id="n_seq2" value="Nucleotidic sequence">
+
+            </td>
+            <td class="td3">
+                <label for="Transcript2"></label>
+                <select id="Transcript2">
+                    <option value="User1"> User1</option>
+                    <option value="User2"> User2</option>
+                    <option value="User3"> User3</option>
+                </select>
+                <button class="little_submit_button" type="submit"> Affect transcript</button>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="twothird">
+    <h3>Annotations to validate</h3>
+    <table>
+        <tr>
+            <td class="td4">
+                Transcript ID
+            </td>
+            <td class="td4">
+                Annotator
+            </td>
+            <td class="td4">
+                Description
+            </td>
+            <td class="td4">
+                Validation
+            </td>
+        </tr>
+        <tr>
+            <td class="td4">
+                <a href="Gene-ProtPage.html"> Temporary page for transcript 3</a>
+            </td>
+            <td class="td4">
+                <label for="user1"></label>
+                <input class="cell_input" disabled id="user1" value="User1">
+            </td>
+            <td class="td4">
+                <label for="desc1"></label>
+                <input class="cell_input" disabled id="desc1" value="Description">
+            </td>
+            <td class="td4">
+                <label for="comment1">Comment</label>
+                <input id="comment1">
+                <button class="little_submit_button" type="submit"> Validate</button>
+                <button class="little_submit_button" type="submit"> Reject</button>
+            </td>
+        </tr>
+        <tr>
+            <td class="td4">
+                <a href="Gene-ProtPage.html"> Temporary page for transcript 4</a>
+            </td>
+            <td class="td4">
+                <label for="user2"></label>
+                <input class="cell_input" disabled id="user2" value="User2">
+            </td>
+            <td class="td4">
+                <label for="desc2"></label>
+                <input class="cell_input" disabled id="desc2" value="Description">
+
+            </td>
+            <td class="td4">
+                <label for="comment2">Comment</label>
+                <input id="comment2">
+                <button class="little_submit_button" type="submit"> Validate</button>
+                <button class="little_submit_button" type="submit"> Reject</button>
+            </td>
+        </tr>
+    </table>
+</div>
+<footer class="footer_2">
+    <a href="Contact.html">Contact</a><br>
+    <p>© CALI 2021</p>
+</footer>
+</body>
+</html>

@@ -12,9 +12,8 @@
 <br><br>
 <div class="menu_button">
     <h2> Menu </h2>
-    <input type="button" value="Annotations">
-    <input type="button" value="Validation">
-    <input type="button" value="Annotations assignment">
+    <input type="button" value="Annotator Area" onclick="window.location.href='AnnotatorArea.html'">
+    <input type="button" value="Validator Area" onclick="window.location.href='ValidatorArea.html'">
     <input type="button" onclick="window.location.href = 'usermanag.html' " value="User management">
     <input type="button" onclick="window.location.href= 'Add_genome.html'" value="Add genome">
 </div><br><br>
@@ -43,11 +42,11 @@
         </select><br><br>
 
         <b> Gene localisation</b><br>
-        <div class="localisation">
+        <div class="double">
             <label for="gene_beg">Beginning :</label><br>
             <input class="localisation_input" type="text" id="gene_beg" placeholder="Begin">
         </div>
-        <div class="localisation">
+        <div class="double">
             <label for="gene_end">Ending :</label><br>
             <input class="localisation_input" type="text" id="gene_end" placeholder="End">
         </div><br>

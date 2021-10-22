@@ -13,9 +13,8 @@
 </header>
 <div class="topnav">
     <a href="menu.html">Home</a>
-    <a href="#Annotation"> Annotations</a>
-    <a href="#Validation"> Validation</a>
-    <a href="#Assign_annotation"> Annotations assignment</a>
+    <a href="AnnotatorArea.html"> Annotator area</a>
+    <a href="ValidatorArea.html"> Validator area</a>
     <a href="usermanag.html"> User management</a>
     <a href="Add_genome.html"> Add genome</a>
     <button type="button" class="LogOut" onclick="window.location.href = 'LoginPage.html'">Log out </button>
@@ -23,20 +22,25 @@
 
 <div class="center">
 
-    <h2 class="heading">Gene/Protein Information</h2>
+    <h2>Gene/Protein Information</h2>
 
-    <p class="titre"><b>Gene ID</b></p>
-    <p class="gene">
-
-        Organism name: XXXXXX<br><br>
-        Strain : XXXXXXX<br><br>
-        Genetic support: XXXXXXX<br><br>
-        Localisation : XXXXX <br><br>
-        Gene Type : XXXXXX <br><br>
-        Sequence Length (nt) : XXXXXX <br><br>
-        Description (function) :XXXXXXX <br><br>
-        Annotated by : XXXXXXX <br><br>
-    </p>
+    <input class="info title" value="Gene ID" disabled><br>
+    <label for="organism_name"> Organism name:</label>
+    <input class="info" id="organism_name" type="text" value="XXXXXX"disabled><br>
+    <label for="strain"> Strain:</label>
+    <input class="info" id="strain" type="text" value="XXXXXX"disabled><br>
+    <label for="genetic_support"> Genetic support:</label>
+    <input class="info" id="genetic_support" type="text" value="XXXXXX"disabled><br>
+    <label for="localisation"> Localisation:</label>
+    <input class="info" id="localisation" type="text" value="XXXXXX" disabled><br>
+    <label for="gene_type"> Gene type:</label>
+    <input class="info" id="gene_type" type="text" value="XXXXXX" disabled><br>
+    <label for="seq_length"> Sequence length(nt):</label>
+    <input class="info" id="seq_length" type="text" value="XXXXXX" disabled><br>
+    <label for="desc"> Description:</label>
+    <input class="info" id="desc" type="text" value="XXXXXX" disabled><br>
+    <label for="annot"> Annotated by:</label>
+    <input class="info" id="annot" type="text" value="XXXXXX" disabled><br>
 
     <b>File to Download:</b>
 

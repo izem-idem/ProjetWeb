@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Result Page for Genome</title>
     <script type="text/javascript" src="https://www.ncbi.nlm.nih.gov/projects/sviewer/js/sviewer.js"></script>
     <link rel="stylesheet" type="text/css" href="website.css">
@@ -16,8 +17,8 @@
     <a href="#Validation"> Validation</a>
     <a href="#Assign_annotation"> Annotations assignment</a>
     <a href="usermanag.html"> User management</a>
-    <a href="Add_genome.html"> Add genome</a> <!--Page active-->
-    <button type="button" class="LogOut"> <span></span> Log out</button>
+    <a href="Add_genome.html"> Add genome</a>
+    <button type="button" class="LogOut" onclick="window.location.href = 'LoginPage.html'">Log out </button>
 </div>
 
 <div class="center">
@@ -54,5 +55,9 @@
         </a> <!--lien vers seqViewerApp.js-->
     </div>
 </div>
+<footer>
+    <a href="Contact.html">Contact</a><br>
+    <p>© CALI 2021</p>
+</footer>
 </body>
 </html>

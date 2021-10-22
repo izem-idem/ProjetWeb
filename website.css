@@ -16,6 +16,19 @@ header{
     margin: 0;
     min-height: 10vh;
 }
+
+footer{
+    background: darkslateblue;
+    text-align: center;
+    bottom: 0;
+    position: relative;
+    width: 100%;
+
+}
+
+footer a, footer p{
+    color: #f2f2f2;
+}
 h1{
     text-align: center;
     font-size: xxx-large;
@@ -38,7 +51,7 @@ h2{
     background-color: darkslateblue;
     overflow: hidden;
 }
-.topnav a {
+.topnav a{
     float: left;
     color: #f2f2f2; /*couleur texte du menu*/
     text-align: center;

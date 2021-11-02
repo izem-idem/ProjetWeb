@@ -1,3 +1,8 @@
+/*Utilisateur admin nécessaire pour acces à db via php */
+-- CREATE USER admin WITH ENCRYPTED PASSWORD 'admin';
+-- ALTER USER admin WITH SUPERUSER ;
+
+/*CREATE SCHEMA AND TABLES*/
 CREATE SCHEMA website;
 SET SCHEMA 'website';
 
@@ -15,34 +20,35 @@ CREATE TABLE "user"
 
 CREATE TABLE genome
 (
+    Id_genome VARCHAR(50) NOT NULL,
     Species     VARCHAR(100) NOT NULL, /*complete name like Escherichia Coli*/
-    Strain      VARCHAR(20) NOT NULL,
+    Strain      VARCHAR(20),
     Sequence    TEXT NOT NULL,
-    Contributor varchar(500), /*has added the genome*/
-    PRIMARY KEY (Species, Strain),
-    FOREIGN KEY (Contributor) REFERENCES "user" (Email)
+    Size_genome INT NOT NULL,
+    PRIMARY KEY (Id_genome)
 );
 
 CREATE TABLE transcript
 (
     Id_transcript   VARCHAR(50) NOT NULL,
     Id_gene         VARCHAR(50),
-    Species         VARCHAR(100) NOT NULL,
-    Strain          VARCHAR(20) NOT NULL,
+    Id_genome VARCHAR(50) NOT NULL,
     Genetic_support VARCHAR(50) NOT NULL, /*plasmid or bacterial chromosome*/
-    Chromomose_id   VARCHAR(20) NOT NULL,
-    gene_type       VARCHAR(50), /*gene_type on fasta*/
-    Symbol          VARCHAR(10), /*gene_symbol on fasta*/
+    Gene_biotype       VARCHAR(50), /*gene_biotype on fasta*/
+    Transcript_biotype       VARCHAR(50), /*transcript_biotype on fasta*/
+    Symbol          VARCHAR(20), /*gene_symbol on fasta*/
     Description     VARCHAR(100), /*protein description*/
     LocBeginning    INTEGER NOT NULL,
     LocEnd          INTEGER NOT NULL,
-    Strand          INTEGER check ( Strand = -1 or Strand = 1 ),
+    Strand          CHAR(2),
     Sequence_nt     TEXT NOT NULL,
-    Sequence_p      TEXT NOT NULL,
+    Size_nt         INT NOT NULL,
+    Sequence_p      TEXT,
+    Size_p          INT,
     Annotator       varchar(500),
     ValidatedBy     VARCHAR(500), /*Affects annotator and validates*/
     PRIMARY KEY (Id_transcript),
-    FOREIGN KEY (Species, Strain) REFERENCES genome (species, strain),
+    FOREIGN KEY (Id_genome) REFERENCES genome (Id_genome),
     FOREIGN KEY (Annotator) REFERENCES "user" (Email),
     FOREIGN KEY (ValidatedBy) REFERENCES "user" (Email)
 );

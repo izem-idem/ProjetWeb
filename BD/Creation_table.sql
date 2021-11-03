@@ -66,5 +66,5 @@ CREATE TABLE annotate
     Validator_email VARCHAR(500) NOT NULL, /*email adress from the validator that assigned and will validate*/
     FOREIGN KEY (Validator_email) REFERENCES "user" (Email),
     FOREIGN KEY (annotator_email) REFERENCES "user" (Email),
-    FOREIGN KEY (Id_trancript) REFERENCES transcript (Id_transcript)
+    FOREIGN KEY (Id_transcript) REFERENCES transcript (Id_transcript)
 );

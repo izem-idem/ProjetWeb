@@ -57,7 +57,7 @@ CREATE TABLE transcript
 CREATE TABLE annotate
 (
     Id              SERIAL PRIMARY KEY, /*instance se fait avec DEFAULT*/
-    Id_trancript    VARCHAR(50) NOT NULL,
+    Id_transcript   VARCHAR(50) NOT NULL,
     Description     VARCHAR(5000) NOT NULL,
     Commentary      VARCHAR(500),
     Validated       BOOLEAN NOT NULL,

@@ -7,16 +7,20 @@
 CREATE SCHEMA website;
 SET SCHEMA 'website';
 
+    -- SET TIME ZONE
+SET timezone = 'UTC';
+
     -- TABLE
 /*Table des utilisateurs remplie via Account_creation avec le statut donné via usermanag*/
 CREATE TABLE "user"
 (
-    Email VARCHAR(500) NOT NULL check ( Email ~* '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$') , /*cf https://dba.stackexchange.com/questions/68266/what-is-the-best-way-to-store-an-email-address-in-postgresql/165923#165923 */
+    Email VARCHAR(320) NOT NULL check ( Email ~* '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$') , /*cf https://dba.stackexchange.com/questions/68266/what-is-the-best-way-to-store-an-email-address-in-postgresql/165923#165923 */
+    /*An email adress has a maximal size of 320 characters https://www.rfc-editor.org/errata_search.php?rfc=3696*/
     Password VARCHAR(50) NOT NULL, /*TODO doit être crypté*/
     FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,
-    TelNr VARCHAR(15) NOT NULL,
-    LastConnection timestamp,
+    TelNr INT NOT NULL,
+    LastConnection timestamptz,
     statut VARCHAR(10) CHECK(statut='Reader' OR statut='Annotator' OR statut='Validator' OR statut='Admin') NOT NULL,
     PRIMARY KEY(Email)
 );
@@ -44,13 +48,13 @@ CREATE TABLE transcript
 -- Info sur localisation dans génome
     LocBeginning    INTEGER NOT NULL,
     LocEnd          INTEGER NOT NULL,
-    Strand          CHAR(2), /*Valeur après localisation dans génome. -1 ou 1*/
+    Strand          CHAR(2), /*Valeur après localisation dans génome. -1 ou 1, elle n'est pas présente dans les génomes non annotés*/
     /*TODO strand absent de new_coli, mais a priori non identifiable, donc dans annotation ou transcript ?*/
 -- Séquences et leur tailles
     Sequence_nt     TEXT NOT NULL,
     Size_nt         INT NOT NULL,
     Sequence_p      TEXT, /*Tant que update (parsing de pep) pas faite, peut être nul*/
-    Size_p          INT, /*Tant que update (parsing de pep) pas faite, peut être nul*/
+    Size_p          INTEGER, /*Tant que update (parsing de pep) pas faite, peut être nul*/
 -- Vérification si annoté (TRUE) ou non (FALSE)
     Annotated       BOOLEAN NOT NULL,
     PRIMARY KEY (Id_transcript),
@@ -79,9 +83,9 @@ CREATE TABLE annotate
     /*TODO laisser en une seule ligne ou plusieurs attributs ?*/
     Commentary      VARCHAR(500), /*Commentaire ajouté lors de la validation/rejet*/
     Validated       int NOT NULL, /*0 en cours de validation, 1 validé, 2 rejeté*/
-    Date_annotation timestamp NOT NULL,
-    Annotator_email VARCHAR(500) NOT NULL,
-    Validator_email VARCHAR(500) /*NOT NULL*/, /*email adress from the validation that has validated/rejected*/
+    Date_annotation timestamptz NOT NULL,
+    Annotator_email VARCHAR(320) NOT NULL,
+    Validator_email VARCHAR(320) /*NOT NULL*/, /*email adress from the validation that has validated/rejected*/
     unique(Id_transcript,Date_annotation,Annotator_email), /*TODO ou date seulement ? */
     FOREIGN KEY (Validator_email) REFERENCES "user" (Email),
     FOREIGN KEY (annotator_email) REFERENCES "user" (Email),
@@ -92,7 +96,7 @@ CREATE TABLE annotate
 /*TODO on pourrait ajouter juste annotateur à annotation je pense*/
 CREATE TABLE assignment(
   Id_transcript varchar(50) NOT NULL,
-  Annotator   varchar(500) NOT NULL,
+  Annotator   varchar(320) NOT NULL,
   PRIMARY KEY (Id_transcript,Annotator),
   FOREIGN KEY (Annotator) REFERENCES "user"(Email),
   FOREIGN KEY (Id_transcript) REFERENCES transcript(Id_transcript)

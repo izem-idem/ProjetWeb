@@ -12,14 +12,14 @@ SET timezone = 'UTC';
 
     -- TABLE
 /*Table des utilisateurs remplie via Account_creation avec le statut donné via usermanag*/
-CREATE TABLE "user"
+CREATE TABLE users
 (
     Email VARCHAR(320) NOT NULL check ( Email ~* '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$') , /*cf https://dba.stackexchange.com/questions/68266/what-is-the-best-way-to-store-an-email-address-in-postgresql/165923#165923 */
     /*An email adress has a maximal size of 320 characters https://www.rfc-editor.org/errata_search.php?rfc=3696*/
     Password VARCHAR(50) NOT NULL, /*TODO doit être crypté*/
     FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,
-    TelNr INT NOT NULL,
+    TelNr VARCHAR(15) NOT NULL,
     LastConnection timestamptz,
     statut VARCHAR(10) CHECK(statut='Reader' OR statut='Annotator' OR statut='Validator' OR statut='Admin') NOT NULL,
     PRIMARY KEY(Email)
@@ -87,8 +87,8 @@ CREATE TABLE annotate
     Annotator_email VARCHAR(320) NOT NULL,
     Validator_email VARCHAR(320) /*NOT NULL*/, /*email adress from the validation that has validated/rejected*/
     unique(Id_transcript,Date_annotation,Annotator_email), /*TODO ou date seulement ? */
-    FOREIGN KEY (Validator_email) REFERENCES "user" (Email),
-    FOREIGN KEY (annotator_email) REFERENCES "user" (Email),
+    FOREIGN KEY (Validator_email) REFERENCES users (Email),
+    FOREIGN KEY (annotator_email) REFERENCES users (Email),
     FOREIGN KEY (Id_transcript) REFERENCES transcript (Id_transcript)
 );
 
@@ -98,6 +98,6 @@ CREATE TABLE assignment(
   Id_transcript varchar(50) NOT NULL,
   Annotator   varchar(320) NOT NULL,
   PRIMARY KEY (Id_transcript,Annotator),
-  FOREIGN KEY (Annotator) REFERENCES "user"(Email),
+  FOREIGN KEY (Annotator) REFERENCES users(Email),
   FOREIGN KEY (Id_transcript) REFERENCES transcript(Id_transcript)
 );

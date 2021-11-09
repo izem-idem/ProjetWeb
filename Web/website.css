@@ -134,6 +134,7 @@ input[type=file]{
     width:100%;
 }
 
+
 /*BUTTONS*/
 .big_submit_button {
     background-color: cornflowerblue;
@@ -151,7 +152,7 @@ input[type=file]{
 }
 
 /*Buttons and links go lighter when the mouse go over them */
-button:hover, .topnav a:hover, .menu_button input:hover {
+button:hover, .topnav a:hover, .menu_button input:hover, .tab button:hover {
     opacity: 0.8;
 }
 /*Buttons on home page*/
@@ -181,12 +182,61 @@ button:hover, .topnav a:hover, .menu_button input:hover {
     text-align: right;
 }
 
-/*Div class for the genetic localisations*/
+/*Div class to have two side by side*/
 .double{
     vertical-align: top;
     display: inline-block;
-    width: 48%;
+    width: 49%;
 }
+
+.double > p{
+    width: 95%;
+    font-style: italic;
+    overflow-wrap: break-word;
+    font-size: smaller;
+    text-align: justify;
+    text-justify: inter-character;
+}
+
+/*TABS*/
+.tabcontent{
+    padding: 10px;
+    border:1px solid darkslateblue;
+    position:relative;
+    background: #d1d1f6;
+    border-radius: 0 0.5em 0.5em 0.5em;
+}
+
+/* Style the tab */
+.tab {
+    width: max-content;
+    overflow: hidden;
+    /*border: 1px solid #ccc;*/
+    border-radius:0 0.5em 0.5em 0.5em;
+    margin-bottom: -1px;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+    font: inherit;
+    background-color: darkslateblue;
+    border-bottom-color:hsl(220, 100%, 98%);
+    color: #f2f2f2;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color:slateblue;
+    text-decoration: underline;
+}
+
 .tabset > input {
     display:block; /* "enable" hidden elements in IE/edge */
     position:absolute; /* then hide them off-screen */

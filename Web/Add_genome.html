@@ -1,42 +1,52 @@
+<!--Usage : -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="author" content="Camille RABIER">
+    <meta name="description" content="Adding of non-annotated genome">
+    <meta name="viewport" content="width=device, initial-scale=1.0">
     <title>Add genome</title>
     <link rel="stylesheet" type="text/css" href="website.css">
 
 </head>
 <body>
+
 <header>
     <h1>CALI</h1>
 </header>
+
+<!--MENU-->
 <div class="topnav">
     <a href="menu.html">Home</a>
     <a href="AnnotatorArea.html"> Annotator area</a>
-    <a href="ValidatorArea.html"> Validator area</a>
+    <a href="ValidatorArea.php"> Validator area</a>
     <a href="usermanag.html"> User management</a>
     <a class= "active" href="Add_genome.html"> Add genome</a> <!--Page active-->
     <button type="button" class="LogOut" onclick="window.location.href = 'LoginPage.html'">Log out </button>
 </div>
 
+<!--PAGE CONTENT-->
 <h2> Adding of a genome</h2>
 <div class="center">
     <div class="container">
         <form action="Parser.php" method="POST" enctype="multipart/form-data">
+            <!--Genome specie/strain names -->
             <label for="genome_name"><b>Species name</b> </label>
             <input type="text" id="genome_name" name="genome_name" placeholder="Species name" required><br>
             <label for="strain_name"><b>Strain name</b></label>
             <input type="text" id="strain_name" name="strain_name" placeholder="Strain name"><br>
+            <!-- User input of the 3 files : genome, CDS description, peptides description -->
             <label for="genome_file">Please add the fasta file of the genome :</label><br>
             <input type="file" id="genome_file" name="genome_file" accept=".fa, .fasta, .fas" required><br>
             <label for="cds_file">Please add the cds description file for the genome :</label><br>
             <input type="file" id="cds_file" name="cds_file" accept=".fa, .fasta, .fas" required><br>
             <label for="pep_file">Please add the peptide description file for the genome :</label><br>
             <input type="file" id="pep_file" name="pep_file" accept=".fa, .fasta, .fas" required><br>
+            <!-- Submitting of names and file : it launches the php script-->
             <button type="submit" name="submit" class="big_submit_button">Add genome</button>
         </form>
     </div>
-
 </div>
 <footer>
     <a href="Contact.html">Contact</a><br>

@@ -39,24 +39,24 @@ $assignment_query = "UPDATE website.transcript SET annotation=2, annotator_email
 // Display of the non-assigned transcript
 while ($transcript = pg_fetch_assoc($non_annotated_finding)){
     //Names of fields to fetch with POST, without them, the fields can't be distinguished
-    $name_submit="submit_".$transcript['id_transcript'];
-    $name_select="Role_".$transcript['id_transcript'];
-    if (isset($_POST[$name_submit])) {
-        $id_transcript = $transcript['id_transcript'];
-        $user = $_POST[$name_select];
+    $id=$transcript['id_transcript'];
+    if (isset($_POST["submit_".$id])) {
+        $id_transcript = $id;
+        $user = $_POST["Role_".$id];
         $assignment_update = pg_query_params($db_conn,$assignment_query,array($user,$id_transcript));
+        echo "The transcript ".$id." has been assigned to ".$user;
     } else {
         echo "<label for='id_transcript1'></label>
-        <input class='info title' disabled id='id_transcript1' value=". $transcript['id_transcript'].">
+        <input class='info title' disabled id='id_transcript1' value=". $id.">
         <a href='Gene-ProtPage.html'> Temporary page for transcript 1</a>
         <br>
-        <label for='".$name_select."'></label>
-        <select id='".$name_select."' name='".$name_select."'>";
+        <label for='Role_".$id."'></label>
+        <select id='Role_".$id."' name='Role_".$id."'>";
         foreach ($annotators as $user){ /*List of annotators as drop-down list*/
             echo "<option value='".$user['email']."'>" .$user['email']."</option>";
         }
         echo "</select>
-        <button name='submit_".$transcript['id_transcript']."' class='little_submit_button' type='submit'> Affect transcript</button>
+        <button name='submit_".$id."' class='little_submit_button' type='submit'> Affect transcript</button>
         <br>
         <div class='double'>
             Nucleotidic sequence <br>

@@ -205,11 +205,12 @@ button:hover, .topnav a:hover, .menu_button input:hover, .tab button:hover {
     position:relative;
     background: #d1d1f6;
     border-radius: 0 0.5em 0.5em 0.5em;
+    display: none;
 }
 
 /* Style the tab */
 .tab {
-    width: max-content;
+    width: available;
     overflow: hidden;
     /*border: 1px solid #ccc;*/
     border-radius:0 0.5em 0.5em 0.5em;
@@ -237,108 +238,108 @@ button:hover, .topnav a:hover, .menu_button input:hover, .tab button:hover {
     text-decoration: underline;
 }
 
-.tabset > input {
-    display:block; /* "enable" hidden elements in IE/edge */
-    position:absolute; /* then hide them off-screen */
-    left:-100%;
-}
+/*.tabset > input {*/
+/*    display:block; !* "enable" hidden elements in IE/edge *!*/
+/*    position:absolute; !* then hide them off-screen *!*/
+/*    left:-100%;*/
+/*}*/
 
-.tabset > ul {
-    position:relative;
-    z-index:999;
-    list-style:none;
-    display:flex;
-    margin-bottom:-1px;
-}
+/*.tabset > ul {*/
+/*    position:relative;*/
+/*    z-index:999;*/
+/*    list-style:none;*/
+/*    display:flex;*/
+/*    margin-bottom:-1px;*/
+/*}*/
 
-.tabset > ul label,
-.tabset > div {
-    border:1px solid darkslateblue;
-}
+/*.tabset > ul label,*/
+/*.tabset > div {*/
+/*    border:1px solid darkslateblue;*/
+/*}*/
 
-.tabset > ul label {
-    display:inline-block;
-    padding:0.25em 1em;
-    background:darkslateblue;
-    color: #f2f2f2;
-    border-right-width:0;
-}
+/*.tabset > ul label {*/
+/*    display:inline-block;*/
+/*    padding:0.25em 1em;*/
+/*    background:darkslateblue;*/
+/*    color: #f2f2f2;*/
+/*    border-right-width:0;*/
+/*}*/
 
-.tabset > ul li:first-child label {
-    border-radius:0.5em 0 0 0;
-}
+/*.tabset > ul li:first-child label {*/
+/*    border-radius:0.5em 0 0 0;*/
+/*}*/
 
-.tabset > ul li:last-child label {
-    border-right-width:1px;
-    border-radius:0 0.5em 0 0;
-}
+/*.tabset > ul li:last-child label {*/
+/*    border-right-width:1px;*/
+/*    border-radius:0 0.5em 0 0;*/
+/*}*/
 
-.tabset > div{
-    position:relative;
-    background: #d1d1f6;
-    border-radius:0 0.5em 0.5em 0.5em;
-}
-.tab2 > div {
-    background: #bcbcf2;
-}
+/*.tabset > div{*/
+/*    position:relative;*/
+/*    background: #d1d1f6;*/
+/*    border-radius:0 0.5em 0.5em 0.5em;*/
+/*}*/
+/*.tab2 > div {*/
+/*    background: #bcbcf2;*/
+/*}*/
 
-.tabset > input:nth-child(1):focus ~ ul li:nth-child(1) label,
-.tabset > input:nth-child(2):focus ~ ul li:nth-child(2) label,
-.tabset > input:nth-child(3):focus ~ ul li:nth-child(3) label,
-.tabset > input:nth-child(4):focus ~ ul li:nth-child(4) label,
-.tabset > input:nth-child(5):focus ~ ul li:nth-child(5) label,
-.tabset > input:nth-child(6):focus ~ ul li:nth-child(6) label,
-.tabset > input:nth-child(7):focus ~ ul li:nth-child(7) label,
-.tabset > input:nth-child(8):focus ~ ul li:nth-child(8) label,
-.tabset > input:nth-child(9):focus ~ ul li:nth-child(9) label {
-    text-decoration:underline;
-}
+/*.tabset > input:nth-child(1):focus ~ ul li:nth-child(1) label,*/
+/*.tabset > input:nth-child(2):focus ~ ul li:nth-child(2) label,*/
+/*.tabset > input:nth-child(3):focus ~ ul li:nth-child(3) label,*/
+/*.tabset > input:nth-child(4):focus ~ ul li:nth-child(4) label,*/
+/*.tabset > input:nth-child(5):focus ~ ul li:nth-child(5) label,*/
+/*.tabset > input:nth-child(6):focus ~ ul li:nth-child(6) label,*/
+/*.tabset > input:nth-child(7):focus ~ ul li:nth-child(7) label,*/
+/*.tabset > input:nth-child(8):focus ~ ul li:nth-child(8) label,*/
+/*.tabset > input:nth-child(9):focus ~ ul li:nth-child(9) label {*/
+/*    text-decoration:underline;*/
+/*}*/
 
-.tabset > input:nth-child(1):checked ~ ul li:nth-child(1) label,
-.tabset > input:nth-child(2):checked ~ ul li:nth-child(2) label,
-.tabset > input:nth-child(3):checked ~ ul li:nth-child(3) label,
-.tabset > input:nth-child(4):checked ~ ul li:nth-child(4) label,
-.tabset > input:nth-child(5):checked ~ ul li:nth-child(5) label,
-.tabset > input:nth-child(6):checked ~ ul li:nth-child(6) label,
-.tabset > input:nth-child(7):checked ~ ul li:nth-child(7) label,
-.tabset > input:nth-child(8):checked ~ ul li:nth-child(8) label,
-.tabset > input:nth-child(9):checked ~ ul li:nth-child(9) label {
-    background:slateblue;
-    text-decoration: underline;
-    color: #f2f2f2;
-    border-bottom-color:hsl(220, 100%, 98%);
-}
+/*.tabset > input:nth-child(1):checked ~ ul li:nth-child(1) label,*/
+/*.tabset > input:nth-child(2):checked ~ ul li:nth-child(2) label,*/
+/*.tabset > input:nth-child(3):checked ~ ul li:nth-child(3) label,*/
+/*.tabset > input:nth-child(4):checked ~ ul li:nth-child(4) label,*/
+/*.tabset > input:nth-child(5):checked ~ ul li:nth-child(5) label,*/
+/*.tabset > input:nth-child(6):checked ~ ul li:nth-child(6) label,*/
+/*.tabset > input:nth-child(7):checked ~ ul li:nth-child(7) label,*/
+/*.tabset > input:nth-child(8):checked ~ ul li:nth-child(8) label,*/
+/*.tabset > input:nth-child(9):checked ~ ul li:nth-child(9) label {*/
+/*    background:slateblue;*/
+/*    text-decoration: underline;*/
+/*    color: #f2f2f2;*/
+/*    border-bottom-color:hsl(220, 100%, 98%);*/
+/*}*/
 
-.tabset > div > section,
-.tabset > div > section h2 {
-    position:absolute;
-    top:-999em;
-    left:-999em;
-}
-.tabset > div > section {
-    padding:1em 1em 0;
-}
+/*.tabset > div > section,*/
+/*.tabset > div > section h2 {*/
+/*    position:absolute;*/
+/*    top:-999em;*/
+/*    left:-999em;*/
+/*}*/
+/*.tabset > div > section {*/
+/*    padding:1em 1em 0;*/
+/*}*/
 
-.tabset > input:nth-child(1):checked ~ div > section:nth-child(1),
-.tabset > input:nth-child(2):checked ~ div > section:nth-child(2),
-.tabset > input:nth-child(3):checked ~ div > section:nth-child(3),
-.tabset > input:nth-child(4):checked ~ div > section:nth-child(4),
-.tabset > input:nth-child(5):checked ~ div > section:nth-child(5),
-.tabset > input:nth-child(6):checked ~ div > section:nth-child(6),
-.tabset > input:nth-child(7):checked ~ div > section:nth-child(7),
-.tabset > input:nth-child(8):checked ~ div > section:nth-child(8),
-.tabset > input:nth-child(9):checked ~ div > section:nth-child(9) {
-    position:Static;
-}
+/*.tabset > input:nth-child(1):checked ~ div > section:nth-child(1),*/
+/*.tabset > input:nth-child(2):checked ~ div > section:nth-child(2),*/
+/*.tabset > input:nth-child(3):checked ~ div > section:nth-child(3),*/
+/*.tabset > input:nth-child(4):checked ~ div > section:nth-child(4),*/
+/*.tabset > input:nth-child(5):checked ~ div > section:nth-child(5),*/
+/*.tabset > input:nth-child(6):checked ~ div > section:nth-child(6),*/
+/*.tabset > input:nth-child(7):checked ~ div > section:nth-child(7),*/
+/*.tabset > input:nth-child(8):checked ~ div > section:nth-child(8),*/
+/*.tabset > input:nth-child(9):checked ~ div > section:nth-child(9) {*/
+/*    position:Static;*/
+/*}*/
 
-.tabset > ul label {
-    -webkit-touch-callout:none;
-    -webkit-user-select:none;
-    -khtml-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
-}
+/*.tabset > ul label {*/
+/*    -webkit-touch-callout:none;*/
+/*    -webkit-user-select:none;*/
+/*    -khtml-user-select:none;*/
+/*    -moz-user-select:none;*/
+/*    -ms-user-select:none;*/
+/*    user-select:none;*/
+/*}*/
 .onethird{
     vertical-align: top;
     display: inline-block;
@@ -362,7 +363,32 @@ button:hover, .topnav a:hover, .menu_button input:hover, .tab button:hover {
     padding-bottom: 9px ;
 }
 
+.extra-info {
+    display: none;
+    line-height: 30px;
+    font-size: 12px;
+    position: relative;
+    top: 0;
+    left: 50px;
+}
 
+.info_span:hover .extra-info {
+    display: block;
+}
+
+.info_span {
+    font-size: 20px;
+    padding-left: 5px;
+    width: 20px;
+    border-radius: 15px;
+}
+
+.info_span:hover {
+    background-color: lavenderblush;
+    padding: 0 0 0 5px;
+    width: 315px;
+    text-align: left !important;
+}
 
 
 

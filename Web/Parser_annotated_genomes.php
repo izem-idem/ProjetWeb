@@ -18,7 +18,7 @@ $pep_file = ['../Data/Escherichia_coli_cft073_pep.fa', '../Data/Escherichia_coli
 /* pg_prepare prépare la commande SQL et pg_execute fournit les valeurs, ainsi on aura pas d'injection SQL a priori ?*/
 $sql_genome = pg_prepare($db_conn, "insert_genome", "INSERT INTO website.genome (Id_genome,Species, Strain, Sequence,Size_genome) VALUES ($1,$2,$3,$4,$5)");
 $sql_transcript = pg_prepare($db_conn, "insert_cds_transcript", "INSERT INTO website.transcript (Id_transcript,Id_genome,Genetic_support,Sequence_nt,LocBeginning,LocEnd,Strand,Size_nt,Annotation) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,1)");
-$sql_annotation = pg_prepare($db_conn, "insert_cds_annotation", "INSERT INTO website.annotate (Id_transcript,Id_gene, Gene_biotype, Transcript_biotype, Symbol, Description,date_annotation,validated) VALUES ($1,$2,$3,$4,$5,$6,$7,1)");
+$sql_annotation = pg_prepare($db_conn, "insert_cds_annotation", "INSERT INTO website.annotate (Id_transcript,Id_gene, Gene_biotype, Transcript_biotype, Symbol, Description,date_annotation,validated) VALUES ($1,$2,$3,$4,$5,$6,'now',1)");
 $sql_pep = pg_prepare($db_conn, "update_pep", "UPDATE website.transcript SET (Sequence_p,Size_p)=($1,$2) WHERE Id_transcript = $3");
 
 //PARSE GENOME
@@ -53,7 +53,7 @@ for ($i = 0; $i <=2; $i++){
                 $size_nt = strlen($seq_nt); /*Récupère taille de la séquence*/
                 /*Execute commande, annotated is obligatory true */
                 $sql_transcript = pg_execute($db_conn, "insert_cds_transcript", array($id_transcript, $id_genome, $genetic_supp, $seq_nt, $Loc_beg, $Loc_end, $strand, $size_nt)) or die ("Query failed with exception: ". pg_last_error());
-                $sql_annotation = pg_execute($db_conn, "insert_cds_annotation", array($id_transcript, $id_gene, $gene_type, $prot_type, ($gene_symbol==0 ? null:$gene_symbol), $description, 'now')) or die ("Query failed with exception: ". pg_last_error());
+                $sql_annotation = pg_execute($db_conn, "insert_cds_annotation", array($id_transcript, $id_gene, $gene_type, $prot_type, ($gene_symbol==0 ? null:$gene_symbol), $description)) or die ("Query failed with exception: ". pg_last_error());
                 /*Reset seq_nt*/
                 $seq_nt = "";
             }

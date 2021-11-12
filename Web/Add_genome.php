@@ -19,10 +19,10 @@
 <div class="topnav">
     <!--Link to pages-->
     <a href="menu.html">Home</a>
-    <a href="AnnotatorArea.html"> Annotator area</a>
+    <a href="AnnotatorArea.php"> Annotator area</a>
     <a href="ValidatorArea.php"> Validator area</a>
     <a href="usermanag.html"> User management</a>
-    <a class= "active" href="Add_genome.html"> Add genome</a> <!--Page active-->
+    <a class= "active" href="Add_genome.php"> Add genome</a> <!--Page active-->
     <!--Link to logout ==> redirect to login page-->
     <button type="button" class="LogOut" onclick="window.location.href = 'LoginPage.html'">Log out </button>
 </div>
@@ -53,7 +53,7 @@
 
 <!--FOOTER-->
 <footer>
-    <a href="Contact.html">Contact</a><br>
+    <a href="Contact.php">Contact</a><br>
     <p>© CALI 2021</p>
 </footer>
 </body>

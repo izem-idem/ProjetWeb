@@ -19,15 +19,16 @@
     <a href="ValidatorArea.php"> Validator area</a>
     <a href="usermanag.html"> User management</a>
     <a href="Add_genome.php"> Add genome</a>
-    <button class="LogOut" onclick="window.location.href = 'LoginPage.html'" type="button">Log out</button>
+    <button class="fa fa-sign-out LogOut" onclick="window.location.href = 'LoginPage.html'" type="button">Log out</button>
 </div>
+<div class="page_container">
 <div class="center">
     <h2> Annotations</h2>
     <div class="tab">
-        <button class="tablinks active" onclick="openTab(event,'ToDo',false)">Annotations to do</button>
+        <button class="tablinks active" onclick="openTab(event,'ToDo',false)">Annotations to do</button> <!--Page displayed by default-->
         <button class="tablinks" onclick="openTab(event,'Status',false)">Annotations status</button>
     </div>
-    <div class="tabcontent" id="ToDo">
+    <div class="tabcontent active" id="ToDo">
         <h3> Annotations to do</h3>
         <?php require "ToDo.php"?>
 
@@ -37,9 +38,10 @@
         <?php require "Status.php" ?>
     </div>
 </div>
-<footer class="footer">
+<footer class="footer_2">
     <a href="Contact.php">Contact</a><br>
     <p>© CALI 2021</p>
 </footer>
+</div>
 </body>
 </html>

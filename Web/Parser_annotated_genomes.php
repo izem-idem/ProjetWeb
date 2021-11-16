@@ -1,13 +1,13 @@
 <!--Dans php.ini : upload_file_size = 15M et post_max_size=16M (j'ai aussi modifié max_execution_time à 600 mais aucune idée si nécessaire-->
 <!--La database website doit être crée dans postgres (CREATE DATABASE website) -->
 <?php
-//Connect to databse
+//Connect to database
 include_once 'libphp/db_utils.php';
 connect_db();
 //Get variables from add_genome.php
     // Text variables
-$species = ['Escherichia_coli','Escherichia_coli','Escherichia_coli'];
-$strain = ['cft073','o157_h7_str_edl933','str_k_12_substr_mg1655'];
+$species = ['Escherichia coli','Escherichia coli','Escherichia coli'];
+$strain = ['cft073','O157:H7 str. EDL933','str. K-12 substr. MG1655'];
     // Files temporary path (les fichiers sont téléchargés temporairement et PHP utilise ces fichiers pour parser)
 $genome_file = ['../Data/Escherichia_coli_cft073.fa', '../Data/Escherichia_coli_o157_h7_str_edl933.fa','../Data/Escherichia_coli_str_k_12_substr_mg1655.fa'];
 $cds_file = ['../Data/Escherichia_coli_cft073_cds.fa', '../Data/Escherichia_coli_o157_h7_str_edl933_cds.fa','../Data/Escherichia_coli_str_k_12_substr_mg1655_cds.fa'];

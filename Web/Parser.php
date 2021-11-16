@@ -10,9 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Text variables
         $species = $_POST['genome_name'];
         $strain = $_POST['strain_name'];
-        /* replace spaces with _ in names*/ /*TODO pas sure de si bonne idée*/
-        preg_replace('/\s+/', '_', trim($species));
-        preg_replace('/\s+/', '_', trim($strain));
+//        /* replace spaces with _ in names*/ /*TODO pas sure de si bonne idée*/
+//        preg_replace('/\s+/', '_', trim($species));
+//        preg_replace('/\s+/', '_', trim($strain));
 // Files temporary path (les fichiers sont téléchargés temporairement et PHP utilise ces fichiers pour parser)
         $genome_file = $_FILES['genome_file']['tmp_name'];
         $cds_file = $_FILES['cds_file']['tmp_name'];

@@ -125,10 +125,9 @@ input[type=file]{
 }
 /*Inputs to show information from DB*/
 .info{
-    background-color: inherit;
-    border: none;
-    width: inherit;
-    font-size: inherit;
+    align-items: center;
+    display: inline-block;
+    color: gray;
 }
 /*Title for some pages, that is obtained from DB*/
 .title{
@@ -137,6 +136,7 @@ input[type=file]{
     text-align: center;
     font-size: large;
     font-weight: bolder;
+    color:darkslateblue;
 }
 
 

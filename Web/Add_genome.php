@@ -48,7 +48,7 @@
             <!-- Submitting of names and file : it launches the php script-->
             <button type="submit" name="submit" class="big_submit_button">Add genome</button>
         </form>
-        <?php require 'Parser.php';?>
+        <?php require 'Parser_other.php';?>
     </div>
 </div>
 

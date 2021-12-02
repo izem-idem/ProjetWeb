@@ -61,7 +61,7 @@ while ($transcript = pg_fetch_assoc($to_annotate)) {/*while there exists rows of
         } else{
             $annotation = pg_query_params($db_conn, $annotation_query, array($id, $gene_id, $gene_biotype, $prot_biotype, $gene_symbol, $description, $annotator)) or die("Error " . pg_last_error());
         }
-        $update_status = pg_query_params($db_conn, $update_status_query, array($id)) or die("Error " . pg_last_error()); /*Status of annotation is updated to "annotation exists"*/
+    $update_status = pg_query_params($db_conn, $update_status_query, array($id)) or die("Error " . pg_last_error()); /*Status of annotation is updated to "annotation exists"*/
         echo "Your annotation for " . $id . " has been submitted";
 
     //Display of the annotations areas for all transcript
@@ -71,7 +71,7 @@ while ($transcript = pg_fetch_assoc($to_annotate)) {/*while there exists rows of
                 <!--This form redirects to itself when the user submits his annotation-->
                 
             <!--Informations on transcript-->
-                <p class='info title'>" . $id . "</p> <!-- Name of transcript-->
+                <p class='title'>" . $id . "</p> <!-- Name of transcript-->
                 <a href='Gene-ProtPage.html'>" . $id . " informations</a><br> 
                     <!--Page with known informations on transcript-->
                 

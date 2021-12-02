@@ -34,7 +34,7 @@ while ($annotation = pg_fetch_assoc($annotated)) {
 
     //Display of the annotations done
     echo "<div class='tabcontent' id=status_" . $id . ">
-            <p class='info title'>" . $id . "</p>
+            <p class='title'>" . $id . "</p>
             <a href='Gene-ProtPage.html'>" . $id . " informations</a><br>";
 
             // Display of the validation status
@@ -44,39 +44,37 @@ while ($annotation = pg_fetch_assoc($annotated)) {
             } elseif ($annotation['validated'] == 1) { /*The annotation is validated, the commentary is displayed*/
                 echo "Status :<p>Validated</p>
                 Validator :
-                <label for='valid_" . $id . "'></label>
-                <input class='info' disabled id='valid_" . $id . "' value='" . $annotation['validator_email'] . "'> <br>
+                <p class='info'>" . $annotation['validator_email'] . "</p>
                 <br><br>Commentary: <br> ".$annotation['commentary'];
 
             } else { /*The annotation is rejected, the commentary is displayed*/
                 echo "Status :<p>Rejected</p>
                 Validator :
-                <label for='valid_" . $id . "'></label>
-                <input class='info' disabled id='" . $annotation['validator_email'] . "' value='" . $annotation['validator_email'] . "'> <br>
+                <p class='info'>" . $annotation['validator_email'] . "</p>
                 <br>Commentary: <br> ".$annotation['commentary'];
             }
 
     //Display of the annotation submitted
     echo "<div class='title'>Annotations</div>
             <!--Input for id_gene-->
-            <label for='gene_id_".$id."'>ID of gene</label>
-            <input class='info' disabled id='gene_id_".$id."' value='".$annotation['id_gene']."'><br>
-            
+            ID of gene : 
+            <p class='info'>".$annotation['id_gene']."</p><br>
+         
             <!--Input for gene_biotype-->
-            <label for='gene_biotype_".$id."'>Biotype of gene</label>
-            <input class='info' disabled id='gene_biotype_".$id."' value='".$annotation['gene_biotype']."'><br>
+            Biotype of gene : 
+            <p class='info'>".$annotation['gene_biotype']."</p><br>
             
             <!--Input for symbol-->
-            <label for='gene_symbol_".$id."'>Gene symbol</label>
-            <input class='info' disabled id='gene_symbol_".$id."' value='".$annotation['symbol']."'><br>
+            Gene symbol : 
+            <p class='info'>".$annotation['symbol']."</p><br>
             
             <!--Input for transcript_biotype-->
-            <label for='prot_biotype_".$id."'> Biotype of protein</label>
-            <input class='info' disabled id='prot_biotype_".$id."' value='".$annotation['transcript_biotype']."'><br>
+            Biotype of transcript : 
+            <p class='info'>".$annotation['transcript_biotype']."</p><br>
             
             <!--Input for description-->
-            <label for='desc_".$id."'>Description of function</label>
-            <input class='info' disabled id='desc_".$id."' value='".$annotation['description']."'>
+            Description of function : 
+            <p class='info'>".$annotation['description']."</p>
         </div>";
 }
 disconnect_db(); /*Disconnect from the database*/

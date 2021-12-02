@@ -72,8 +72,7 @@ while ($transcript = pg_fetch_assoc($non_annotated)){
     } else { /*If no assignment has been done*/
         /*Name of transcript*/
         echo "<label for='id_transcript1'></label>
-        <input class='info title' disabled id='id_transcript1' value=". $id.">
-        
+        <p class='title'>".$id."</p>        
         <!--Link to known information about the transcript-->
         <a href='Gene-ProtPage.html'> Temporary page for transcript 1</a><br>
         

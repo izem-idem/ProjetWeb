@@ -24,24 +24,35 @@
     connect_db ();
 
 
-    $q_user_name = "SELECT email FROM website.users";
+    $q_name_status = "SELECT email, status FROM website.users WHERE status != 'Admin'";
 
-    $res_user_name = pg_query($db_conn, $q_user_name) or die (pg_last_error());
-    $res_user_array = pg_fetch_all_columns($res_user_name);
+
+    $res_name_status = pg_query($db_conn, $q_name_status) or die (pg_last_error());
+    $res_user_array = pg_fetch_all_columns($res_name_status);
+    $res_status_user = pg_fetch_all_columns($res_name_status, 1);
+
 
     ?>
-
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 
     <?php
-    foreach ($res_user_array as $id_user_name){
-      echo "<select name='sel".$id_user_name."'>
+
+    echo '<table>';
+    while ($id = pg_fetch_assoc($res_name_status))
+     {
+       $id_user_name = $id['email'];
+       $id_status = $id['status'];
+      echo '<tr> <td> '.$id_user_name .'</td>';
+      echo '<td>' .$id_status. '</td>';
+      echo "<td> <select name='sel".$id_user_name."'>
         <option value='Reader'> Reader</option>
         <option value='Annotator'> Annotator</option>
         <option value='Validator'> Validator</option>
         </select>
-        <button class='little_submit_button' type='submit', name = 'submit".$id_user_name."'> Change role</button>";
-      }
+        <button class='little_submit_button' type='submit', name = 'submit".$id_user_name."'> Change role</button> </td>";
+      echo "<td><button class='little_submit_button' type='submit', name = 'del".$id_user_name."'> Delete user</button>";
+
+
 
 
 
@@ -56,33 +67,33 @@
         else if ($_POST["sel".$id_user_name] == 'Validator') {
           $alter_role = "UPDATE website.users SET status = 'Validator' WHERE users.email = ".$id_user_name;
         }
-
+            echo $alter_role;
+            $res_alter_role = pg_query($db_conn, $alter_role) or die(pg_last_error());
       }
-        echo "<button class='little_submit_button' type='submit', name = 'del".$id_user_name."'> Delete user</button>";
-        if ($_POST["del".$id_user_name]) {
-          $del_user = "DELETE FROM website.users
-          WHERE email = $id_user_name";
-        }
 
+      if (isset($_POST["del".$id_user_name])) {
 
-    ?>
-  </form>
+        $del_user = "DELETE FROM website.users
+        WHERE email = $id_user_name";
+        echo $del_user;
+        $res_delete_role = pg_query($db_conn, $del_user) or die(pg_last_error());
+      }
 
-    <?php
-
-    echo "</form>";
-    while ($line = pg_fetch_array($res_user_name, null, PGSQL_ASSOC)) {
-    echo "\t<tr>\n";
-    foreach ($line as $col_value) {
-    echo "\t\t<td>$col_value</td>\n";
     }
-    echo "\t</tr>\n";
-    }
-    echo "</table>\n";
-    pg_free_result($res_user_name);
+
+
+
+
 
     disconnect_db();
     ?>
+  </form>
+
+
+
+
+
+
   </div>
 
 </body>

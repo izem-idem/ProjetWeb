@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device, initial-scale=1.0">
     <title>Add genome</title>
     <link rel="stylesheet" type="text/css" href="website.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -19,12 +20,12 @@
 <div class="topnav">
     <!--Link to pages-->
     <a href="menu.html">Home</a>
-    <a href="AnnotatorArea.html"> Annotator area</a>
+    <a href="AnnotatorArea.php"> Annotator area</a>
     <a href="ValidatorArea.php"> Validator area</a>
     <a href="usermanag.html"> User management</a>
-    <a class= "active" href="Add_genome.html"> Add genome</a> <!--Page active-->
+    <a class= "active" href="Add_genome.php"> Add genome</a> <!--Page active-->
     <!--Link to logout ==> redirect to login page-->
-    <button type="button" class="LogOut" onclick="window.location.href = 'LoginPage.html'">Log out </button>
+    <button type="button" class="fa fa-sign-out LogOut" onclick="window.location.href = 'LoginPage.html'">Log out </button>
 </div>
 
 <!--PAGE CONTENT-->
@@ -47,13 +48,13 @@
             <!-- Submitting of names and file : it launches the php script-->
             <button type="submit" name="submit" class="big_submit_button">Add genome</button>
         </form>
-        <?php require 'Parser.php';?>
+        <?php require 'Parser_other.php';?>
     </div>
 </div>
 
 <!--FOOTER-->
 <footer>
-    <a href="Contact.html">Contact</a><br>
+    <a href="Contact.php">Contact</a><br>
     <p>© CALI 2021</p>
 </footer>
 </body>

@@ -2,12 +2,18 @@
     margin: 0;
     padding: 0;
 }
+
+/* For button, button:hover https://www.w3schools.com/howto/howto_css_login_form.asp*/
+
+/*GENERAL*/
 html{
     background-color: lavender;
 }
 body{
+    position: relative;
     margin: 0;
-    padding: 0;
+    min-height: 100vh;
+    padding: 0 0 2.5rem 0;
 }
 header{
     background: darkslateblue;
@@ -29,6 +35,7 @@ footer{
     background: darkslateblue;
     text-align: center;
     bottom: 0;
+    height: 2.5rem;
     position: absolute;
     width: 100%;
 }
@@ -58,11 +65,13 @@ h3{
 
 
 
-/* NAVIGATION TABS*/
+/* NAVIGATION TABS (https://www.w3schools.com/howto/howto_js_topnav.asp)*/
+/*Background*/
 .topnav {
     background-color: darkslateblue;
     overflow: hidden;
 }
+/*Links*/
 .topnav a{
     float: left;
     color: #f2f2f2; /*couleur texte du menu*/
@@ -97,6 +106,7 @@ h3{
 }
 
 /*FIELDS*/
+/*General*/
 input{
     width: 100%;
     padding: 12px 20px;
@@ -105,34 +115,30 @@ input{
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
-
+/*Checkbox*/
 input[type="checkbox"]{
     width: auto;
 }
+/*File*/
 input[type=file]{
     border: none;
 }
+/*Inputs to show information from DB*/
 .info{
-    background-color: inherit;
-    border: none;
-    width: inherit;
-    font-size: inherit;
+    align-items: center;
+    display: inline-block;
+    color: gray;
 }
-
+/*Title for some pages, that is obtained from DB*/
 .title{
     width: 100%;
     display: inline-block;
     text-align: center;
     font-size: large;
     font-weight: bolder;
+    color:darkslateblue;
 }
 
-.cell_input{
-    padding: 0;
-    background-color: inherit;
-    border: none;
-    width:100%;
-}
 
 /*BUTTONS*/
 .big_submit_button {
@@ -151,7 +157,7 @@ input[type=file]{
 }
 
 /*Buttons and links go lighter when the mouse go over them */
-button:hover, .topnav a:hover, .menu_button input:hover {
+button:hover, .topnav a:hover, .menu_button input:hover, .tab button:hover {
     opacity: 0.8;
 }
 /*Buttons on home page*/
@@ -181,138 +187,94 @@ button:hover, .topnav a:hover, .menu_button input:hover {
     text-align: right;
 }
 
-/*Div class for the genetic localisations*/
+/*Div class to have two side by side*/
 .double{
     vertical-align: top;
     display: inline-block;
-    width: 48%;
-}
-.tabset > input {
-    display:block; /* "enable" hidden elements in IE/edge */
-    position:absolute; /* then hide them off-screen */
-    left:-100%;
+    width: 49%;
 }
 
-.tabset > ul {
-    position:relative;
-    z-index:999;
-    list-style:none;
-    display:flex;
-    margin-bottom:-1px;
+.double > p{
+    width: 95%;
+    font-style: italic;
+    overflow-wrap: break-word;
+    font-size: smaller;
+    text-align: justify;
+    text-justify: inter-character;
 }
 
-.tabset > ul label,
-.tabset > div {
+/*TABS*/
+.tabcontent{
+    padding: 10px;
     border:1px solid darkslateblue;
-}
-
-.tabset > ul label {
-    display:inline-block;
-    padding:0.25em 1em;
-    background:darkslateblue;
-    color: #f2f2f2;
-    border-right-width:0;
-}
-
-.tabset > ul li:first-child label {
-    border-radius:0.5em 0 0 0;
-}
-
-.tabset > ul li:last-child label {
-    border-right-width:1px;
-    border-radius:0 0.5em 0 0;
-}
-
-.tabset > div{
     position:relative;
     background: #d1d1f6;
+    border-radius: 0 0.5em 0.5em 0.5em;
+    display: none;
+}
+
+.tabcontent.active{
+    display: block;
+}
+
+/* Style the tab */
+.tab {
+    width: available;
+    overflow: hidden;
+    /*border: 1px solid #ccc;*/
     border-radius:0 0.5em 0.5em 0.5em;
-}
-.tab2 > div {
-    background: #bcbcf2;
+    margin-bottom: -1px;
 }
 
-.tabset > input:nth-child(1):focus ~ ul li:nth-child(1) label,
-.tabset > input:nth-child(2):focus ~ ul li:nth-child(2) label,
-.tabset > input:nth-child(3):focus ~ ul li:nth-child(3) label,
-.tabset > input:nth-child(4):focus ~ ul li:nth-child(4) label,
-.tabset > input:nth-child(5):focus ~ ul li:nth-child(5) label,
-.tabset > input:nth-child(6):focus ~ ul li:nth-child(6) label,
-.tabset > input:nth-child(7):focus ~ ul li:nth-child(7) label,
-.tabset > input:nth-child(8):focus ~ ul li:nth-child(8) label,
-.tabset > input:nth-child(9):focus ~ ul li:nth-child(9) label {
-    text-decoration:underline;
-}
-
-.tabset > input:nth-child(1):checked ~ ul li:nth-child(1) label,
-.tabset > input:nth-child(2):checked ~ ul li:nth-child(2) label,
-.tabset > input:nth-child(3):checked ~ ul li:nth-child(3) label,
-.tabset > input:nth-child(4):checked ~ ul li:nth-child(4) label,
-.tabset > input:nth-child(5):checked ~ ul li:nth-child(5) label,
-.tabset > input:nth-child(6):checked ~ ul li:nth-child(6) label,
-.tabset > input:nth-child(7):checked ~ ul li:nth-child(7) label,
-.tabset > input:nth-child(8):checked ~ ul li:nth-child(8) label,
-.tabset > input:nth-child(9):checked ~ ul li:nth-child(9) label {
-    background:slateblue;
-    text-decoration: underline;
-    color: #f2f2f2;
+/* Style the buttons that are used to open the tab content */
+.tab button {
+    font: inherit;
+    background-color: darkslateblue;
     border-bottom-color:hsl(220, 100%, 98%);
-}
-
-.tabset > div > section,
-.tabset > div > section h2 {
-    position:absolute;
-    top:-999em;
-    left:-999em;
-}
-.tabset > div > section {
-    padding:1em 1em 0;
-}
-
-.tabset > input:nth-child(1):checked ~ div > section:nth-child(1),
-.tabset > input:nth-child(2):checked ~ div > section:nth-child(2),
-.tabset > input:nth-child(3):checked ~ div > section:nth-child(3),
-.tabset > input:nth-child(4):checked ~ div > section:nth-child(4),
-.tabset > input:nth-child(5):checked ~ div > section:nth-child(5),
-.tabset > input:nth-child(6):checked ~ div > section:nth-child(6),
-.tabset > input:nth-child(7):checked ~ div > section:nth-child(7),
-.tabset > input:nth-child(8):checked ~ div > section:nth-child(8),
-.tabset > input:nth-child(9):checked ~ div > section:nth-child(9) {
-    position:Static;
-}
-
-.tabset > ul label {
-    -webkit-touch-callout:none;
-    -webkit-user-select:none;
-    -khtml-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
-}
-.onethird{
-    vertical-align: top;
-    display: inline-block;
-    width:38%;
-}
-
-.twothird{
-    vertical-align: top;
-    display: inline-block;
-    width: 58%;
-}
-
-/*Cell margin*/
-.td3{
-    width: 31%;
-    padding-bottom: 9px;
-}
-
-.td4{
-    width: 21%;
-    padding-bottom: 9px ;
+    color: #f2f2f2;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
 }
 
 
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color:slateblue;
+    text-decoration: underline;
+}
+
+
+/*EXTRA INFOS*/
+.extra-info {
+    display: none;
+    line-height: 30px;
+    font-size: 12px;
+    position: relative;
+    top: 0;
+    left: 50px;
+}
+
+.info_span:hover .extra-info {
+    display: block;
+}
+
+.info_span {
+    font-size: 20px;
+    padding-left: 5px;
+    width: 20px;
+    border-radius: 15px;
+}
+
+.info_span:hover {
+    background-color: lavenderblush;
+    padding: 0 0 0 5px;
+    width: 315px;
+    text-align: left !important;
+}
 
 
 

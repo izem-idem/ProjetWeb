@@ -16,6 +16,11 @@
     <h1>CALI</h1>
 </header>
 <?php
+require_once 'libphp/db_utils.php';
+connect_db();
+$query_admin = "SELECT email FROM website.users WHERE status='Admin'";
+$res_admin = pg_query($db_conn, $query_admin);
+$admin = pg_fetch_all_columns($res_admin);
 //The form has been submitted
 if (isset($_POST["Submit"])){
 //    Get all infos given in the contact form
@@ -40,8 +45,9 @@ if (isset($_POST["Submit"])){
         /*Mail message*/
         $message = filter_var($_POST['Message'], FILTER_SANITIZE_STRING);
         $message = "From: $name \n About: $subject Message: $message";
-
-        $mail= mail("camille.rabier@universite-paris-saclay.fr",$subject_mail,$message, $mail_header) or die("Error the mail could not be sent !");
+        foreach ($admin as $admin_email){
+            $mail= mail($admin_email,$subject_mail,$message, $mail_header) or die("Error the mail could not be sent !");
+        }
         echo "Thank you for contacting us. You will get a reply within 24 hours";
     }
 }

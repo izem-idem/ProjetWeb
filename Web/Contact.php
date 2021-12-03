@@ -16,30 +16,40 @@
     <h1>CALI</h1>
 </header>
 <?php
+require_once 'libphp/db_utils.php';
+connect_db();
+$query_admin = "SELECT email FROM website.users WHERE status='Admin'";
+$res_admin = pg_query($db_conn, $query_admin);
+$admin = pg_fetch_all_columns($res_admin);
 //The form has been submitted
 if (isset($_POST["Submit"])){
 //    Get all infos given in the contact form
-    $email =filter_var($_POST['Email'],FILTER_VALIDATE_EMAIL) ;
-
-    if (empty($_POST['Name'])){ /*The name is not required, if not given his name will be anonumous person*/
-        $name = "An anonymous person";
-    } else{
-        $name = filter_var($_POST['Name'], FILTER_SANITIZE_STRING);
+    if(!filter_var($_POST['Email'],FILTER_VALIDATE_EMAIL)){ //https://www.php.net/manual/fr/filter.examples.validation.php
+        echo "<p class='error_login'>Email is not valid</p>";
     }
-    $subject =filter_var($_POST['Subject'], FILTER_SANITIZE_STRING);
+    else{
+        $email = $_POST['Email'];
+        if (empty($_POST['Name'])){ /*The name is not required, if not given his name will be anonumous person*/
+            $name = "An anonymous person";
+        } else{
+            $name = filter_var($_POST['Name'], FILTER_SANITIZE_STRING);
+        }
+        $subject =filter_var($_POST['Subject'], FILTER_SANITIZE_STRING);
 
-    /*The email will be sent as coming from the submitter of the contact form*/
-    $mail_header = "From : $email \r\n";
+        /*The email will be sent as coming from the submitter of the contact form*/
+        $mail_header = "From : $email \r\n";
 
-    /*Subject of the mail*/
-    $subject_mail = "Contact form";
+        /*Subject of the mail*/
+        $subject_mail = "Contact form";
 
-    /*Mail message*/
-    $message = filter_var($_POST['Message'], FILTER_SANITIZE_STRING);
-    $message = "From: $name \n About: $subject Message: $message";
-
-    $mail= mail("camille.rabier@universite-paris-saclay.fr",$subject_mail,$message, $mail_header) or die("Error the mail could not be sent !");
-    echo "Thank you for contacting us. You will get a reply within 24 hours";
+        /*Mail message*/
+        $message = filter_var($_POST['Message'], FILTER_SANITIZE_STRING);
+        $message = "From: $name \n About: $subject Message: $message";
+        foreach ($admin as $admin_email){
+            $mail= mail($admin_email,$subject_mail,$message, $mail_header) or die("Error the mail could not be sent !");
+        }
+        echo "Thank you for contacting us. You will get a reply within 24 hours";
+    }
 }
 ?>
 <div class="center">

@@ -8,9 +8,6 @@
 // Text variables
         $species = "Escherichia Coli";
         $strain = "";
-//        /* replace spaces with _ in names*/ /*TODO pas sure de si bonne idée*/
-//        preg_replace('/\s+/', '_', trim($species));
-//        preg_replace('/\s+/', '_', trim($strain));
 // Files temporary path (les fichiers sont téléchargés temporairement et PHP utilise ces fichiers pour parser)
         $genome_file = "../Data/new_coli.fa";
         $cds_file = "../Data/new_coli_cds.fa";

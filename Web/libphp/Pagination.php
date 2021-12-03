@@ -30,6 +30,7 @@ function create_pagination($nr_results,$perpage,$currentPage){
         }
 
         $lastlink = 0;
+
         foreach($tmp as $i => $link) {
             if($i > $lastlink + 1) {
                 echo " ... "; // where one or more links have been omitted

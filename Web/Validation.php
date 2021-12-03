@@ -40,8 +40,7 @@ while ($annotation = pg_fetch_assoc($tovalidate)) {
     $id = $annotation['id_transcript'];
     //If the validator has validated or rejected the annotation
     if (isset($_POST["validate_" . $id])) {/*The annotation has been validated*/
-        $comment = filter_var($_POST["comment_" . $id], FILTER_SANITIZE_STRING);
-
+        $comment = $_POST["comment_" . $id];
         /*Update status of the annotation to validated and also add the validator email and the commentary*/
         $update_status = pg_query_params($db_conn, $update_status, array($validator,1,$comment,$id)) or die("Error " . pg_last_error());
 
@@ -76,7 +75,7 @@ while ($annotation = pg_fetch_assoc($tovalidate)) {
     }else{ /*The annotation have not been validated or rejected*/
         echo "<div class='tabcontent' id=valid_" . $id . ">
                 <form action=" . $_SERVER['PHP_SELF'] . " method='POST'> <!--When the validation and rejection button is clicked the form redirects to the same page-->
-                    <p class='info title'>" . $id . "</p>
+                    <p class='title'>" . $id . "</p>
                     <a href='Gene-ProtPage.html'>" . $id . " informations</a><br>
                     
                     <!--Annotation information-->

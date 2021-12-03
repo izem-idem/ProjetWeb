@@ -19,7 +19,12 @@
 //The form has been submitted
 if (isset($_POST["Submit"])){
 //    Get all infos given in the contact form
-    $email =filter_var($_POST['Email'],FILTER_VALIDATE_EMAIL) ;
+    if(!filter_var($_POST['Email'],FILTER_VALIDATE_EMAIL)){ //https://www.php.net/manual/fr/filter.examples.validation.php
+        echo "Email is not valid";
+    }
+    else{
+        $email = $_POST['Email'];
+    }
 
     if (empty($_POST['Name'])){ /*The name is not required, if not given his name will be anonumous person*/
         $name = "An anonymous person";

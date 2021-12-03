@@ -42,12 +42,16 @@
     <label for="annot"> Annotated by:</label>
     <input class="info" id="annot" type="text" value="XXXXXX" disabled><br>
 
-    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-    <label for="vehicle1"> I have a bike</label><br>
-    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-    <label for="vehicle2"> I have a car</label><br>
-    <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-    <label for="vehicle3"> I have a boat</label><br>
+    <b>File to Download:</b>
+
+    <input type="checkbox" id="box1" name="Angene_fasta" value=1>
+    <label for="box1"> Annoted Gene </label>
+    <input type="checkbox" id="box2" name="Anprot_fasta" value=2>
+    <label for="box2"> Annoted Protein </label>
+    <input type="checkbox" id="box3" name="gene_fasta" value=3>
+    <label for="box3"> Gene sequence</label>
+    <input type="checkbox" id="box4" name="prot_fasta" value=4>
+    <label for="box4"> Protein sequence</label>&nbsp;&nbsp;
 
     <button class="little_submit_button" type="submit">Download</button>
 
@@ -72,6 +76,7 @@
         <option value="nt">Nucleotide collection</option>
         <option value="nr"> Non-redundant Protein Sequence</option>
         <option value="swissprot">UNIPROT</option>
+        <option value="refseq_rna">Transcript Reference Sequences</option>
     </select>
     
     <br><br>
@@ -83,6 +88,7 @@
         <option value="NCBI">NCBI</option>
         <option value="PFAM">PFAM</option>
         <option value="Uniprot">Uniprot</option>
+       
     </select>
     <button class="little_submit_button" type="submit">Access</button> <br><br/>
     <div class="visu-part">

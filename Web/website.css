@@ -196,7 +196,7 @@ button:hover, .topnav a:hover, .menu_button input:hover, .tab button:hover {
 
 .double > p{
     width: 95%;
-    font-style: italic;
+    /*font-style: italic;*/
     overflow-wrap: break-word;
     font-size: smaller;
     text-align: justify;
@@ -276,6 +276,19 @@ button:hover, .topnav a:hover, .menu_button input:hover, .tab button:hover {
     text-align: left !important;
 }
 
+
+.spaced_table{
+    width: 100%;
+}
+.spaced_table>thead>tr>td{
+    color: darkslateblue;
+    font-weight: bold;
+    border-bottom: 2px solid black;
+}
+.spaced_table>tbody>tr>td{
+    padding-bottom: 1em;
+    padding-right: 1em;
+}
 
 
 

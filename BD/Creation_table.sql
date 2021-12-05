@@ -17,12 +17,13 @@ CREATE TABLE users
     Email VARCHAR(320) NOT NULL check ( Email ~* '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$') , /*cf https://dba.stackexchange.com/questions/68266/what-is-the-best-way-to-store-an-email-address-in-postgresql/165923#165923 */
     /*TODO USERNAME ?*/
     /*An email adress has a maximal size of 320 characters https://www.rfc-editor.org/errata_search.php?rfc=3696*/
-    Password VARCHAR(50) NOT NULL, /*TODO doit être crypté*/
+    Password VARCHAR(255) NOT NULL,
     FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,
     TelNr VARCHAR(15) NOT NULL, /*TODO RENDRE NULL POSSIBLE ?*/
     LastConnection timestamptz, /*Last date of connection*/
     Status VARCHAR(10) CHECK(Status='Reader' OR Status='Annotator' OR Status='Validator' OR Status='Admin') NOT NULL,
+    Access BOOLEAN, /*True if user has still access to website and false otherwise*/
     /*By default the new users are reader until the admin changes their status*/
     PRIMARY KEY(Email)
 );

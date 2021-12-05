@@ -1,4 +1,3 @@
-<!--Change user after validation-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +21,7 @@
     <a href="menu.html">Home</a>
     <a href="AnnotatorArea.php"> Annotator area</a>
     <a class="active" href="ValidatorArea.php"> Validator area</a> <!--Page active-->
-    <a href="usermanag.html"> User management</a>
+    <a href="usermanag.php"> User management</a>
     <a href="Add_genome.php"> Add genome</a>
     <button class="fa fa-sign-out LogOut" onclick="window.location.href = 'LoginPage.html'" type="button">Log out</button>
 </div>

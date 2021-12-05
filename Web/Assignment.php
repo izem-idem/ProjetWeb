@@ -74,7 +74,7 @@ while ($transcript = pg_fetch_assoc($non_annotated)){
         echo "<label for='id_transcript1'></label>
         <p class='title'>".$id."</p>        
         <!--Link to known information about the transcript-->
-        <a href='Gene-ProtPage.html'> Temporary page for transcript 1</a><br>
+        <a href='../Web_izem/Gene-ProtPage.php?id=$id'>" . $id . " informations</a><br>
         
         <!--List of annotator-->
         <label for='Role_".$id."'></label>
@@ -91,11 +91,11 @@ while ($transcript = pg_fetch_assoc($non_annotated)){
         <!--Display of sequences-->
         <div class='double'>
             Nucleotidic sequence <br>
-            <p>".$transcript['sequence_nt']."</p><br>
+            <p class='info'>".$transcript['sequence_nt']."</p><br>
         </div>
         <div class='double'>
             Proteic sequence <br>
-            <p>".$transcript['sequence_p']."</p><br>
+            <p class='info'>".$transcript['sequence_p']."</p><br>
         </div>";
     }
 }

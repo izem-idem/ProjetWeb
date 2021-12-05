@@ -33,6 +33,7 @@ while ($annotation = pg_fetch_assoc($annotated)) {
     $id = $annotation['id_transcript'];
 
     //Display of the annotations done
+    /*Header*/
     echo "<div class='tabcontent' id=status_" . $id . ">
             <p class='title'>" . $id . "</p>
             <a href='../Web_izem/Gene-ProtPage.php?id=$id'>" . $id . " informations</a><br>";
@@ -55,7 +56,7 @@ while ($annotation = pg_fetch_assoc($annotated)) {
                         <tr><td class='double'>Commentary:</td><td class='double'><p class='info'>". $annotation['commentary']."</p></td></tr></table>";
             }
 
-    //Display of the annotation submitted
+    /*Fields of annotation*/
     echo "<div class='title'>Annotations</div>
             <table class='spaced_table'>
                     <tr>                          

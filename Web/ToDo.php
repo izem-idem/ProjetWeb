@@ -1,6 +1,8 @@
 <?php
 /*Author : Camille RABIER*/
-/*This page is used by Annotator_area.php to get all the annotations to do by the logged annotator and update the DB with the annotation*/
+/*This page is used by Annotator_area.php to get all the annotations to do by the logged annotator and update the DB with the annotation
+If the annotator has doubts on how to fill the fields, he can hover his mouse over the question marks to have more information
+All the fields, but gene symbol are required. Once all the fields required are filled, he can click on submit*/
 /*Source for extra info : https://codepen.io/EasyBoarder/pen/Lkzzjy*/
 
 

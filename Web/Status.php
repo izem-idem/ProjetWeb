@@ -33,48 +33,53 @@ while ($annotation = pg_fetch_assoc($annotated)) {
     $id = $annotation['id_transcript'];
 
     //Display of the annotations done
+    /*Header*/
     echo "<div class='tabcontent' id=status_" . $id . ">
             <p class='title'>" . $id . "</p>
-            <a href='Gene-ProtPage.html'>" . $id . " informations</a><br>";
+            <a href='../Web_izem/Gene-ProtPage.php?id=$id'>" . $id . " informations</a><br>";
 
             // Display of the validation status
             if ($annotation['validated'] == 0) { /*The annotation is waiting for validation*/
-                echo "Waiting for validation";
+                echo "<table class='spaced_table'>
+                        <tr><td class='double'>Status :</td><td class='double'><p class='info'>Waiting for validation</p></td></tr></table>";
 
             } elseif ($annotation['validated'] == 1) { /*The annotation is validated, the commentary is displayed*/
-                echo "Status :<p>Validated</p>
-                Validator :
-                <p class='info'>" . $annotation['validator_email'] . "</p>
-                <br><br>Commentary: <br> ".$annotation['commentary'];
+                echo "<table class='spaced_table'>
+                        <tr><td class='double'>Status :</td><td class='double'><p class='info'>Validated</p></td></tr>
+                        <tr><td class='double'>Validator : </td><td class='double'><p class='info'>" . $annotation['validator_email'] . "</p></td></tr>
+                        <tr><td class='double'>Commentary:</td><td class='double'><p class='info'>". $annotation['commentary']."</p></td></tr></table>";
 
             } else { /*The annotation is rejected, the commentary is displayed*/
-                echo "Status :<p>Rejected</p>
-                Validator :
-                <p class='info'>" . $annotation['validator_email'] . "</p>
-                <br>Commentary: <br> ".$annotation['commentary'];
+                echo "<table class='spaced_table'>
+                        <tr><td class='double'>Status :</td><td class='double'><p class='info'>Rejected</p></td></tr>
+                        <tr><td class='double'>Validator : </td><td class='double'><p class='info'>" . $annotation['validator_email'] . "</p></td></tr>
+                        <tr><td class='double'>Commentary:</td><td class='double'><p class='info'>". $annotation['commentary']."</p></td></tr></table>";
             }
 
-    //Display of the annotation submitted
+    /*Fields of annotation*/
     echo "<div class='title'>Annotations</div>
-            <!--Input for id_gene-->
-            ID of gene : 
-            <p class='info'>".$annotation['id_gene']."</p><br>
-         
-            <!--Input for gene_biotype-->
-            Biotype of gene : 
-            <p class='info'>".$annotation['gene_biotype']."</p><br>
-            
-            <!--Input for symbol-->
-            Gene symbol : 
-            <p class='info'>".$annotation['symbol']."</p><br>
-            
-            <!--Input for transcript_biotype-->
-            Biotype of transcript : 
-            <p class='info'>".$annotation['transcript_biotype']."</p><br>
-            
-            <!--Input for description-->
-            Description of function : 
-            <p class='info'>".$annotation['description']."</p>
+            <table class='spaced_table'>
+                    <tr>                          
+                        <td class='double'>ID of gene : </td>
+                        <td class='double'><p class='info'>" . $annotation['id_gene'] . "</p></td>
+                    </tr>
+                    <tr>
+                        <td class='double'>Biotype of gene : </td>
+                        <td class='double'><p class='info'>" . $annotation['gene_biotype'] . "</p></td>
+                    </tr>
+                    <tr>
+                        <td class='double'>Gene symbol : </td>
+                        <td class='double'><p class='info'>" . $annotation['symbol'] . "</p></td>
+                    </tr>
+                    <tr>
+                        <td class='double'>Biotype of transcript : </td>
+                        <td class='double'><p class='info'>" . $annotation['transcript_biotype'] . "</p></td>
+                    </tr>
+                    <tr>
+                        <td class='double'>Description of function : </td>
+                        <td class='double'><p class='info'>" . $annotation['description'] . "</p></td>
+                    </tr>
+                </table>         
         </div>";
 }
 disconnect_db(); /*Disconnect from the database*/

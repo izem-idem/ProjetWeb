@@ -1,4 +1,4 @@
-<!--Change user after validation-->
+<!--TODO add session-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,46 +6,54 @@
     <meta name="author" content="Camille RABIER">
     <meta name="description" content="Assignment of transcript to annotators and validation of annotations submitted">
     <title>Validator area</title>
+    <!--CSS-->
     <link href="website.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="Tabs.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--CSS for log out button-->
+    <!--Javascript-->
+    <script src="Tabs.js" type="text/javascript"></script> <!--Script used to create tabs-->
 
 </head>
 <body>
+
 <!--HEADER-->
 <header>
     <h1>CALI</h1>
 </header>
 
-<!--MENU-->
+<!--NAVIGATION MENU-->
 <div class="topnav">
-    <a href="menu.html">Home</a>
+    <a href="search_page.php">Search transcript/genome</a> <!--TODO Modify-->
     <a href="AnnotatorArea.php"> Annotator area</a>
     <a class="active" href="ValidatorArea.php"> Validator area</a> <!--Page active-->
-    <a href="usermanag.html"> User management</a>
+    <a href="usermanag.php"> User management</a>
     <a href="Add_genome.php"> Add genome</a>
-    <button class="fa fa-sign-out LogOut" onclick="window.location.href = 'LoginPage.html'" type="button">Log out</button>
+    <button class="fa fa-sign-out LogOut" onclick="window.location.href = 'LoginPage.html'" type="button">Log out</button><!--TODO modify-->
 </div>
 
 <!--PAGE CONTENT-->
 <h2> Annotation assignment and validation</h2>
 <div class="center">
-    <!--TABS-->
+    <!--TABS LINKS : Annotations assignment and validation of annotations-->
     <div class="tab">
         <button class="tablinks active" onclick="openTab(event,'Assignment',false)">Annotations assignment</button> <!--Page displayed by default-->
         <button class="tablinks" onclick="openTab(event,'Validation',false)">Annotations validation</button>
     </div>
+    <!--TABS-->
+    <!--Assignment of transcripts-->
     <div class="tabcontent active" id="Assignment">
         <h3> Annotations assignment</h3>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
             <?php require_once 'Assignment.php'; ?>
         </form>
     </div>
+    <!--Validation of annotations-->
     <div class="tabcontent" id="Validation">
         <h3> Annotations validation</h3>
         <?php require_once 'Validation.php'; ?>
     </div>
 </div>
+
+<!--FOOTER-->
 <footer class="footer_2">
     <a href="Contact.php">Contact</a><br>
     <p>© CALI 2021</p>

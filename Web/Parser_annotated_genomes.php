@@ -12,7 +12,7 @@ $strain = ['cft073','O157:H7 str. EDL933','str. K-12 substr. MG1655'];
 $genome_file = ['../Data/Escherichia_coli_cft073.fa', '../Data/Escherichia_coli_o157_h7_str_edl933.fa','../Data/Escherichia_coli_str_k_12_substr_mg1655.fa'];
 $cds_file = ['../Data/Escherichia_coli_cft073_cds.fa', '../Data/Escherichia_coli_o157_h7_str_edl933_cds.fa','../Data/Escherichia_coli_str_k_12_substr_mg1655_cds.fa'];
 $pep_file = ['../Data/Escherichia_coli_cft073_pep.fa', '../Data/Escherichia_coli_o157_h7_str_edl933_pep.fa','../Data/Escherichia_coli_str_k_12_substr_mg1655_pep.fa'];
-
+$null = array("AAN80917", "AAN83121","AAN81862","AAN78501","AAN83767","AAN80196","AAN80571","AAN81865","AAN81864","AAN80914","AAN80929","AAN78588","AAN78625","AAN83134","AAN81374","AAN78531","AAN82544","AAN80885","AAN80267","AAN82559","AAN81541","AAN82561","AAN80883","AAN82408","AAN80918","AAN78532","AAN78594","AAN83031","AAN83062","AAN81000","AAN81569","AAN83727","AAN80886");
 //PREPARE SQL COMMANDS
 /* pour éviter injection sql, on utilise le couple pg_prepare et pg_execute*/
 /* pg_prepare prépare la commande SQL et pg_execute fournit les valeurs, ainsi on aura pas d'injection SQL a priori ?*/
@@ -58,7 +58,7 @@ for ($i = 0; $i <=2; $i++){
                 $seq_nt = "";
             }
             $infos = array();
-            preg_match('#>(.+) cds#', $line, $infos);
+            preg_match('#>(.+) cds #', $line, $infos);
             $id_transcript = $infos[1];
             if (strpos($line, "description")) {
                 preg_match('#(chromosome|plasmid):(.+?):(.+?):(.+?):(.+?):(.+?) gene#', $line, $infos);
@@ -98,12 +98,14 @@ for ($i = 0; $i <=2; $i++){
         }
     }
     echo $genome_file[$i]." CDS done \n";
+
 //    PARSE PEPTIDES
     $pep = file($pep_file[$i]) or die("Unable to open peptide file !");
     $seq_p = '';
     foreach ($pep as $line) {
         $header = strpos($line, ">");
         if ($header !== false) { /*It's the header line*/
+//            if (str_starts_with(">"))
             if (strlen($seq_p) > 0) { /*if first sequence already in memory*/
                 $seq_p = preg_replace('/\s+/', "", $seq_p);
                 $size_p = strlen($seq_p);
@@ -111,7 +113,7 @@ for ($i = 0; $i <=2; $i++){
                 $seq_p = "";
             }
             $infos = array();
-            preg_match('#>(.+) pep#', $line, $infos);
+            preg_match('#>(.+) pep #', $line, $infos);
             $id_transcript = $infos[1];
         }else{
             $seq_p=$seq_p.$line;

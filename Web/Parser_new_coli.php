@@ -78,7 +78,7 @@
                     $seq_p = "";
                 }
                 $infos = array();
-                preg_match('#>(.+) pep#', $line, $infos);
+                preg_match('#>(.+) pep #', $line, $infos);
                 $id_transcript = $infos[1];
             } else {
                 $seq_p = $seq_p . $line;

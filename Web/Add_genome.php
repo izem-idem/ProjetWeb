@@ -22,7 +22,7 @@
     <a href="menu.html">Home</a>
     <a href="AnnotatorArea.php"> Annotator area</a>
     <a href="ValidatorArea.php"> Validator area</a>
-    <a href="usermanag.html"> User management</a>
+    <a href="usermanag.php"> User management</a>
     <a class= "active" href="Add_genome.php"> Add genome</a> <!--Page active-->
     <!--Link to logout ==> redirect to login page-->
     <button type="button" class="fa fa-sign-out LogOut" onclick="window.location.href = 'LoginPage.html'">Log out </button>

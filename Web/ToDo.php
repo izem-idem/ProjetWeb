@@ -1,6 +1,8 @@
 <?php
 /*Author : Camille RABIER*/
-/*This page is used by Annotator_area.php to get all the annotations to do by the logged annotator and update the DB with the annotation*/
+/*This page is used by Annotator_area.php to get all the annotations to do by the logged annotator and update the DB with the annotation
+If the annotator has doubts on how to fill the fields, he can hover his mouse over the question marks to have more information
+All the fields, but gene symbol are required. Once all the fields required are filled, he can click on submit*/
 /*Source for extra info : https://codepen.io/EasyBoarder/pen/Lkzzjy*/
 
 
@@ -11,8 +13,11 @@ connect_db();
 // QUERIES
 $annotator = "camrabier@gmail.com"; /*Annotator connected TODO modify for logged one*/
 
-// Find annotations to do for annotator connected
-$to_annotate_query = "SELECT id_transcript,sequence_nt, sequence_p FROM website.transcript WHERE transcript.annotator_email = $1 AND annotation=2";
+// Find annotations to do for annotator connected. The query select all the transcript that have been assigned to the user
+// excluding waiting for validation (annotation = 0) or already validated (validated =1) annotation.
+$to_annotate_query = "SELECT id_transcript,sequence_nt, sequence_p, annotation FROM website.transcript WHERE transcript.annotator_email = $1 AND annotation != 0 
+                        EXCEPT SELECT transcript.id_transcript,sequence_nt, sequence_p,annotation FROM website.transcript, website.annotate  
+                                WHERE annotate.id_transcript=transcript.id_transcript AND validated IN (0,1)";
 /*annotation=2 for the annotations has been assigned but no transcript has been done*/
 
 $to_annotate = pg_query_params($db_conn, $to_annotate_query, array($annotator)) or die("Error " . pg_last_error());
@@ -72,17 +77,20 @@ while ($transcript = pg_fetch_assoc($to_annotate)) {/*while there exists rows of
                 
             <!--Informations on transcript-->
                 <p class='title'>" . $id . "</p> <!-- Name of transcript-->
-                <a href='Gene-ProtPage.html'>" . $id . " informations</a><br> 
+                <a href='../Web_izem/Gene-ProtPage.php?$id'>" . $id . " informations</a><br> 
                     <!--Page with known informations on transcript-->
-                
-                <!--Sequences for quick access-->
+                ";
+        if ($transcript['annotation']==1){
+            echo "<a href='Annotation_history.php?id=$id'>$id annotations history</a><br>";
+        }
+        echo"<!--Sequences for quick access-->
                 <div class='double'>
                     Nucleotidic sequence: <br>
-                    <p>" . $transcript['sequence_nt'] . "</p><br>
+                    <p class='info'>" . $transcript['sequence_nt'] . "</p><br>
                 </div>
                 <div class='double'>
                     Proteic sequence: <br>
-                    <p>" . $transcript['sequence_p'] . "</p><br>
+                    <p class='info'>" . $transcript['sequence_p'] . "</p><br>
                 </div>
                 <br>
                 

@@ -1,3 +1,16 @@
+<?php
+// Connect to database
+require_once 'libphp/db_utils.php'; /*Functions to connect and disconnect the database*/
+connect_db();
+
+// Insert user in DB
+$add_user_query = "INSERT INTO website.users(Email, Password, FirstName, LastName, TelNr, LastConnection, Status, Access) VALUES ($1,$2,$3,$4,$5,'now','Reader',TRUE)";
+/*The Status of the user is initialized at Reader and his Access is True by default. The LastConnection is the current time, all other fields are given with $_POST variables*/
+// Get Admin email to notify them of a new user
+$query_admin = "SELECT Email FROM website.users WHERE Status='Admin'";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,16 +19,7 @@
     <link rel="stylesheet" type="text/css" href="website.css">
 </head>
 
-<?php
-// Connect to database
-require_once 'libphp/db_utils.php'; /*Functions to connect and disconnect the database*/
-connect_db();
 
-// Insert user in DB
-$add_user_query = "INSERT INTO website.users(Email, Password, FirstName, LastName, TelNr, LastConnection, Status) VALUES ($1,$2,$3,$4,$5,'now','Reader')";
-/*The Status of the user is initialized at Reader and the LastConnection is the current time, all other fields are given with $_POST variables*/
-
-?>
 <body>
 <header>
     <h1>CALI</h1>
@@ -73,7 +77,11 @@ $add_user_query = "INSERT INTO website.users(Email, Password, FirstName, LastNam
               /*Message in the mail */
               $message = "Hi, I am a new user of your website and I would like to have a role as ".$_POST["role"] ;
 
-              foreach ($admin as $admin_email){
+              // Get the Email of the Administrators
+              $res_admin = pg_query($db_conn, $query_admin);
+              $admin_emails = pg_fetch_all_columns($res_admin);
+              //Send them each an email
+              foreach ($admin_emails as $admin_email){
                   $mail= mail($admin_email,$subject_mail,$message, $mail_header) or die("Error the mail could not be sent !");
               }
             }

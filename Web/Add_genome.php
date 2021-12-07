@@ -1,3 +1,16 @@
+<?php
+session_start();
+if (isset($_SESSION['Email'])){
+    if ($_SESSION['Status']!='Admin'){
+        header("HTTP/1.0 404 Not Found");
+        echo "<h1>404 Not Found</h1>";
+        echo "The page that you have requested is not accessible for you. No ID was given in the URL";
+        exit();
+} else {
+    session_destroy();
+}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

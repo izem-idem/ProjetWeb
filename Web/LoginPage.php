@@ -1,20 +1,15 @@
 <?php
-// Start a user session
+// Start a user session or connect to existing one
 session_start() ;
-// Remove previous session variables
-session_unset() ;
 // Connect to database
 require_once 'libphp/db_utils.php'; /*Functions to connect and disconnect the database*/
 connect_db();
 
-// Get the hashed password, check that this user still has access
-$password_query = "SELECT Password FROM website.users WHERE Email = $1 AND Access=TRUE ";
-// Get the role of the user in the database
-$status_query = "SELECT Status FROM website.users WHERE Email = $1 " ;
+// Get the hashed password and role of the user in the database, check that this user still has access
+$user_query = "SELECT Password,Status FROM website.users WHERE Email = $1 AND Access=TRUE ";
 
-// Change last connection time of the user
+// Change last connection time of the user in database
 $update_last_conn_query = "UPDATE website.users SET LastConnection='now' WHERE Email=$1";
-
 ?>
 
 <!DOCTYPE html>
@@ -42,33 +37,46 @@ $update_last_conn_query = "UPDATE website.users SET LastConnection='now' WHERE E
           if (isset($_POST['submit'])) { /*Find if the submit has been clicked*/
             /*Check that Email is valid*/
             if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)) { //https://www.php.net/manual/fr/filter.examples.validation.php
-              echo 'Email is invalid' ;
+              echo '<div class="error_login">
+                      <p> Invalid email address </p>
+                    </div>' ;
             } else {
               $Email = $_POST['email'] ;
               $psw = $_POST['psw'] ;
-              $psw_res = pg_query_params($db_conn, $password_query, array($Email)) or die("Error " . pg_last_error());
-              $hash_password = pg_fetch_result($psw_res, 0, 0) ;
-              if(!password_verify($psw, $hash_password)) { //https://stackoverflow.com/questions/47602044/how-do-i-use-the-argon2-algorithm-with-password-hash?fbclid=IwAR3cRiQN_WSth5loXg1AxTKEobgrHS1qYQnbR7yU3JB95NKkKEZs7D3UkCI
-                echo 'Wrong login/password combination' ;
+              $user_res = pg_query_params($db_conn, $user_query, array($Email)) or die("Error " . pg_last_error());
+              if (pg_num_rows($user_res)==0){ /*Verify that user exists*/
+                echo '<div class="error_login">
+                        <p> Invalid email address </p>
+                      </div>' ;
               } else {
-                $update_last_conn = pg_query_params($db_conn, $update_last_conn_query, array($Email)) or die("Error " . pg_last_error());
-                $status_res = pg_query_params($db_conn, $status_query, array($Email)) or die("Error " . pg_last_error());
-                $_SESSION['Status'] = pg_fetch_result($status_res, 0, 0) ;
-                $_SESSION["Email"] = $Email ;
-                header('Location: search_page.php');
+                  $user = pg_fetch_assoc($user_res,0);
+                  $hash_password = $user['password'];
+                  // Check that password matches with the hashed one in database
+                  if(!password_verify($psw, $hash_password)) { //https://stackoverflow.com/questions/47602044/how-do-i-use-the-argon2-algorithm-with-password-hash?fbclid=IwAR3cRiQN_WSth5loXg1AxTKEobgrHS1qYQnbR7yU3JB95NKkKEZs7D3UkCI
+                      echo '<div class="error_login">
+                              <p> Wrong password </p>
+                            </div>' ;
+                  } else {
+                      // Update user's last connection time
+                      $update_last_conn = pg_query_params($db_conn, $update_last_conn_query, array($Email)) or die("Error " . pg_last_error());
+                      // Set session variables
+                      $status = $user['status'];
+                      $_SESSION['Status'] = $status;
+                      $_SESSION["Email"] = $Email ;
+                      // Send to home page
+                      header('Location: search_page.php');
+                  }
               }
             }
           }
         ?>
-        <div class="error_login" hidden>
-            <p> Wrong login/password combination </p>
-        </div>
+
         <div class="Sign up">
             <span>Don't have an account ?</span>
             <a href="AccountCreation.php"> Sign up </a>
         </div>
         <div class="Forgotten_Password">
-            <a href="Forgotten_password.html"> Forgot password ? </a> <!--envoit sur Forgotten_password.html-->
+            <a href="Forgotten_password.php"> Forgot password ? </a>
         </div>
     </div>
 </div>

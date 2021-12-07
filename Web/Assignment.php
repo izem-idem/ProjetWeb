@@ -68,7 +68,7 @@ while ($transcript = pg_fetch_assoc($non_annotated)){
         /*Send mail to annotator to let him know about the assignment*/
         $subject = "New transcript assignment";
         $message = " Hello, \n you have been assigned a new transcript to annotate. Its ID is : $id \n You can go annotate in the Annotator Area. \n Have a good day, \n The CALI team.";
-        mail($annotator,$subject,$message,"From: admin@CALI.com");
+        mail($annotator,$subject,$message,"From: CALI <noreply@CALI.com>");
 
         echo "The transcript ".$id." has been assigned to ".$annotator;
 

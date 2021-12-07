@@ -173,7 +173,11 @@ button:hover, .topnav a:hover, .menu_button input:hover, .tab button:hover {
 }
 /*Button to log out*/
 .LogOut{
-    float: right
+    float: right;
+    border :darkslateblue;
+    color: white;
+    border-radius : 30px;
+    background-color: slateblue;
 }
 
 /*Error message when wrong password/login combination*/

@@ -1,22 +1,24 @@
+<?php
+session_start();
+if (!isset($_SESSION['Email'])){
+    header("Location: LoginPage.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title> Search </title>
     <link rel="stylesheet" type="text/css" href="website.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--CSS for log out button-->
 </head>
 <body>
 <header>
     <h1>CALI</h1>
 </header>
 <div class="topnav">
-    <a class="active" href="search_page.php">Search</a>
-    <a href="AnnotatorArea.php"> Annotator area</a> <!--Page active-->
-    <a href="ValidatorArea.php"> Validator area</a>
-    <a href="usermanag.html"> User management</a>
-    <a href="Add_genome.php"> Add genome</a>
-    <button class="fa fa-sign-out LogOut" onclick="window.location.href = 'LoginPage.html'" type="button">Log out
-    </button>
+    <?php require_once 'libphp/Menu.php';
+    echo Menu($_SESSION['Status'],"search_page.php")?>
 </div>
 <div class="center">
     <h2> Search </h2>
@@ -125,9 +127,9 @@
                     foreach ($line as $col_value) {
                         // METTRE LES LIENS D'IZEM
                         if ($_POST["result_type"] == "gene_prot") {
-                          echo "\t\t<td> <a href = 'Gene-ProtPage.html?id=$col_value'> $col_value </a></td>\n";
+                          echo "\t\t<td> <a href = 'Gene-ProtPage.php?id=$col_value'> $col_value </a></td>\n";
                         } else if ($_POST["result_type"] == "Genome") {
-                        echo "\t\t<td> <a href = 'GenomePage.html?id=$col_value'> $col_value </a></td>\n";
+                        echo "\t\t<td> <a href = 'GenomePage.php?id=$col_value'> $col_value </a></td>\n";
                       }
                     }
                     echo "\t</tr>\n";

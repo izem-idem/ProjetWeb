@@ -51,7 +51,7 @@ while ($annotation = pg_fetch_assoc($tovalidate)) {
         /*Send mail to annotator to let him know about the validation status*/
         $subject = "You annotation for $id has been validated";
         $message = " Hello, \n your annotation for the transcript $id has been reviewed. You can go look at the commentary on your annotator area.\n Have a good day, \n The CALI team.";
-        mail($annotation['annotator_email'], $subject, $message, "From: admin@CALI.com");
+        mail($annotation['annotator_email'], $subject, $message, "From: CALI <noreply@CALI.com>");
 
         echo "The annotation for " . $id . " has been validated<br>"; /*Message to confirm the validation*/
 
@@ -73,12 +73,12 @@ while ($annotation = pg_fetch_assoc($tovalidate)) {
             $assignment_info = " The transcript has been reassigned to a new person.";
         }
         $message = " Hello, \n your annotation for the transcript $id has been reviewed. $assignment_info \nYou can go look at the commentary on your annotator area.\n Have a good day, \n The CALI team.";
-        mail($annotation['annotator_email'], $subject, $message, "From: admin@CALI.com");
+        mail($annotation['annotator_email'], $subject, $message, "From: CALI <noreply@CALI.com>");
 
         /*Send mail to annotator to let him know about the assignment*/
         $subject = "New transcript assignment";
         $message = " Hello, \n you have been assigned a new transcript to annotate. Its ID is : $id \n You can go annotate in the Annotator Area. \n Have a good day, \n The CALI team.";
-        mail($new_annotator,$subject,$message,"From: admin@CALI.com");
+        mail($new_annotator,$subject,$message,"From: CALI <noreply@CALI.com>");
 
         //Validation message
         echo "The annotation for " . $id . " has been rejected, the annotation has been reassigned to :" . $new_annotator . "<br>"; /*Message to confirm the rejection*/

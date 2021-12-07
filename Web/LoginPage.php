@@ -1,6 +1,11 @@
 <?php
 // Start a user session or connect to existing one
 session_start() ;
+/* If a user session is on, send back to search_page
+  User must be logged out to access this page */
+if (isset($_SESSION['Email'])) {
+  header('Location: search_page.php') ;
+}
 // Connect to database
 require_once 'libphp/db_utils.php'; /*Functions to connect and disconnect the database*/
 connect_db();

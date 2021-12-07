@@ -6,6 +6,11 @@ connect_db();
 // Insert user in DB
 $add_user_query = "INSERT INTO website.users(Email, Password, FirstName, LastName, TelNr, LastConnection, Status, Access) VALUES ($1,$2,$3,$4,$5,'now','Reader',TRUE)";
 /*The Status of the user is initialized at Reader and his Access is True by default. The LastConnection is the current time, all other fields are given with $_POST variables*/
+// Check if user exists
+$check_user_query = "SELECT Access FROM website.users WHERE Email=$1";
+// Update user information if his account was previously deleted
+$update_user_query = "UPDATE website.users SET Password=$2, FirstName=$3, LastName=$4, TelNr=$5, LastConnection='now', Status='Reader', Access=TRUE WHERE Email=$1";
+
 // Get Admin email to notify them of a new user
 $query_admin = "SELECT Email FROM website.users WHERE Status='Admin'";
 
@@ -31,9 +36,9 @@ $query_admin = "SELECT Email FROM website.users WHERE Status='Admin'";
           <label for="email"><b>Email</b></label><br>
           <input type="text" placeholder="Email" name="email" id="email" required><br> <!--Vérification que l'adresse mail a l'air valide-->
           <label for="psw"><b>Password</b></label><br>
-          <input type="password" placeholder="Password" name="psw" id="psw" required><br>
+          <input type="password" placeholder="Password" name="psw" id="psw" required minlength="7"><br>
           <label for="psw2"><b>Confirm Password</b></label><br>
-          <input type="password" placeholder="Confirm password" name="psw2" id="psw2" required><br>
+          <input type="password" placeholder="Confirm password" name="psw2" id="psw2" required minlength="7"><br>
           <label for="first_name"><b>First Name</b></label><br>
           <input type="text" placeholder="First Name" name="first_name" id="first_name" required><br>
           <label for="last_name"><b>Last Name</b></label><br>
@@ -65,24 +70,52 @@ $query_admin = "SELECT Email FROM website.users WHERE Status='Admin'";
           	$TelNr = filter_var($_POST["tel"],FILTER_SANITIZE_STRING);
             /*Encrypt password in database*/
             $hash_password = password_hash($_POST["psw"],PASSWORD_ARGON2ID); //https://stackoverflow.com/questions/47602044/how-do-i-use-the-argon2-algorithm-with-password-hash?fbclid=IwAR3cRiQN_WSth5loXg1AxTKEobgrHS1qYQnbR7yU3JB95NKkKEZs7D3UkCI
-            /*Add the user to the database*/
-          	$add_user = pg_query_params($db_conn, $add_user_query, array($Email, $hash_password, $FirstName, $LastName, $TelNr)) or die("Error " . pg_last_error());
-          	echo "Your user profile was created successfully";
 
-            if ($_POST["role"] != 'Reader') { /*Send an email to Admin to get an other role than Reader*/
-              /*The email will be sent as coming from the new user*/
-              $mail_header = "From : $Email \r\n";
-              /*Subject of the mail*/
-              $subject_mail = "New user role";
-              /*Message in the mail */
-              $message = "Hi, I am a new user of your website and I would like to have a role as ".$_POST["role"] ;
+            // Check if the user already exists in the database
+            $check_user_res = pg_query_params($db_conn, $check_user_query, array($Email)) or die("Error " . pg_last_error());
+            if (pg_num_rows($check_user_res)==1){ /*Check that there is an entry for this Email*/
+              $user_access = pg_fetch_result($check_user_res,0,0) ;
+              if ($user_access) { // User already exists and account is active
+                echo '<div class="error_login">
+                        <p> There is already an account for this email address </p>
+                      </div>' ;
+                $sendmail = FALSE ;
+              } else { // User existed and his account was deactivated
+                /*Add the user to the database*/
+              	$update_user = pg_query_params($db_conn, $update_user_query, array($Email, $hash_password, $FirstName, $LastName, $TelNr)) or die("Error " . pg_last_error());
+                echo "Your user profile was created successfully";
+                $sendmail = TRUE ;
+              }
 
-              // Get the Email of the Administrators
+            } else {
+              /*Add the user to the database*/
+            	$add_user = pg_query_params($db_conn, $add_user_query, array($Email, $hash_password, $FirstName, $LastName, $TelNr)) or die("Error " . pg_last_error());
+            	echo "Your user profile was created successfully";
+              $sendmail = TRUE ;
+            }
+
+            if ($sendmail=TRUE and $_POST["role"] != 'Reader') { /*Send an email to Admin to get an other role than Reader*/
+              //Get the Email of the Administrators
               $res_admin = pg_query($db_conn, $query_admin);
               $admin_emails = pg_fetch_all_columns($res_admin);
               //Send them each an email
               foreach ($admin_emails as $admin_email){
-                  $mail= mail($admin_email,$subject_mail,$message, $mail_header) or die("Error the mail could not be sent !");
+                $to = $admin_email; // Send email to our user
+                $subject = "New user role"; // Give the email a subject
+                $emessage = "New user ".$Email." would like to get a role as a ".$_POST["role"] ;
+
+                // if emessage is more than 70 chars
+                $emessage = wordwrap($emessage, 70, "\r\n");
+
+                // Our emessage above including the link
+                $headers   = array();
+                $headers[] = "MIME-Version: 1.0";
+                $headers[] = "Content-type: text/plain; charset=iso-8859-1";
+                $headers[] = "From: no-reply <noreply@yourdomain.com>";
+                $headers[] = "Subject: {$subject}";
+                $headers[] = "X-Mailer: PHP/".phpversion(); // Set from headers
+
+                mail($to, $subject, $emessage, implode("\r\n", $headers));
               }
             }
         	}
@@ -98,7 +131,7 @@ disconnect_db(); /*Disconnect from database*/
 ?>
 
 <footer>
-    <a href="Contact.html">Contact</a><br>
+    <a href="Contact.php">Contact</a><br>
     <p>© CALI 2021</p>
 </footer>
 </body>

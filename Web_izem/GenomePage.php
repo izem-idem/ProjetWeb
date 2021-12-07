@@ -1,10 +1,16 @@
+<?php
+        
+    require('Genome_result.php');
+    #require('test_2.php');
+        
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Result Page for Genome</title>
     <script type="text/javascript" src="https://www.ncbi.nlm.nih.gov/projects/sviewer/js/sviewer.js" id ="autoload"></script>
-    <link rel="stylesheet" type="text/css" href="website.css">
+    <link rel="stylesheet" type="text/css" href="web/website.css">
 </head>
 
 <body>
@@ -19,55 +25,64 @@
     <button type="button" class="LogOut" onclick="window.location.href = 'LoginPage.html'">Log out </button>
 </div>
 
+<!------------------------------------------------------------PARTIE INFORMATION ---------------------------------------------------------->   
+
+
+
+
+
 <div class="center">
 
     <h2>Genome Information</h2>
 
-    <input class="info title" value="Genome ID" disabled><br>
-    <label for="organism_name"> Organism name:</label>
-    <input class="info" id="organism_name" type="text" value="XXXXXX" disabled><br>
-    <label for="strain"> Strain:</label>
-    <input class="info" id="strain" type="text" value="XXXXXX" disabled><br>
-    <label for="genetic_support"> Genetic support:</label>
-    <input class="info" id="genetic_support" type="text" value="XXXXXX" disabled><br>
-    <label for="seq_length"> Sequence length(nt):</label>
-    <input class="info" id="seq_length" type="text" value="XXXXXX" disabled><br>
-    <svg alt="download" class="dlbtn-icon" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 60 60"
-         enable-background="new 0 0 60 60" xml:space="preserve">
-        <g>
-        <polygon points="48.75,36.25 48.75,48.75 11.25,48.75 11.25,36.25 5,36.25 5,55 55,55 55,36.25  "></polygon>
-            <polygon points="42.5,23.75 36.25,23.75 36.25,5 23.75,5 23.75,23.75 17.5,23.75 30,42.5  "></polygon>
-        </g>
-    </svg>
-    <button class="little_submit_button" type="submit">Download Fasta Sequence</button>
-    <br><br>
+    <form class = "Inputs" method = "post">
+        <input class="info title" value= <?php echo $id_genome ?> disabled><br>
+        <label for="organism_name"> Organism name:</label>
+        <input class="info" id="organism_name" type="text" value=<?php echo $species   ?> disabled><br>
+        <label for="strain"> Strain:</label>
+        <input class="info" id="strain" type="text" value=<?php echo $strain ?> disabled><br>
+        <label for="seq_length"> Sequence length(nt):</label>
+        <input class="info" id="seq_length" type="text" value=<?php echo $size?> disabled><br><br>
+       
+        <svg alt="download" class="dlbtn-icon" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 60 60"
+             enable-background="new 0 0 60 60" xml:space="preserve">
+            <g>
+            <polygon points="48.75,36.25 48.75,48.75 11.25,48.75 11.25,36.25 5,36.25 5,55 55,55 55,36.25  "></polygon>
+                <polygon points="42.5,23.75 36.25,23.75 36.25,5 23.75,5 23.75,23.75 17.5,23.75 30,42.5  "></polygon>
+            </g>
+        </svg>
+        <button class="little_submit_button" type="submit" name="Load">Download Fasta Sequence</button>
+    </form>
 
-    <label for="database_link"><b>External links</b></label>
-    <select id="database_link">
-        <option value="Biocyc"> BioCyc</option>
-        <option value="Bacteria.Ensembl">Bacteria.Ensembl</option>
-    </select>
+<!------------------------------------------------------------PARTIE INFORMATION ---------------------------------------------------------->   
+    <br><br>
+<!------------------------------------------------------------PARTIE LIENS EXTERNES ---------------------------------------------------------->   
+
+        
+        <label for="database_link"><b>External links</b></label>
+        
+        <select id="database_link" onChange = "window.open(this.value)">
+            <option value="">Please choose a Database</option>
+            <option value=<?php print $link_GTDB ?> > GTDB </option>
+            <option value=<?php echo $link_Bensembl?>>Bacteria.Ensembl</option>
+            <option value=<?php echo $link_ncbi ?>>NCBI</option>
+        </select>
+        
+        
+
     
-    <button class="little_submit_button" type="submit">Access</button> <br><br>
-    <p class="Visu"><b>Visualisation via Sequence Viewer (NCBI)</b></p><br><br>
+    
+    
+<!------------------------------------------------------------PARTIE LIENS EXTERNES ---------------------------------------------------------->   
+
+  <!------------------------------------------------------------PARTIE VISUALISATION -------------------------------------------------------->   
+   
+   
+    <p class="Visu"><b>Genome Visualisation via Sequence Viewer (NCBI)</b></p><br><br>
+
     <div id="sv1" class="SeqViewerApp">
-    
-        <?php 
-        
-        require('simple_html_dom.php');
-        
-        $link = "embedded=true&id=";
-        $appname = "&appname=IZEM";
-        $html =file_get_html("https://www.ncbi.nlm.nih.gov/assembly/?term=ASM744v1");
-        foreach($html->find(".refseq") as $element)  { 
-            $id=strip_tags($element);
-        }
-        
-        #$id= "AE014075.1";
-        
-        ?>        
-    
-      <a href="<?php echo $link.$id.$appname?>"></a> <!--lien vers seqViewerApp.js-->
+     
+      <a href="<?php echo $link ?>"></a> <!--lien vers seqViewerApp.js-->
 
     </div>
     <script>
@@ -76,6 +91,7 @@
       });
       
     </script>
+ <!------------------------------------------------------------PARTIE VISUALISATION ---------------------------------------------------------->   
 
 <footer>
     <a href="Contact.html">Contact</a><br>

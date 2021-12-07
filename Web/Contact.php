@@ -1,6 +1,5 @@
 <!--Based on https://code.tutsplus.com/tutorials/create-a-contact-form-in-php--cms-32314-->
 <!--For sending mail : modified based on https://stackoverflow.com/questions/3175488/test-phps-mail-function-from-localhost/19625975-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +15,16 @@
     <h1>CALI</h1>
 </header>
 <?php
+/*Libraries of php functions*/
 require_once 'libphp/db_utils.php';
+require_once 'libphp/Menu.php';
+
+session_start();
+if (isset($_SESSION['Email'])){
+
+    echo "<div class='topnav'>".Menu($_SESSION['Status'],"")."</div>";
+}
+
 connect_db();
 $query_admin = "SELECT email FROM website.users WHERE status='Admin'";
 $res_admin = pg_query($db_conn, $query_admin);
@@ -30,27 +38,28 @@ if (isset($_POST["Submit"])){
     else{
         $email = $_POST['Email'];
         if (empty($_POST['Name'])){ /*The name is not required, if not given his name will be anonumous person*/
-            $name = "An anonymous person";
+            $name = "An anonymous person" ;
         } else{
             $name = filter_var($_POST['Name'], FILTER_SANITIZE_STRING);
         }
         $subject =filter_var($_POST['Subject'], FILTER_SANITIZE_STRING);
 
         /*The email will be sent as coming from the submitter of the contact form*/
-        $mail_header = "From : $email \r\n";
+        $mail_header = "From : CALI <noreply@CALI.com> \r\n";
 
         /*Subject of the mail*/
         $subject_mail = "Contact form";
 
         /*Mail message*/
         $message = filter_var($_POST['Message'], FILTER_SANITIZE_STRING);
-        $message = "From: $name \n About: $subject Message: $message";
+        $message = "From: $name ($email)\n About: $subject Message: $message";
         foreach ($admin as $admin_email){
             $mail= mail($admin_email,$subject_mail,$message, $mail_header) or die("Error the mail could not be sent !");
         }
         echo "Thank you for contacting us. You will get a reply within 24 hours";
     }
 }
+disconnect_db();
 ?>
 <div class="center">
     <h2>Contact us:</h2>

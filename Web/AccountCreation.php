@@ -56,18 +56,18 @@ $query_admin = "SELECT Email FROM website.users WHERE Status='Admin'";
           <button name ='submit' class="big_submit_button" type="submit">Register</button> <!--Crée utilisateur dans la base de données avec rôle reader par défaut et envoie mail à administrateur pour prévenir qu'il y a un nouveau utilisateur avec le rôle voulu-->
         </form>
         <?php
-        	if (isset($_POST['submit'])) { /*Find if the submit has been clicked*/
+        if (isset($_POST['submit'])) { /*Find if the submit has been clicked*/
             /*Check that Email is valid*/
-            if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)) die('Email is invalid'); //https://www.php.net/manual/fr/filter.examples.validation.php
+            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) die('Email is invalid'); //https://www.php.net/manual/fr/filter.examples.validation.php
             /*Check that passwords match*/
-            if($_POST["psw"] != $_POST["psw2"]) die('Passwords do not match');
+            if ($_POST["psw"] != $_POST["psw2"]) die('Passwords do not match');
 
             /*Get all the information entered*/
             /*By filtering the input, we verify that no harmul characters like script injections are given as input*/
-            $Email = filter_var($_POST["email"],FILTER_SANITIZE_STRING);
-          	$FirstName = filter_var($_POST["first_name"],FILTER_SANITIZE_STRING);
-          	$LastName = filter_var($_POST["last_name"],FILTER_SANITIZE_STRING);
-          	$TelNr = filter_var($_POST["tel"],FILTER_SANITIZE_STRING);
+            $Email = filter_var($_POST["email"], FILTER_SANITIZE_STRING);
+            $FirstName = filter_var($_POST["first_name"], FILTER_SANITIZE_STRING);
+            $LastName = filter_var($_POST["last_name"], FILTER_SANITIZE_STRING);
+            $TelNr = filter_var($_POST["tel"], FILTER_SANITIZE_STRING);
             /*Encrypt password in database*/
             $hash_password = password_hash($_POST["psw"],PASSWORD_ARGON2ID); //https://stackoverflow.com/questions/47602044/how-do-i-use-the-argon2-algorithm-with-password-hash?fbclid=IwAR3cRiQN_WSth5loXg1AxTKEobgrHS1qYQnbR7yU3JB95NKkKEZs7D3UkCI
 
@@ -118,12 +118,12 @@ $query_admin = "SELECT Email FROM website.users WHERE Status='Admin'";
                 mail($to, $subject, $emessage, implode("\r\n", $headers));
               }
             }
-        	}
+        }
         ?>
-      <div class="Log in">
-          <span>Already have an account ?</span>
-          <a href="LoginPage.php"> Log in </a>
-      </div>
+        <div class="Log in">
+            <span>Already have an account ?</span>
+            <a href="LoginPage.php"> Log in </a>
+        </div>
     </div>
 </div>
 <?php

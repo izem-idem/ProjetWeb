@@ -1,30 +1,33 @@
+<?php
+session_start();
+if (isset($_SESSION['Email'])){
+    if ($_SESSION['Status'] != 'Admin'){
+        header("HTTP/1.0 404 Not Found");
+        echo "<h1>404 Not Found</h1>";
+        echo "The page that you have requested is not accessible for you.";
+        echo "<a href='search_page.php'>Go back to search page</a>";
+        exit();
+    }
+}else {
+    header("Location: LoginPage.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title> User management </title>
     <link rel="stylesheet" type="text/css" href="website.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--CSS for log out button-->
 </head>
-<style>
-    table{
-        width: 100%;
-    }
-    tr>td{
-        padding-bottom: 1em;
-    }
-</style>
 <body>
 <header>
     <h1>CALI</h1>
 </header>
 
 <div class="topnav">
-    <a href="menu.html">Home</a>
-    <a href="AnnotatorArea.php"> Annotator area</a>
-    <a href="ValidatorArea.php"> Validator area</a>
-    <a class="active" href="usermanag.php"> User management</a> <!--Page active-->
-    <a href="Add_genome.php"> Add genome</a>
-    <button type="button" class="LogOut" onclick="window.location.href = 'LoginPage.html'">Log out</button>
+    <?php require_once 'libphp/Menu.php';
+    echo Menu($_SESSION['Status'],"usermanag.php")?>
 </div>
 <div class="center">
     <div class="container">

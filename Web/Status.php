@@ -8,15 +8,15 @@ include_once 'libphp/db_utils.php';
 connect_db();
 
 // QUERIES
-$annotator = $_SESSION['Email']; /*TODO modify for the logged one*/
+$annotator = $_SESSION['Email'];
 
 // Find annotations done by the annotator connected
 $annotated_query = "SELECT id_transcript, id_gene, gene_biotype, transcript_biotype, symbol, description, commentary, validated, annotator_email, validator_email FROM website.annotate WHERE annotate.annotator_email = $1";
 
-$annotated = pg_query_params($db_conn, $annotated_query, array($annotator)) or die("Error " . pg_last_error());
+$annotated_results = pg_query_params($db_conn, $annotated_query, array($annotator)) or die("Error " . pg_last_error());
 /*Query to select the infos to echo for all annotation done by the annotator*/
 
-$id_transcript_tabs = pg_fetch_all_columns($annotated);
+$id_transcript_tabs = pg_fetch_all_columns($annotated_results);
 /*Get all the id of transcript to annotate*/
 
 //DISPLAY OF SUBMITTED ANNOTATION
@@ -29,7 +29,7 @@ foreach ($id_transcript_tabs as $tab) {
 echo "</div>";
 
 //For each annotation a div is created, that can accessed through the tablinks
-while ($annotation = pg_fetch_assoc($annotated)) {
+while ($annotation = pg_fetch_assoc($annotated_results)) {
     $id = $annotation['id_transcript'];
 
     //Display of the annotations done

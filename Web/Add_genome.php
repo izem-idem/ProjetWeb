@@ -5,7 +5,7 @@ if (isset($_SESSION['Email'])){
         header("HTTP/1.0 404 Not Found");
         echo "<h1>404 Not Found</h1>";
         echo "The page that you have requested is not accessible for you.";
-        echo "<a href='Search_page.php'>Go back to search page</a>";
+        echo "<a href='search_page.php'>Go back to search page</a>";
         exit();
     }
 }else {
@@ -32,14 +32,8 @@ if (isset($_SESSION['Email'])){
 
 <!--MENU-->
 <div class="topnav">
-    <!--Link to pages-->
-    <a href="search_page.php">Search</a>
-    <a href="AnnotatorArea.php"> Annotator area</a>
-    <a href="ValidatorArea.php"> Validator area</a>
-    <a href="usermanag.php"> User management</a>
-    <a class= "active" href="Add_genome.php"> Add genome</a> <!--Page active-->
-    <!--Link to logout ==> redirect to login page-->
-    <button type="button" class="fa fa-sign-out LogOut" onclick="window.location.href = 'LogOut.php'">Log out </button>
+<?php require_once 'libphp/Menu.php';
+echo Menu($_SESSION['Status'],"Add_genome.php")?>
 </div>
 
 <!--PAGE CONTENT-->

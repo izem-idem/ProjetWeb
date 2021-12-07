@@ -51,7 +51,7 @@ $update_last_conn_query = "UPDATE website.users SET LastConnection='now' WHERE E
               $user_res = pg_query_params($db_conn, $user_query, array($Email)) or die("Error " . pg_last_error());
               if (pg_num_rows($user_res)==0){ /*Verify that user exists*/
                 echo '<div class="error_login">
-                        <p> Invalid email address </p>
+                        <p> Unknown email address </p>
                       </div>' ;
               } else {
                   $user = pg_fetch_assoc($user_res,0);

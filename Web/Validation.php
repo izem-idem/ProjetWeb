@@ -12,7 +12,7 @@ include_once 'libphp/db_utils.php';
 connect_db();
 // QUERIES
 // Find annotations to validate
-$validator = "camrabier@gmail.com";
+$validator = $_SESSION['Email'];
 /*The validator can't validate annotation he did himself and validated=0 corresponds to "Waiting for validation"*/
 $tovalidate = "SELECT id_transcript, id_gene, gene_biotype, transcript_biotype, symbol, description, annotator_email FROM website.annotate WHERE annotate.validated=0 and annotator_email <> $1";
 $tovalidate = pg_query_params($db_conn, $tovalidate, array($validator));

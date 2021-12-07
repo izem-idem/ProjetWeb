@@ -11,7 +11,7 @@ require_once 'libphp/db_utils.php'; /*Functions to connect and disconnect the da
 connect_db();
 
 // QUERIES
-$annotator = "camrabier@gmail.com"; /*Annotator connected TODO modify for logged one*/
+$annotator = $_SESSION['Email']; /*Annotator connected TODO modify for logged one*/
 
 // Find annotations to do for annotator connected. The query select all the transcript that have been assigned to the user
 // excluding waiting for validation (annotation = 0) or already validated (validated =1) annotation.

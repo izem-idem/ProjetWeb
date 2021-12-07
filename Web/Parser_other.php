@@ -1,73 +1,97 @@
-<!--Dans php.ini : upload_file_size = 15M et post_max_size=16M (j'ai aussi modifié max_execution_time à 600 mais aucune idée si nécessaire-->
-<!--La database website doit être crée dans postgres (CREATE DATABASE website) -->
+<!--Used by Add_genome.php to parse the files given by the user. It requires the CDS, peptides and genomes files-->
+<!--It needs to modify the php.ini to increase the size of file upload authorized by php-->
+
 <?php
+//Required libraries
+include_once "libphp/db_utils.php"; /*DB connection functions*/
+include_once 'libphp/Functions_ph8.php'; /*There are php8 functions used, for older php version, the functions are replaced*/
+
+//Connect to database
+connect_db();
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submit'])) {
-//Connect to database
-        include_once "libphp/db_utils.php";
-        connect_db();
 //Get variables from add_genome.php
 // Text variables
         $species = $_POST['genome_name'];
         $strain = $_POST['strain_name'];
-// Files temporary path (les fichiers sont téléchargés temporairement et PHP utilise ces fichiers pour parser)
+// Files temporary path (the files are temporarily downloaded)
         $genome_file = $_FILES['genome_file']['tmp_name'];
         $cds_file = $_FILES['cds_file']['tmp_name'];
         $pep_file = $_FILES['pep_file']['tmp_name'];
 
 //PREPARE SQL COMMANDS
-        /* pour éviter injection sql, on utilise le couple pg_prepare et pg_execute*/
-        /* pg_prepare prépare la commande SQL et pg_execute fournit les valeurs, ainsi on aura pas d'injection SQL a priori ?*/
+        //Insertion in genome table
         $sql_genome = pg_prepare($db_conn, "insert_genome", "INSERT INTO website.genome (Id_genome,Species, Strain, Sequence,Size_genome) VALUES ($1,$2,$3,$4,$5)");
+
+        //Insertion in transcript table
         $sql_transcript = pg_prepare($db_conn, "insert_cds_transcript", "INSERT INTO website.transcript (Id_transcript,Id_genome,Genetic_support,Sequence_nt,LocBeginning,LocEnd,Strand,Size_nt,Annotation) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,0)");
+
+        //Update transcript table with proteic sequence and its size
         $sql_pep = pg_prepare($db_conn, "update_pep", "UPDATE website.transcript SET (Sequence_p,Size_p)=($1,$2) WHERE Id_transcript = $3");
 
 
 //PARSE GENOME
-        $genome = file_get_contents($genome_file) or die("Unable to open genome file !"); /* récupère contenu du fichier*/
-// Séparation header/séquence
-        $header_seq = explode("REF", $genome); /*Sépare header de la séquence --> array*/
-        $header = $header_seq[0]; /*Récupère header*/
-        $seq = preg_replace('/\s+/', "", $header_seq[1]); /*Récupère séquence et enlève saut de ligne*/
-// Analyse header
-        $genome_id_size = array(); /*Array qui va contenir les matchs pour la reconnaissance par regex*/
+        $genome = file_get_contents($genome_file) or die("Unable to open genome file !"); /*get the file content*/
+
+// Split header/sequence
+        $header_seq = explode("REF", $genome); /*Split the header from the sequence to an array*/
+        $header = $header_seq[0]; /*Get header*/
+        $seq = preg_replace('/\s+/', "", $header_seq[1]); /*Get séquence et take out whitespaces*/
+
+// Analyze header
+        $genome_id_size = array(); /*Array that will contain the matchs of the regex expression*/
         preg_match('#chromosome:(.+):Chromosome:1:(.+):1#', $header, $genome_id_size);
-        /*$genome_id_size=[ligne entière matchant, identifiant chromosome, taille génome]*/
-        /*(.+) permet de dire qu'on cherche cet élément :
-        . = tous les charactères sauf nouvelle ligne
-        + = 1 ou plus occurence de l'élément précédent*/
+        /* $genome_id_size=[entire line that matches the regex, chromosome id, genome size]*/
+        /* (.+) is to capture the expression matching the regex context :
+        . = matches any character except line terminators
+        + = 1 or more occurences of the preceding token*/
+
+        //Genome ID and size
         $id_genome = $genome_id_size[1];
-        $genome_size = (int)$genome_id_size[2]; /*Caste en int, sinon il sera inséré en tant que string dans la BD et donc erreur*/
+        $genome_size = (int)$genome_id_size[2]; /*Cast string to int (the DB requires an int, not a string value)*/
+        // Insert in BD
         $sql_genome = pg_execute($db_conn, "insert_genome", array($id_genome, $species, ($strain ? null : $strain), $seq, $genome_size)) or die (pg_last_error($db_conn));
 
 //PARSE CDS
-        $cds = file($cds_file) or die("Unable to open cds file !"); /*Récupère lignes du fichier*/
+        $cds = file($cds_file) or die("Unable to open cds file !"); /*Get file lines*/
         $seq_nt = '';
 
-        foreach ($cds as $line) { /*Itérations sur les lignes du fichier */
-//    $header = strpos($line, ">"); /*regarde si*/
+        foreach ($cds as $line) { /*Iterate on the file lines */
             if (str_starts_with($line, ">")) { /*It's the header line*/
                 if (strlen($seq_nt) > 0) { /*if first sequence already in memory*/
-                    $seq_nt = preg_replace('/\s+/', "", $seq_nt); /*Enlève saut de ligne*/
-                    $size_nt = strlen($seq_nt); /*Récupère taille de la séquence*/
+                    $seq_nt = preg_replace('/\s+/', "", $seq_nt); /*Delete whitespaces*/
+                    $size_nt = strlen($seq_nt); /*Get sequence size*/
 
-                    /*Execute commande, annotated is obligatory false (= f dans postgres) */
+                    //Execute queries, annotated is mandatorily false (= f in postgres)
                     $sql_transcript = pg_execute($db_conn, "insert_cds_transcript", array($id_transcript, $id_genome, $genetic_supp, $seq_nt, $Loc_beg, $Loc_end, null, $size_nt)) or die (pg_last_error($db_conn));
+
+                    //Reset sequence string
                     $seq_nt = "";
                 }
+
                 $infos = array();
+
+                //Transcript ID
                 preg_match('#>(.+) cds#', $line, $infos);
                 $id_transcript = $infos[1];
+
+                //Genome ID, genetic support,localisation
                 preg_match('#(chromosome|plasmid):(.+):(.+):(.+):(.+)$#', $line, $infos);
+                /*$ is to tell it's the end of the line*/
+
                 $id_genome = $infos[2];
                 $genetic_supp = $infos[3];
                 $Loc_beg = $infos[4];
                 $Loc_end = $infos[5];
+
             } else { /*It's part of the sequence*/
                 $seq_nt = $seq_nt . $line;
             }
         }
 
+//PARSE PEPTIDES
         $pep = file($pep_file) or die("Unable to open peptide file !");
         $seq_p = '';
         foreach ($pep as $line) {
@@ -80,6 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $seq_p = "";
                 }
                 $infos = array();
+
+                //Transcript ID
                 preg_match('#>(.+) pep#', $line, $infos);
                 $id_transcript = $infos[1];
             } else {

@@ -72,18 +72,15 @@ if (!isset($_SESSION['Email'])){
         connect_db();
         if (isset($_POST["submit"])) {
 
-            $info_formulaire = ["species_name", "strain_name", "genetic_support", "id_genome", /*"strand",*/
+            $info_form = ["species_name", "strain_name", "genetic_support", "id_genome",
                 "gene_beg", "gene_end", "sequence_nt", "id_transcript", "prot_seq", "gene_id", "gene_symbol", "description"];
-            $col_table = ["genome.species", "genome.strain", "transcript.genetic_support", "genome.id_genome", /*"transcript.strand",*/
+            $col_table = ["genome.species", "genome.strain", "transcript.genetic_support", "genome.id_genome",
                 "transcript.LocBeginning", "transcript.Loc_end", "transcript.sequence_nt", "transcript.id_transcript", "transcript.sequence_p", "annotate.id_gene", "annotate.symbol", "annotate.description"];
 
-            for ($i = 0; $i <= count($info_formulaire) - 1; $i++) { //Pour chaque champ du formulaire
-                $ch = $info_formulaire[$i];
+            for ($i = 0; $i <= count($info_form) - 1; $i++) { //Pour chaque champ du formulaire
+                $ch = $info_form[$i];
                 $col = $col_table[$i];
-                if ($col == "id_genome") { //idgenome est ambigu
-                    $col = "transcript." . $col;
-                }
-                if (!empty($_POST[$ch])) { //Si la champ est rempli
+                if (!empty($_POST[$ch])) { //Si le champ est rempli
                     if (isset($query_sql)) {//Si la variable a été déclarée
                         if (($ch != "sequence_nt") && ($ch != "sequence_p")) {
                             $query_sql .= "AND " . $col . "='" . $_POST[$ch] . "'";
@@ -125,7 +122,6 @@ if (!isset($_SESSION['Email'])){
                 while ($line = pg_fetch_assoc($res)) {
                     echo "\t<tr>\n";
                     foreach ($line as $col_value) {
-                        // METTRE LES LIENS D'IZEM
                         if ($_POST["result_type"] == "gene_prot") {
                           echo "\t\t<td> <a href = 'Gene-ProtPage.php?id=$col_value'> $col_value </a></td>\n";
                         } else if ($_POST["result_type"] == "Genome") {

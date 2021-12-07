@@ -2,7 +2,20 @@
 <!--It is only accessible for annotators (and validator/admin)-->
 <!--A more precise description for the tabs are in their respective PHP pages (ToDo.php and Status.php)-->
 
-<!--TODO add session-->
+<?php
+session_start();
+if (isset($_SESSION['Email'])){
+    if (!in_array($_SESSION['Status'],['Admin','Annotator','Validator']) ){
+        header("HTTP/1.0 404 Not Found");
+        echo "<h1>404 Not Found</h1>";
+        echo "The page that you have requested is not accessible for you.";
+        echo "<a href='Search_page.php'>Go back to search page</a>";
+        exit();
+    }
+}else {
+    header("Location: LoginPage.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +39,7 @@
 
 <!--NAVIGATION MENU-->
 <div class="topnav">
-    <a href="search_page.php">Search transcript/genome</a> <!--TODO Modify-->
+    <a href="search_page.php">Search</a> <!--TODO Modify-->
     <a class="active" href="AnnotatorArea.php"> Annotator area</a> <!--Page active-->
     <a href="ValidatorArea.php"> Validator area</a>
     <a href="usermanag.php"> User management</a>

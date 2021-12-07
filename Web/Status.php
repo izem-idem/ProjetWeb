@@ -8,7 +8,7 @@ include_once 'libphp/db_utils.php';
 connect_db();
 
 // QUERIES
-$annotator = "camrabier@gmail.com"; /*TODO modify for the logged one*/
+$annotator = $_SESSION['Email']; /*TODO modify for the logged one*/
 
 // Find annotations done by the annotator connected
 $annotated_query = "SELECT id_transcript, id_gene, gene_biotype, transcript_biotype, symbol, description, commentary, validated, annotator_email, validator_email FROM website.annotate WHERE annotate.annotator_email = $1";

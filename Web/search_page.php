@@ -22,7 +22,7 @@
     <h2> Search </h2>
     <div class="container">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-            <p> You can use multiple arguments per search area by using "AND". </p>
+
             <p> To use pattern search for the sequences you can use % before or after the pattern</p><br>
             <label for="genome_name"><b>Species name</b> </label>
             <input type="text" name="species_name" placeholder="Species name"><br>
@@ -38,23 +38,6 @@
 
             <label for="seq_genome"><b>Genome sequence</b></label>
             <input type="text" name="genome_seq" placeholder="Genome sequence"><br>
-
-            <label for="strand"><b>Strand</b></label>
-            <select name="strand">
-                <option value="-1"> -1</option>
-                <option value="+1"> +1</option>
-            </select><br><br>
-
-            <b> Gene localisation</b><br>
-            <div class="double">
-                <label for="gene_beg">Beginning :</label><br>
-                <input class="localisation_input" type="text" name="gene_beg" placeholder="Begin">
-            </div>
-            <div class="double">
-                <label for="gene_end">Ending :</label><br>
-                <input class="localisation_input" type="text" name="gene_end" placeholder="End">
-            </div>
-            <br>
 
             <label for="gene_id"><b>Gene ID</b></label>
             <input type="text" name="gene_id" placeholder="Gene ID"><br>

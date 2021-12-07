@@ -14,7 +14,6 @@ if(isset($_GET['id'])){
     exit();
 }
 ?>
-<!--TODO add session-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,12 +34,8 @@ if(isset($_GET['id'])){
 
 <!--NAVIGATION MENU-->
 <div class="topnav">
-    <a href="search_page.php">Search transcript/genome</a> <!--TODO Modify-->
-    <a href="AnnotatorArea.php"> Annotator area</a>
-    <a href="ValidatorArea.php"> Validator area</a>
-    <a href="usermanag.php"> User management</a>
-    <a href="Add_genome.php"> Add genome</a>
-    <button class="fa fa-sign-out LogOut" onclick="window.location.href = 'LoginPage.html'" type="button">Log out</button> <!--TODO modify-->
+    <?php require_once 'libphp/Menu.php';
+    echo Menu($_SESSION['Status'],"")?>
 </div>
 
 <!--PAGE CONTENT-->

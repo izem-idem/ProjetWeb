@@ -15,7 +15,6 @@ SET timezone = 'UTC';
 CREATE TABLE users
 (
     Email VARCHAR(320) NOT NULL check ( Email ~* '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$') , /*cf https://dba.stackexchange.com/questions/68266/what-is-the-best-way-to-store-an-email-address-in-postgresql/165923#165923 */
-    /*TODO USERNAME ?*/
     /*An email adress has a maximal size of 320 characters https://www.rfc-editor.org/errata_search.php?rfc=3696*/
     Password VARCHAR(255) NOT NULL,
     FirstName VARCHAR(50) NOT NULL,
@@ -52,7 +51,6 @@ CREATE TABLE transcript
     LocBeginning    INTEGER NOT NULL,
     LocEnd          INTEGER NOT NULL,
     Strand          CHAR(2), /*Valeur après localisation dans génome. -1 ou 1, elle n'est pas présente dans les génomes non annotés*/
-    /*TODO strand absent de new_coli, mais a priori non identifiable, donc dans annotation ou transcript ?*/
 -- Séquences et leur tailles
     Sequence_nt     TEXT NOT NULL,
     Size_nt         INT NOT NULL,

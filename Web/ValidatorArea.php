@@ -1,3 +1,7 @@
+<!--Page displaying tabs to assign transcript and validate submitted annotations-->
+<!--It is only accessible for validators (and admin)-->
+<!--A more precise description for the tabs are in their respective PHP pages (Assignment.php and Validation.php)-->
+
 <?php
 session_start();
 if (isset($_SESSION['Email'])){

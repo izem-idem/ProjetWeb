@@ -77,7 +77,7 @@ $query_admin = "SELECT Email FROM website.users WHERE Status='Admin'";
               /*Subject of the mail*/
               $subject_mail = "New user role";
               /*Message in the mail */
-              $message = "Hi, I am a new user of your website and I would like to have a role as ".$_POST["role"] ;
+              $message = "Hi, there is a new user ($Email) of your website and he would like to have a role as ".$_POST["role"] ;
 
               // Get the Email of the Administrators
               $res_admin = pg_query($db_conn, $query_admin);

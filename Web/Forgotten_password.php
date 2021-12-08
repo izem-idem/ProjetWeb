@@ -32,6 +32,10 @@ $user_query = "SELECT Email FROM website.users WHERE Email = $1 AND Access=TRUE 
         <input type="text" placeholder="Email" name="email" id="email" required><br>
         <button name="submit" type="submit" class="big_submit_button"> Send email</button> <!--envoie après vérification que l'email existe dans la BD un email avec un lien personnalisé pour Reset_password-->
       </form>
+      <div class="Log in">
+          <span>Back to</span>
+          <a href="LoginPage.php"> Log in </a>
+      </div>
     </div>
 </div>
 <?php

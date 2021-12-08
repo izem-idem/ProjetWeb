@@ -186,6 +186,12 @@ button:hover, .topnav a:hover, .menu_button input:hover, .tab button:hover {
     color: red;
 }
 
+/*Normal message*/
+.message{
+    text-align: center;
+    color: black;
+}
+
 /*div for forgotten password link */
 .Forgotten_Password{
     text-align: right;
@@ -293,6 +299,3 @@ button:hover, .topnav a:hover, .menu_button input:hover, .tab button:hover {
     padding-bottom: 1em;
     padding-right: 1em;
 }
-
-
-

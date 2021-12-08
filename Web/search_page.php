@@ -1,22 +1,24 @@
+<?php
+session_start();
+if (!isset($_SESSION['Email'])){
+    header("Location: LoginPage.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title> Search </title>
     <link rel="stylesheet" type="text/css" href="website.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--CSS for log out button-->
 </head>
 <body>
 <header>
     <h1>CALI</h1>
 </header>
 <div class="topnav">
-    <a class="active" href="search_page.php">Search</a>
-    <a href="AnnotatorArea.php"> Annotator area</a> <!--Page active-->
-    <a href="ValidatorArea.php"> Validator area</a>
-    <a href="usermanag.html"> User management</a>
-    <a href="Add_genome.php"> Add genome</a>
-    <button class="fa fa-sign-out LogOut" onclick="window.location.href = 'LoginPage.html'" type="button">Log out
-    </button>
+    <?php require_once 'libphp/Menu.php';
+    echo Menu($_SESSION['Status'],"search_page.php")?>
 </div>
 <div class="center">
     <h2> Search </h2>
@@ -24,41 +26,41 @@
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 
 
-            <label for="genome_name"><b>Species name</b> </label>
-            <input type="text" name="species_name" placeholder="Species name"><br>
+            <label for="species_name"><b>Species name</b> </label>
+            <input type="text" name="species_name" id="species_name" placeholder="Species name"><br>
 
             <label for="strain_name"><b>Strain name</b></label>
-            <input type="text" name="strain_name" placeholder="Strain name"><br>
+            <input type="text" name="strain_name" id="strain_name" placeholder="Strain name"><br>
 
             <label for="genetic_support"><b>Genetic support (bacterial or plasmid typically)</b></label>
-            <input type="text" name="genetic_support" placeholder="Genetic support"><br>
+            <input type="text" name="genetic_support" id="genetic_support" placeholder="Genetic support"><br>
 
             <label for="chr_ID"><b>Chromosome ID</b></label>
-            <input type="text" name="id_genome" placeholder="Chromosome ID"><br>
+            <input type="text" id="chr_ID" name="id_genome" placeholder="Chromosome ID"><br>
 
             <label for="seq_genome"><b>Genome sequence</b></label>
-            <input type="text" name="genome_seq" placeholder="Genome sequence"><br>
+            <input type="text" name="genome_seq" id="seq_genome" placeholder="Genome sequence"><br>
 
             <label for="gene_id"><b>Gene ID</b></label>
-            <input type="text" name="gene_id" placeholder="Gene ID"><br>
+            <input type="text" id="gene_id" name="gene_id" placeholder="Gene ID"><br>
 
             <label for="gene_symbol"><b>Gene symbol</b></label>
-            <input type="text" name="gene_symbol" placeholder="Gene symbol"><br>
+            <input type="text" name="gene_symbol" id="gene_symbol" placeholder="Gene symbol"><br>
 
             <label for="sequence_nt"><b>Nucleotide sequence or pattern (3 to 950 characters)</b></label>
-            <input type="text" name="sequence_nt" placeholder="Nucleotide pattern" minlength="3" maxlength="950"><br>
+            <input type="text" id="sequence_nt" name="sequence_nt" placeholder="Nucleotide pattern" minlength="3" maxlength="950"><br>
 
             <label for="prot_id"><b>Protein ID</b> </label>
-            <input type="text" name="id_transcript" placeholder="Protein ID"><br>
+            <input type="text" id="prot_id" name="id_transcript" placeholder="Protein ID"><br>
 
             <label for="description"><b>Function</b></label>
-            <input type="text" name="description" placeholder="Function"><br>
+            <input type="text" id="description" name="description" placeholder="Function"><br>
 
             <label for="prot_seq"><b>Protein sequence or pattern (3 to 320 characters)</b></label>
-            <input type="text" name="prot_seq" placeholder="Protein pattern" minlength="3" maxlength="320"><br><br>
+            <input type="text" id="prot_seq" name="prot_seq" placeholder="Protein pattern" minlength="3" maxlength="320"><br><br>
 
             <label for="result_type"><b>Select type of results</b></label>
-            <select name="result_type">
+            <select name="result_type" id="result_type">
                 <option value="gene_prot"> Gene / Protein</option>
                 <option value="Genome"> Genome</option>
             </select><br><br>
@@ -70,10 +72,9 @@
         connect_db();
         if (isset($_POST["submit"])) {
 
-            $info_formulaire = ["species_name", "strain_name", "genetic_support", "id_genome", // Id des champs du formulaire
-                "gene_beg", "gene_end", "sequence_nt", "id_transcript", "prot_seq", "gene_id", "gene_symbol", "description"];
-            $col_table = ["genome.species", "genome.strain", "transcript.genetic_support", "genome.id_genome", // Attributs des tables SQL
-                "transcript.LocBeginning", "transcript.Loc_end", "transcript.sequence_nt", "transcript.id_transcript", "transcript.sequence_p", "annotate.id_gene", "annotate.symbol", "annotate.description"];
+            $info_formulaire = ["species_name", "strain_name", "genetic_support", "id_genome", "sequence_nt", "id_transcript", "prot_seq", "gene_id", "gene_symbol", "description"];
+            $col_table = ["genome.species", "genome.strain", "transcript.genetic_support", "genome.id_genome",
+                "transcript.sequence_nt", "transcript.id_transcript", "transcript.sequence_p", "annotate.id_gene", "annotate.symbol", "annotate.description"];
 
             for ($i = 0; $i <= count($info_formulaire) - 1; $i++) { //Pour chaque champ du formulaire
                 $ch = $info_formulaire[$i]; // $ch = ensemble des ID du formulaire
@@ -89,7 +90,7 @@
                             $query_sql .= "AND " . $col . " LIKE %" . $_POST[$ch] . "% ";
                         }
 
-                    } else { // Si le champ est vide
+                    } else { // Si la requête est vide
                       if ($_POST["result_type"] == "gene_prot") { // Si on veut en résultat des genes ou des proteines
                         if (($ch != "sequence_nt") && ($ch != "sequence_p")) {
 
@@ -123,11 +124,10 @@
                 while ($line = pg_fetch_assoc($res)) {
                     echo "\t<tr>\n";
                     foreach ($line as $col_value) {
-                        // METTRE LES LIENS D'IZEM
                         if ($_POST["result_type"] == "gene_prot") {
-                          echo "\t\t<td> <a href = 'Gene-ProtPage.html?id=$col_value'> $col_value </a></td>\n";
+                          echo "\t\t<td> <a href = 'Gene-ProtPage.php?id=$col_value'> $col_value </a></td>\n";
                         } else if ($_POST["result_type"] == "Genome") {
-                        echo "\t\t<td> <a href = 'GenomePage.html?id=$col_value'> $col_value </a></td>\n";
+                        echo "\t\t<td> <a href = 'GenomePage.php?id=$col_value'> $col_value </a></td>\n";
                       }
                     }
                     echo "\t</tr>\n";

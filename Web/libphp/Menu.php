@@ -2,10 +2,10 @@
 function Menu($role, $page_active): string
 {
     $to_echo = "";
-    $admin_pages = array("Search" => "search_page.php", "Annotator area" => "AnnotatorArea.php", "Validator Area" => "ValidatorArea.php", "Add genome" => "Add_genome.php", "User Management" => "usermanag.php");
-    $validator_pages = array("Search" => "search_page.php", "Annotator area" => "AnnotatorArea.php", "Validator Area" => "ValidatorArea.php");
-    $annotator_pages = array("Search" => "search_page.php", "Annotator area" => "AnnotatorArea.php");
-    $reader_pages = array("Search" => "search_page.php");
+    $admin_pages = array("Search" => "search_page.php", "Profile" => "UserProfile.php", "Annotator area" => "AnnotatorArea.php", "Validator Area" => "ValidatorArea.php", "Add genome" => "Add_genome.php", "User Management" => "usermanag.php");
+    $validator_pages = array("Search" => "search_page.php", "Profile" => "UserProfile.php", "Annotator area" => "AnnotatorArea.php", "Validator Area" => "ValidatorArea.php");
+    $annotator_pages = array("Search" => "search_page.php", "Profile" => "UserProfile.php", "Annotator area" => "AnnotatorArea.php");
+    $reader_pages = array("Search" => "search_page.php", "Profile" => "UserProfile.php");
     if ($role == 'Admin') {
         foreach ($admin_pages as $name => $page) {
             if ($page_active == $page) {/*Active page*/
@@ -43,6 +43,3 @@ function Menu($role, $page_active): string
     $to_echo .= "<div class='LogOut'><a class='fa fa-sign-out fa-lg' href = 'Logout.php'>Log out</a></div>";
     return $to_echo;
 }
-
-
-

@@ -55,12 +55,26 @@ $query_admin = "SELECT Email FROM website.users WHERE Status='Admin'";
           </div>
           <button name ='submit' class="big_submit_button" type="submit">Register</button> <!--Crée utilisateur dans la base de données avec rôle reader par défaut et envoie mail à administrateur pour prévenir qu'il y a un nouveau utilisateur avec le rôle voulu-->
         </form>
+        <div class="Log in">
+            <span>Already have an account ?</span>
+            <a href="LoginPage.php"> Log in </a>
+        </div>
         <?php
         if (isset($_POST['submit'])) { /*Find if the submit has been clicked*/
             /*Check that Email is valid*/
-            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) die('Email is invalid'); //https://www.php.net/manual/fr/filter.examples.validation.php
+            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { //https://www.php.net/manual/fr/filter.examples.validation.php
+              echo '<div class="error_login">
+                      <p> Email is invalid </p>
+                    </div>' ;
+              die;
+            }
             /*Check that passwords match*/
-            if ($_POST["psw"] != $_POST["psw2"]) die('Passwords do not match');
+            if ($_POST["psw"] != $_POST["psw2"]) {
+              echo '<div class="error_login">
+                      <p> Passwords do not match </p>
+                    </div>' ;
+              die ;
+            }
 
             /*Get all the information entered*/
             /*By filtering the input, we verify that no harmul characters like script injections are given as input*/
@@ -83,14 +97,18 @@ $query_admin = "SELECT Email FROM website.users WHERE Status='Admin'";
               } else { // User existed and his account was deactivated
                 /*Add the user to the database*/
               	$update_user = pg_query_params($db_conn, $update_user_query, array($Email, $hash_password, $FirstName, $LastName, $TelNr)) or die("Error " . pg_last_error());
-                echo "Your user profile was created successfully";
+                echo '<div class="message">
+                        <p> Your user profile was created successfully, please go back to the Login Page </p>
+                      </div>';
                 $sendmail = TRUE ;
               }
 
             } else {
               /*Add the user to the database*/
             	$add_user = pg_query_params($db_conn, $add_user_query, array($Email, $hash_password, $FirstName, $LastName, $TelNr)) or die("Error " . pg_last_error());
-            	echo "Your user profile was created successfully";
+              echo '<div class="message">
+                      <p> Your user profile was created successfully, please go back to the Login Page </p>
+                    </div>';
               $sendmail = TRUE ;
             }
 
@@ -120,10 +138,7 @@ $query_admin = "SELECT Email FROM website.users WHERE Status='Admin'";
             }
         }
         ?>
-        <div class="Log in">
-            <span>Already have an account ?</span>
-            <a href="LoginPage.php"> Log in </a>
-        </div>
+
     </div>
 </div>
 <?php

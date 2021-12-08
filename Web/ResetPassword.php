@@ -32,7 +32,7 @@ $password_query = "SELECT Password FROM website.users WHERE Email = $1";
     <div class="container">
       <form action= <?php echo $_SERVER['PHP_SELF'] ; ?> method='POST'>
         <label for="old_psw"><b>Current password</b></label><br>
-        <input type="password" placeholder="Current password" name="old_psw" id="old_psw" required minlength="7"><br>
+        <input type="password" placeholder="Current password" name="old_psw" id="old_psw" required><br>
         <label for="psw"><b>New password</b></label><br>
         <input type="password" placeholder="New password" name="psw" id="psw" required minlength="7"><br>
         <label for="psw2"><b>Confirm new password</b></label><br>

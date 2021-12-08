@@ -36,7 +36,7 @@ $update_last_conn_query = "UPDATE website.users SET LastConnection='now' WHERE E
           <input type="text" placeholder="Enter email" name='email' id="email" required><br>
           <label for="psw"><b>Password</b></label><br>
           <input type="password" placeholder="Enter Password" name='psw' id="psw" required><br>
-          <button name="submit" class="big_submit_button" type="submit">Login</button>
+          <button name="submit" class="big_submit_button" type="submit">Log in</button>
         </form>
         <?php
           if (isset($_POST['submit'])) { /*Find if the submit has been clicked*/

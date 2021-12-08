@@ -99,7 +99,7 @@ h3{
 /*Form container*/
 .container{
     margin: 0 auto;
-    width: 70%;
+    width: 90%;
     padding: 16px;
     background-color: lightsteelblue;
     box-shadow: 2px 2px 5px steelblue;
@@ -218,7 +218,7 @@ button:hover, .topnav a:hover, .menu_button input:hover, .tab button:hover {
     padding: 10px;
     border:1px solid darkslateblue;
     position:relative;
-    background: #d1d1f6;
+    background: lightsteelblue;
     border-radius: 0 0.5em 0.5em 0.5em;
     display: none;
 }

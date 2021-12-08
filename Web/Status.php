@@ -35,8 +35,7 @@ while ($annotation = pg_fetch_assoc($annotated_results)) {
     //Display of the annotations done
     /*Header*/
     echo "<div class='tabcontent' id=status_" . $id . ">
-            <p class='title'>" . $id . "</p>
-            <a href='../Web_izem/Gene-ProtPage.php?id=$id'>" . $id . " informations</a><br>";
+            <a href='Gene-ProtPage.php?id=$id' class='title'>" . $id . "</a><br>";/*TODO modify*/
 
             // Display of the validation status
             if ($annotation['validated'] == 0) { /*The annotation is waiting for validation*/

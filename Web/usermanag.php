@@ -1,35 +1,38 @@
+<?php
+session_start();
+if (isset($_SESSION['Email'])){
+if ($_SESSION['Status']!='Admin'){
+header("HTTP/1.0 404 Not Found");
+echo "<h1>404 Not Found</h1>";
+echo "The page that you have requested is not accessible for you.";
+echo "<a href='search_page.php'>Go back to search page</a>";
+exit();
+}
+}else {
+header("Location: LoginPage.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title> User management </title>
     <link rel="stylesheet" type="text/css" href="website.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--CSS for log out button-->
 </head>
-<style>
-    table{
-        width: 100%;
-    }
-    tr>td{
-        padding-bottom: 1em;
-    }
-</style>
 <body>
 <header>
     <h1>CALI</h1>
 </header>
 
 <div class="topnav">
-    <a href="menu.html">Home</a>
-    <a href="AnnotatorArea.php"> Annotator area</a>
-    <a href="ValidatorArea.php"> Validator area</a>
-    <a class="active" href="usermanag.php"> User management</a> <!--Page active-->
-    <a href="Add_genome.php"> Add genome</a>
-    <button type="button" class="LogOut" onclick="window.location.href = 'LoginPage.html'">Log out</button>
+    <?php require_once 'libphp/Menu.php';
+    echo Menu($_SESSION['Status'],"usermanag.php")?>
 </div>
 <div class="center">
     <div class="container">
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-            <table>
+            <table class="spaced_table">
                 <?php
                 include_once 'libphp/db_utils.php';
                 connect_db();
@@ -46,7 +49,7 @@
                 while ($id = pg_fetch_assoc($res_name_status)) {
                     $id_email = $id['email']; // adresse mail
                     $id_user_name = explode(".", $id_email)[0]; // id_user_name : tout ce qu'il y a avant '.com' ou '.fr' de l'adresse mail
-                    $id_last_co = $id['lastconnection']; // date de dernière connection
+                    $id_last_co = explode(".",$id['lastconnection'])[0]; // date de dernière connection
 
                     if (isset($_POST["del" . $id_user_name])) { // si on supprime un utilisateur
                         // celui-ci perd l'accès au site (mais n'est pas supprimé de la base de données)
@@ -81,8 +84,8 @@
                                 <option value='Validator'> Validator</option>
                                 </select>
                                 <button class='little_submit_button' type='submit' name = 'submit" . $id_user_name . "'> Change role</button> </td>";
-                        echo "<td><button class='little_submit_button' type='submit' name = 'del" . $id_user_name . "'> Delete user</button></td></tr>";
-                        echo '<td>' . $id_last_co . '</td>';
+                        echo "<td><button class='little_submit_button' type='submit' name = 'del" . $id_user_name . "'> Delete user</button></td>";
+                        echo '<td>' . $id_last_co . '</td></tr>';
 
                     }
                 }

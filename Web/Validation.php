@@ -13,9 +13,14 @@ connect_db();
 // QUERIES
 // Find annotations to validate
 $validator = $_SESSION['Email'];
-/*The validator can't validate annotation he did himself and validated=0 corresponds to "Waiting for validation"*/
-$tovalidate = "SELECT id_transcript, id_gene, gene_biotype, transcript_biotype, symbol, description, annotator_email FROM website.annotate WHERE annotate.validated=0 and annotator_email <> $1";
-$tovalidate = pg_query_params($db_conn, $tovalidate, array($validator));
+/*The validator can't validate annotation he did himself (if he is not admin) and validated=0 corresponds to "Waiting for validation"*/
+if ($_SESSION['Status'] == 'Admin') { /*The admin can validate his annotation*/
+    $tovalidate = "SELECT id_transcript,id, id_gene, gene_biotype, transcript_biotype, symbol, description, annotator_email FROM website.annotate WHERE annotate.validated=0";
+    $tovalidate = pg_query_params($db_conn, $tovalidate, array());
+} else {/*The other validators can't*/
+    $tovalidate = "SELECT id_transcript,id, id_gene, gene_biotype, transcript_biotype, symbol, description, annotator_email FROM website.annotate WHERE annotate.validated=0 and annotator_email <> $1";
+    $tovalidate = pg_query_params($db_conn, $tovalidate, array($validator));
+}
 $id_transcript_tabs = pg_fetch_all_columns($tovalidate);
 
 // Find annotators (= admin + validator + annotator)
@@ -25,7 +30,7 @@ $annotator_results = pg_query($db_conn, $annotator_query);
 $annotators = pg_fetch_all_columns($annotator_results); /*List of annotators, by defaut pg_fetch_all_colums takes the first column*/
 
 //Prepare query to update the table annotate with the validator email, the status of validation (validated=1 for validation or validated=2 for rejection)
-$update_status = "UPDATE website.annotate SET validator_email=$1, validated=$2, commentary=$3 WHERE id_transcript=$4";
+$update_status = "UPDATE website.annotate SET validator_email=$1, validated=$2, commentary=$3 WHERE id=$4";
 
 // Assign transcript to new user in case of rejection
 $assignment_query = "UPDATE website.transcript SET annotator_email=$1 WHERE Id_transcript = $2";
@@ -41,7 +46,8 @@ echo "</div>";
 
 //For each annotation a div is created, that can accessed through the tablinks
 while ($annotation = pg_fetch_assoc($tovalidate)) {
-    $id = $annotation['id_transcript'];
+    $id = $annotation['id'];
+    $id_transcript = $annotation['id_transcript'];
     //If the validator has validated or rejected the annotation
     if (isset($_POST["validate_" . $id])) {/*The annotation has been validated*/
         $comment = $_POST["comment_" . $id];
@@ -57,13 +63,17 @@ while ($annotation = pg_fetch_assoc($tovalidate)) {
 
     } else if (isset($_POST["reject_" . $id])) { /*The annotation has been rejected, the annotator can be changed*/
         $comment = filter_var($_POST["comment_" . $id], FILTER_SANITIZE_STRING);
-        $new_annotator = $_POST["Role_" . $id];
+        if ($_POST["Role_" . $id] == "Default") {
+            $new_annotator = $annotation['annotator_email']; /*Considers that if annotator did not select a new annotator it's the same one*/
+        } else {
+            $new_annotator = $_POST["Role_" . $id];
+        }
 
         /*Update status of the annotation to rejected and also add the validator email and the commentary*/
         $update_status = pg_query_params($db_conn, $update_status, array($validator, 2, $comment, $id)) or die("Error " . pg_last_error());
 
         /*Update the annotator email in transcript*/
-        $assignment_update = pg_query_params($db_conn, $assignment_query, array($new_annotator, $id));
+        $assignment_update = pg_query_params($db_conn, $assignment_query, array($new_annotator, $id_transcript));
 
         /*Send mail to annotator to let him know about the validation status*/
         $subject = "You annotation for $id has been rejected";
@@ -78,22 +88,22 @@ while ($annotation = pg_fetch_assoc($tovalidate)) {
         /*Send mail to annotator to let him know about the assignment*/
         $subject = "New transcript assignment";
         $message = " Hello, \n you have been assigned a new transcript to annotate. Its ID is : $id \n You can go annotate in the Annotator Area. \n Have a good day, \n The CALI team.";
-        mail($new_annotator,$subject,$message,"From: CALI <noreply@CALI.com>");
+        mail($new_annotator, $subject, $message, "From: CALI <noreply@CALI.com>");
 
         //Validation message
         echo "The annotation for " . $id . " has been rejected, the annotation has been reassigned to :" . $new_annotator . "<br>"; /*Message to confirm the rejection*/
 
     } else { /*The annotation have not been validated or rejected*/
-        echo "<div class='tabcontent' id=valid_" . $id . ">
+        echo "<div class='tabcontent' id=valid_" . $id_transcript . ">
                 <form action=" . $_SERVER['PHP_SELF'] . " method='POST'> <!--When the validation and rejection button is clicked the form redirects to the same page-->
-                    <p class='title'>" . $id . "</p>
-                    <a href='../Web_izem/Gene-ProtPage.php?id=$id'>" . $id . " informations</a><br> <!--TODO modify-->
+                    <a href='Gene-ProtPage.php?id=$id_transcript'class='title'> $id_transcript</a><br> <!--TODO modify-->
+                    <a href='Annotation_history.php?id=$id_transcript'>$id_transcript annotations history</a><br>
                     
                     <!--Annotation information-->
                     <table class='spaced_table'>
                         <tr>
                             <td>Annotator : </td>
-                            <td><p class='info'>".$annotation['annotator_email']."</p></td>
+                            <td><p class='info'>" . $annotation['annotator_email'] . "</p></td>
                         </tr>
                         <tr>                          
                             <td>ID of gene : </td>
@@ -124,7 +134,8 @@ while ($annotation = pg_fetch_assoc($tovalidate)) {
                     <!--Validation/rejection buttons-->
                     <button class='little_submit_button' type='submit' name='validate_" . $id . "'> Validate</button><br>
                     
-                    <label for='Role_" . $id . "'></label> <select id='Role_" . $id . "' name='Role_" . $id . "'>";/*if the validator rejects, he can change the annotator*/
+                    <label for='Role_" . $id . "'></label> <select id='Role_" . $id . "' name='Role_" . $id . "'>
+                    <option value='Default'>Select new annotator...</option>";/*if the validator rejects, he can change the annotator*/
         foreach ($annotators as $new_annotator) { /*List of annotators as drop-down list*/
             echo "<option value='" . $new_annotator . "'>" . $new_annotator . "</option>";
         }

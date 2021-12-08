@@ -42,7 +42,7 @@ $nr_results_finding = pg_query($db_conn,$nr_results_query) or die("Error " . pg_
 $nr_results = pg_fetch_all_columns($nr_results_finding)[0]; /*Number of results*/
 
     // Find annotators (= admin + validator + annotator)
-$annotator_query = "SELECT email FROM website.users WHERE status in ('Admin','Validator','Annotator')";
+$annotator_query = "SELECT email FROM website.users WHERE status in ('Admin','Validator','Annotator') ORDER BY email";
 /*The admin and validator can also annotate*/
 $annotator_results = pg_query($db_conn,$annotator_query) or die("Error " . pg_last_error());
 
@@ -54,54 +54,49 @@ $assignment_query = "UPDATE website.transcript SET annotation=2, annotator_email
 
 //ADD PAGINATION
 create_pagination($nr_results,$perpage,$currentPage);
+echo "<table class='spaced_table'>
+<thead>
+<tr>
+<td>Transcript</td>
+<td>Genome</td>
+<td>Annotator</td>
+</tr>
+</thead><tbody>";
 
 // DISPLAY AND ASSIGNMENT OF TRANSCRIPTS
 while ($transcript = pg_fetch_assoc($non_annotated)){
     $id=$transcript['id_transcript'];
 
     // Updating of database to assign transcript to annotator
-    if (isset($_POST["submit_".$id])) { /*A transcript (identified by the id in the name of the button) has been assigned to an annotator*/
-        $id_transcript = $id;
+    if (isset($_POST["submit"]) & isset($_POST["Role_".$id]) and $_POST["Role_$id"] != "Default"){
         $annotator = $_POST["Role_".$id]; /*Annotator to which the transcript has been assigned*/
-        $assignment_update = pg_query_params($db_conn,$assignment_query,array($annotator,$id_transcript)) or die("Error " . pg_last_error());
-
+        $assignment_update = pg_query_params($db_conn,$assignment_query,array($annotator,$id)) or die("Error " . pg_last_error());
         /*Send mail to annotator to let him know about the assignment*/
         $subject = "New transcript assignment";
         $message = " Hello, \n you have been assigned a new transcript to annotate. Its ID is : $id \n You can go annotate in the Annotator Area. \n Have a good day, \n The CALI team.";
         mail($annotator,$subject,$message,"From: CALI <noreply@CALI.com>");
 
-        echo "The transcript ".$id." has been assigned to ".$annotator;
-
+        echo "The transcript ".$id." has been assigned to $annotator<br>";
     //Display of non-annotated transcripts
     } else { /*If no assignment has been done*/
         /*Name of transcript*/
-        echo "<label for='id_transcript1'></label>
-        <p class='title'>".$id."</p>        
+
+        echo "<tr>
         <!--Link to known information about the transcript-->
-        <a href='../Web_izem/Gene-ProtPage.php?id=$id'>" . $id . " informations</a><br>
-        
-        <!--List of annotator-->
+        <td><a href='../Web_izem/Gene-ProtPage.php?id=$id' class='title'>" . $id . "</a><!--TODO--></td>
+        <td><a href='../Web_izem/Genome.php?id=".$transcript['id_genome']."'>".$transcript['id_genome']."</a><!--TODO--></td>
+        <td>        <!--List of annotator-->
         <label for='Role_".$id."'></label>
-        <select id='Role_".$id."' name='Role_".$id."'>";
+        <select id='Role_".$id."' name='Role_".$id."'>
+        <option value = 'Default'>Select the annotator...</option>";
         foreach ($annotators as $annotator){ /*List of annotators as drop-down list*/
             echo "<option value='".$annotator."'>" .$annotator."</option>";
         }
-        echo "</select>
-
-        <!--Assign transcript to annotator selected in drop down-->
-        <button name='submit_".$id."' class='little_submit_button' type='submit'> Affect transcript</button>
-        <br>
-        
-        <!--Display of sequences-->
-        <div class='double'>
-            Nucleotidic sequence <br>
-            <p class='info'>".$transcript['sequence_nt']."</p><br>
-        </div>
-        <div class='double'>
-            Proteic sequence <br>
-            <p class='info'>".$transcript['sequence_p']."</p><br>
-        </div>";
+        echo "</select></td></tr>";
     }
 }
+// Assign transcript to annotator selected in drop down
+//echo " <button name='submit' class='big_submit_button' type='submit'> Affect</button>";
+echo " </tbody></table><button name='submit' class='big_submit_button' type='submit'> Affect</button>";
 disconnect_db(); /*disconnect from the database*/
 ?>

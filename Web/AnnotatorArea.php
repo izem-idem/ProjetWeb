@@ -44,7 +44,7 @@ if (isset($_SESSION['Email'])){
 </div>
 
 <!--PAGE CONTENT-->
-<div class="page_container">
+<div>
     <div class="center">
         <h2> Annotations</h2>
         <!--TABS LINKS : Annotations to do and status of validation for annotation done-->

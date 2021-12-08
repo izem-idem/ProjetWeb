@@ -37,8 +37,9 @@ echo Menu($_SESSION['Status'],"Add_genome.php")?>
 </div>
 
 <!--PAGE CONTENT-->
-<h2> Adding of a genome</h2>
+
 <div class="center">
+    <h2> Adding of a genome</h2>
     <div class="container">
         <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST" enctype="multipart/form-data">
             <!--Genome specie/strain names -->

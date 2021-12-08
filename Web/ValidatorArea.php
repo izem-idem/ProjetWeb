@@ -44,8 +44,9 @@ if (isset($_SESSION['Email'])){
 </div>
 
 <!--PAGE CONTENT-->
-<h2> Annotation assignment and validation</h2>
+<div>
 <div class="center">
+    <h2> Annotation assignment and validation</h2>
     <!--TABS LINKS : Annotations assignment and validation of annotations-->
     <div class="tab">
         <button class="tablinks active" onclick="openTab(event,'Assignment',false)">Annotations assignment</button> <!--Page displayed by default-->
@@ -64,6 +65,7 @@ if (isset($_SESSION['Email'])){
         <h3> Annotations validation</h3>
         <?php require_once 'Validation.php'; ?>
     </div>
+</div>
 </div>
 
 <!--FOOTER-->

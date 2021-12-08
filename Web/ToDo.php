@@ -76,8 +76,8 @@ while ($transcript = pg_fetch_assoc($to_annotate)) {/*while there exists rows of
                 <!--This form redirects to itself when the user submits his annotation-->
                 
             <!--Informations on transcript-->
-                <p class='title'>" . $id . "</p> <!-- Name of transcript-->
-                <a href='../Web_izem/Gene-ProtPage.php?$id'>" . $id . " informations</a><br> 
+                 <!-- Name of transcript and link for transcript-->
+                <a href='Gene-ProtPage.php?$id'class='title'>" . $id . "</a><br> 
                     <!--Page with known informations on transcript-->
                 ";
         if ($transcript['annotation']==1){

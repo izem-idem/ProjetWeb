@@ -4,6 +4,10 @@
 
 
 <?php
+session_start();
+if (!isset($_SESSION['Email'])){
+    header("Location: LoginPage.php");
+}
 #Verification that the page is opened from a link with ID given, otherwise it shows an error
 if(isset($_GET['id'])){
     $id = $_GET['id'];

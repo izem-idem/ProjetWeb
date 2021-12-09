@@ -1,14 +1,23 @@
 <?php
+/*
+Author : Alex Westbrook
+This page is for users to view their own profile on the website. It is accessible to any Reader.
+The user can choose to change his password from here, see ResetPassword.php
+*/
+
+// Connect to user session
 session_start();
-if (!isset($_SESSION['Email'])){
+if (!isset($_SESSION['Email'])){ // If no user session is on (direct access from url), send back to LoginPage.php
     header("Location: LoginPage.php");
 }
 
 // Connect to database
-require_once 'libphp/db_utils.php'; /*Functions to connect and disconnect the database*/
+require_once 'libphp/db_utils.php'; // Functions to connect and disconnect the database
 connect_db();
 
-// Get User information in database
+// SQL queries
+
+// Get user information in database
 $user_query = "SELECT * FROM website.users WHERE Email=$1";
 $user_res = pg_query_params($db_conn, $user_query, array($_SESSION['Email'])) or die("Error " . pg_last_error());
 $user = pg_fetch_assoc($user_res,0);
@@ -27,7 +36,7 @@ $user = pg_fetch_assoc($user_res,0);
 </header>
 <div class="topnav">
     <?php require_once 'libphp/Menu.php';
-    echo Menu($_SESSION['Status'],"UserProfile.php")?>
+    echo Menu($_SESSION['Status'],"UserProfile.php")?> <!-- Displays the menu on top of the page, see Menu.php for detail-->
 </div>
 <div class="center">
     <div class="container">
@@ -66,21 +75,18 @@ $user = pg_fetch_assoc($user_res,0);
         <p class='info'> <?php echo $user['status'] ?> </p><br>
       </div>
 
-      <div class='title'>
-        <form action= <?php echo $_SERVER['PHP_SELF'] ; ?> method='POST'>
-          <button class='little_submit_button' type='submit' name = 'submit'> Change Password </button>
-        </form>
+      <div class="title">
+          <a href="ResetPassword.php">
+            <button class='little_submit_button'> Change password </button>
+          </a>
       </div>
-      <?php
-        if (isset($_POST['submit'])) {
-          header('Location: ResetPassword.php') ;
-        }
-      ?>
     </div>
 </div>
+
 <?php
 disconnect_db() ;
 ?>
+
 <footer>
     <a href="Contact.php">Contact</a><br>
     <p>© CALI 2021</p>

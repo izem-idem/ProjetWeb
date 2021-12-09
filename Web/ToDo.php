@@ -15,8 +15,8 @@ $annotator = $_SESSION['Email'];
 
 // Find annotations to do for annotator connected. The query select all the transcript that have been assigned to the user
 // excluding waiting for validation (annotation = 0) or already validated (validated =1) annotation.
-$to_annotate_query = "SELECT id_transcript,sequence_nt, sequence_p, annotation FROM website.transcript WHERE transcript.annotator_email = $1 AND annotation != 0 
-                        EXCEPT SELECT transcript.id_transcript,sequence_nt, sequence_p,annotation FROM website.transcript, website.annotate  
+$to_annotate_query = "SELECT id_transcript, id_genome,sequence_nt, sequence_p, annotation FROM website.transcript WHERE transcript.annotator_email = $1 AND annotation != 0 
+                        EXCEPT SELECT transcript.id_transcript,id_genome, sequence_nt,sequence_p,annotation FROM website.transcript, website.annotate  
                                 WHERE annotate.id_transcript=transcript.id_transcript AND validated IN (0,1)";
 /*annotation=2 for the annotations has been assigned but no transcript has been done*/
 
@@ -48,42 +48,47 @@ foreach ($id_transcript_tabs as $tab) {
 echo "</div>";
 
 // For each transcript a div is created, that can be accesed through tablinks
-while ($transcript = pg_fetch_assoc($to_annotate)) {/*while there exists rows of the query result not treated*/
-    $id = $transcript['id_transcript'];
+if (pg_num_rows($to_annotate) == 0) {
+    echo "No annotations have been assigned to you";
+} else {
+    while ($transcript = pg_fetch_assoc($to_annotate)) {/*while there exists rows of the query result not treated*/
+        $id = $transcript['id_transcript'];
 
-    //Updating of database for new annotated transcrips
-    if (isset($_POST["submit_" . $id])) { /*Find if the submit has been clicked for this transcript*/
-        /*Get all the annotation entered*/
-        /*By filtering the input, we verify that no harmul characters like script injections are given as input*/
-        $gene_id = $comment = filter_var($_POST["gene_id_" . $id],FILTER_SANITIZE_STRING);
-        $gene_biotype = filter_var($_POST["gene_biotype_" . $id],FILTER_SANITIZE_STRING);
-        $gene_symbol = filter_var($_POST["gene_symbol_" . $id],FILTER_SANITIZE_STRING); /*Can be empty*/
-        $prot_biotype = filter_var($_POST["prot_biotype_" . $id],FILTER_SANITIZE_STRING);
-        $description = filter_var($_POST["description_" . $id],FILTER_SANITIZE_STRING);
+        //Updating of database for new annotated transcrips
+        if (isset($_POST["submit_" . $id])) { /*Find if the submit has been clicked for this transcript*/
+            /*Get all the annotation entered*/
+            /*By filtering the input, we verify that no harmul characters like script injections are given as input*/
+            $gene_id = $comment = filter_var($_POST["gene_id_" . $id], FILTER_SANITIZE_STRING);
+            $gene_biotype = filter_var($_POST["gene_biotype_" . $id], FILTER_SANITIZE_STRING);
+            $gene_symbol = filter_var($_POST["gene_symbol_" . $id], FILTER_SANITIZE_STRING); /*Can be empty*/
+            $prot_biotype = filter_var($_POST["prot_biotype_" . $id], FILTER_SANITIZE_STRING);
+            $description = filter_var($_POST["description_" . $id], FILTER_SANITIZE_STRING);
 
-        if (empty($gene_symbol)){ /*if no annotation for gene_symbol was not given, no value will be inserted for gene_symbol in the DB*/
-            $annotation = pg_query_params($db_conn, $annotation_query, array($id, $gene_id, $gene_biotype, $prot_biotype, null, $description, $annotator)) or die("Error " . pg_last_error());
-        } else{
-            $annotation = pg_query_params($db_conn, $annotation_query, array($id, $gene_id, $gene_biotype, $prot_biotype, $gene_symbol, $description, $annotator)) or die("Error " . pg_last_error());
-        }
-    $update_status = pg_query_params($db_conn, $update_status_query, array($id)) or die("Error " . pg_last_error()); /*Status of annotation is updated to "annotation exists"*/
-        echo "Your annotation for " . $id . " has been submitted";
+            if (empty($gene_symbol)) { /*if no annotation for gene_symbol was not given, no value will be inserted for gene_symbol in the DB*/
+                $annotation = pg_query_params($db_conn, $annotation_query, array($id, $gene_id, $gene_biotype, $prot_biotype, null, $description, $annotator)) or die("Error " . pg_last_error());
+            } else {
+                $annotation = pg_query_params($db_conn, $annotation_query, array($id, $gene_id, $gene_biotype, $prot_biotype, $gene_symbol, $description, $annotator)) or die("Error " . pg_last_error());
+            }
+            $update_status = pg_query_params($db_conn, $update_status_query, array($id)) or die("Error " . pg_last_error()); /*Status of annotation is updated to "annotation exists"*/
+            echo "Your annotation for " . $id . " has been submitted";
 
-    //Display of the annotations areas for all transcript
-    } else {/*If no annotation has been submitted the annotations fields are displayed*/
-        echo "<div class='tabcontent' id=todo_" . $id . ">     
+            //Display of the annotations areas for all transcript
+        } else {/*If no annotation has been submitted the annotations fields are displayed*/
+            echo "<div class='tabcontent' id=todo_" . $id . ">     
             <form action=" . $_SERVER['PHP_SELF'] . " method='POST'>
                 <!--This form redirects to itself when the user submits his annotation-->
                 
             <!--Informations on transcript-->
                  <!-- Name of transcript and link for transcript-->
-                <a href='Gene-ProtPage.php?$id'class='title'>" . $id . "</a><br> 
+                <a href='Gene-ProtPage.php?id=$id'class='title' target='_blank'>" . $id . "</a><br> 
+                Genome : <a href='GenomePage.php?id=" . $transcript['id_genome'] . "' target='_blank'>" . $transcript['id_genome'] . "</a><br>
+               
                     <!--Page with known informations on transcript-->
                 ";
-        if ($transcript['annotation']==1){
-            echo "<a href='Annotation_history.php?id=$id'>$id annotations history</a><br>";
-        }
-        echo"<!--Sequences for quick access-->
+            if ($transcript['annotation'] == 1) { /*If a precedent annotation was rejected for this transcript*/
+                echo "<a href='Annotation_history.php?id=$id' target='_blank'>$id annotations history</a><br>";
+            }
+            echo "<!--Sequences for quick access-->
                 <div class='double'>
                     Nucleotidic sequence: <br>
                     <p class='info'>" . $transcript['sequence_nt'] . "</p><br>
@@ -147,6 +152,7 @@ while ($transcript = pg_fetch_assoc($to_annotate)) {/*while there exists rows of
                 <button name= 'submit_" . $id . "'class='little_submit_button' type='submit'> Submit</button>
             </form>
         </div>";
+        }
     }
 }
 disconnect_db(); /*Disconnect from database*/

@@ -3,7 +3,7 @@
 /*This page is used by Annotator_area.php to display the status of the submitted annotations by the annotator connected*/
 
 // Connect to database and find annotated transcript status
-    // Connect to database
+// Connect to database
 include_once 'libphp/db_utils.php';
 connect_db();
 
@@ -29,34 +29,37 @@ foreach ($id_transcript_tabs as $tab) {
 echo "</div>";
 
 //For each annotation a div is created, that can accessed through the tablinks
-while ($annotation = pg_fetch_assoc($annotated_results)) {
-    $id = $annotation['id_transcript'];
+if (pg_num_rows($annotated_results) == 0) {
+    echo "No annotations submitted";
+} else {
+    while ($annotation = pg_fetch_assoc($annotated_results)) {
+        $id = $annotation['id_transcript'];
 
-    //Display of the annotations done
-    /*Header*/
-    echo "<div class='tabcontent' id=status_" . $id . ">
-            <a href='Gene-ProtPage.php?id=$id' class='title'>" . $id . "</a><br>";/*TODO modify*/
+        //Display of the annotations done
+        /*Header*/
+        echo "<div class='tabcontent' id=status_" . $id . ">
+            <a href='Gene-ProtPage.php?id=$id' target='_blank' class='title'>" . $id . "</a><br>";
 
-            // Display of the validation status
-            if ($annotation['validated'] == 0) { /*The annotation is waiting for validation*/
-                echo "<table class='spaced_table'>
+        // Display of the validation status
+        if ($annotation['validated'] == 0) { /*The annotation is waiting for validation*/
+            echo "<table class='spaced_table'>
                         <tr><td class='double'>Status :</td><td class='double'><p class='info'>Waiting for validation</p></td></tr></table>";
 
-            } elseif ($annotation['validated'] == 1) { /*The annotation is validated, the commentary is displayed*/
-                echo "<table class='spaced_table'>
+        } elseif ($annotation['validated'] == 1) { /*The annotation is validated, the commentary is displayed*/
+            echo "<table class='spaced_table'>
                         <tr><td class='double'>Status :</td><td class='double'><p class='info'>Validated</p></td></tr>
                         <tr><td class='double'>Validator : </td><td class='double'><p class='info'>" . $annotation['validator_email'] . "</p></td></tr>
-                        <tr><td class='double'>Commentary:</td><td class='double'><p class='info'>". $annotation['commentary']."</p></td></tr></table>";
+                        <tr><td class='double'>Commentary:</td><td class='double'><p class='info'>" . $annotation['commentary'] . "</p></td></tr></table>";
 
-            } else { /*The annotation is rejected, the commentary is displayed*/
-                echo "<table class='spaced_table'>
+        } else { /*The annotation is rejected, the commentary is displayed*/
+            echo "<table class='spaced_table'>
                         <tr><td class='double'>Status :</td><td class='double'><p class='info'>Rejected</p></td></tr>
                         <tr><td class='double'>Validator : </td><td class='double'><p class='info'>" . $annotation['validator_email'] . "</p></td></tr>
-                        <tr><td class='double'>Commentary:</td><td class='double'><p class='info'>". $annotation['commentary']."</p></td></tr></table>";
-            }
+                        <tr><td class='double'>Commentary:</td><td class='double'><p class='info'>" . $annotation['commentary'] . "</p></td></tr></table>";
+        }
 
-    /*Fields of annotation*/
-    echo "<div class='title'>Annotations</div>
+        /*Fields of annotation*/
+        echo "<div class='title'>Annotations</div>
             <table class='spaced_table'>
                     <tr>                          
                         <td class='double'>ID of gene : </td>
@@ -80,6 +83,7 @@ while ($annotation = pg_fetch_assoc($annotated_results)) {
                     </tr>
                 </table>         
         </div>";
+    }
 }
 disconnect_db(); /*Disconnect from the database*/
 ?>

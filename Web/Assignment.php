@@ -83,8 +83,8 @@ while ($transcript = pg_fetch_assoc($non_annotated)){
 
         echo "<tr>
         <!--Link to known information about the transcript-->
-        <td><a href='../Web_izem/Gene-ProtPage.php?id=$id' class='title'>" . $id . "</a><!--TODO--></td>
-        <td><a href='../Web_izem/Genome.php?id=".$transcript['id_genome']."'>".$transcript['id_genome']."</a><!--TODO--></td>
+        <td><a href='Gene-ProtPage.php?id=$id'  target='_blank' class='title='>" . $id . "</a><!--TODO--></td>
+        <td><a href='GenomePage.php?id=".$transcript['id_genome']."' target='_blank'>".$transcript['id_genome']."</a></td>
         <td>        <!--List of annotator-->
         <label for='Role_".$id."'></label>
         <select id='Role_".$id."' name='Role_".$id."'>

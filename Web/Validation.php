@@ -96,8 +96,8 @@ while ($annotation = pg_fetch_assoc($tovalidate)) {
     } else { /*The annotation have not been validated or rejected*/
         echo "<div class='tabcontent' id=valid_" . $id_transcript . ">
                 <form action=" . $_SERVER['PHP_SELF'] . " method='POST'> <!--When the validation and rejection button is clicked the form redirects to the same page-->
-                    <a href='Gene-ProtPage.php?id=$id_transcript'class='title'> $id_transcript</a><br> <!--TODO modify-->
-                    <a href='Annotation_history.php?id=$id_transcript'>$id_transcript annotations history</a><br>
+                    <a href='Gene-ProtPage.php?id=$id_transcript'class='title' target='_blank'> $id_transcript</a><br> <!--TODO modify-->
+                    <a href='Annotation_history.php?id=$id_transcript' target='_blank'>$id_transcript annotations history</a><br>
                     
                     <!--Annotation information-->
                     <table class='spaced_table'>

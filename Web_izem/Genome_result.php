@@ -9,7 +9,7 @@ connect_db();
 ####FOR GENOME DOWNLOAD
 
 $query = "SELECT Id_genome,Species,Strain,Size_genome,Sequence FROM website.genome WHERE Id_genome =$1"; #je vais $row[0:4]
-$result = pg_query_params($db_conn, $query,array('ASM744v1')) or die("Error " . pg_last_error());
+$result = pg_query_params($db_conn, $query,array($id)) or die("Error " . pg_last_error());
 $row = pg_fetch_row($result);
 #echo "$row[0] $row[1]\n";
 
@@ -20,12 +20,12 @@ $size=$row[3];
 
 
  
-#echo $row[4];
+$big_line=">Chromosome dna:chromosome chromosome:{$id_genome}:Chromosome:1:{$size}:1 REF\n".$row[4];
 
 
 if (isset($_POST["Load"])){
     $file=$id_genome.".fasta";
-    file_put_contents($file,$row[4]); #j'écris la séquence dans un fichier qui s'appelle id_genome.fasta 
+    file_put_contents($file,$big_line); #j'écris la séquence dans un fichier qui s'appelle id_genome.fasta 
     #Attention le current dir dans lequel vous allez mettre ce code doit avoir les droit d'écriture (faites chmod 777 dir/ ) 
     
     if(file_exists($file)) {
@@ -83,9 +83,9 @@ $html2 =file_get_html("https://www.ncbi.nlm.nih.gov/assembly/?term={$id_genome}"
             $id2=strip_tags($ele);
         }
         
-$link = "embedded=true&id={$id2}&appname=IZEM";
+$link = "embedded=true&id={$id2}&v=10000:15000&appname=IZEM";
 
-
+#  &v=2611678:2619749 > ça permet de désigner une région de ton génome 
 
 
 

@@ -1,16 +1,24 @@
+<?php   
+     #idd = $_GET['id'];
+     $idd="AAN78503";
+     require('gene-prot_result.php');
+     
+      
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Result Page for Gene/Protein</title>
     <script type="text/javascript" src="https://www.ncbi.nlm.nih.gov/projects/sviewer/js/sviewer.js" id ="autoload"></script>
-    <link rel="stylesheet" type="text/css" href="website.css">
+    <link rel="stylesheet" type="text/css" href="web/website.css">
 </head>
 
 <body>
 <header>
     <h1>CALI</h1>
 </header>
+
 <div class="topnav">
     <a href="menu.html">Home</a>
     <a href="AnnotatorArea.html"> Annotator area</a>
@@ -20,104 +28,137 @@
     <button type="button" class="LogOut" onclick="window.location.href = 'LoginPage.html'">Log out </button>
 </div>
 
+<div class ="Inception">
+
 <div class="center">
 
     <h2>Gene/Protein Information</h2>
-
-    <input class="info title" value="Gene ID" disabled><br>
+    
+    <label for="gene"> GENE-PROTEIN ID</label>
+    <input class="gene_id" value=<?php echo $idd ?> disabled><br>
     <label for="organism_name"> Organism name:</label>
-    <input class="info" id="organism_name" type="text" value="XXXXXX"disabled><br>
+    <input class="info" id="organism_name" type="text" value=<?php echo $organism  ?> disabled><br>
     <label for="strain"> Strain:</label>
-    <input class="info" id="strain" type="text" value="XXXXXX"disabled><br>
+    <input class="info" id="strain" type="text" value=<?php echo $strain  ?> disabled><br>
     <label for="genetic_support"> Genetic support:</label>
-    <input class="info" id="genetic_support" type="text" value="XXXXXX"disabled><br>
+    <input class="info" id="genetic_support" type="text" value=<?php echo $support?> disabled><br>
     <label for="localisation"> Localisation:</label>
-    <input class="info" id="localisation" type="text" value="XXXXXX" disabled><br>
+    <input class="info" id="localisation" type="text" value=<?php echo $loc ?> disabled><br>
     <label for="gene_type"> Gene type:</label>
-    <input class="info" id="gene_type" type="text" value="XXXXXX" disabled><br>
+    <input class="info" id="gene_type" type="text" value= <?php echo $biotype?> disabled><br>
     <label for="seq_length"> Sequence length(nt):</label>
-    <input class="info" id="seq_length" type="text" value="XXXXXX" disabled><br>
+    <input class="info" id="seq_length" type="text" value=<?php echo  $size_nt ?> disabled><br>
     <label for="desc"> Description:</label>
-    <input class="info" id="desc" type="text" value="XXXXXX" disabled><br>
+    <input class="info" id="desc" type="text" value=<?php echo $fonction  ?> disabled><br>
+    <label for="Gene_symbol"> Gene Symbol </label>
+    <input class="info" id="Gen_symbol" type="text" value=<?php echo $symbol  ?> disabled><br>
     <label for="annot"> Annotated by:</label>
-    <input class="info" id="annot" type="text" value="XXXXXX" disabled><br>
+    <input class="info" id="annot" type="text" value=<?php echo $mail?> disabled><br>
+
 
     <b>File to Download:</b>
-
-    <input type="checkbox" id="box1" name="Angene_fasta" value=1>
-    <label for="box1"> Annoted Gene </label>
-    <input type="checkbox" id="box2" name="Anprot_fasta" value=2>
-    <label for="box2"> Annoted Protein </label>
-    <input type="checkbox" id="box3" name="gene_fasta" value=3>
-    <label for="box3"> Gene sequence</label>
-    <input type="checkbox" id="box4" name="prot_fasta" value=4>
-    <label for="box4"> Protein sequence</label>&nbsp;&nbsp;
-
-    <button class="little_submit_button" type="submit">Download</button>
-
-    <svg alt="download" class="dlbtn-icon" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 60 60"
-    enable-background="new 0 0 60
-    60" xml:space="preserve">
-        <g>
-            <polygon points="48.75,36.25 48.75,48.75 11.25,48.75 11.25,36.25 5,36.25 5,55 55,55 55,36.25  "></polygon>
-            <polygon points="42.5,23.75 36.25,23.75 36.25,5 23.75,5 23.75,23.75 17.5,23.75 30,42.5  "></polygon>
-        </g>
-    </svg>
-    <br><br>
-    <label for="BLAST"><b>BLAST</b></label>
+     <select id="database_link" onChange = "window.open(this.value)">
+            <option value="" disabled selected >Please choose File to Download</option>
+            <option value=<?php echo $url_gene ?>>Gene sequence</option>
+            <option value=<?php echo $url_prot ?>>Protein sequence</option>
+           
+     </select>
     
-    <select id="seqtype">
-        <option value="Protein"> Protein Sequence</option>
-        <option value="Nucleic">Nucleic Acid Sequence</option>
-    </select>
-    
-    <select id="db_prot">
-        <option value="pdb"> Protein Data Bank</option>
-        <option value="nt">Nucleotide collection</option>
-        <option value="nr"> Non-redundant Protein Sequence</option>
-        <option value="swissprot">UNIPROT</option>
-        <option value="refseq_rna">Transcript Reference Sequences</option>
-    </select>
     
     <br><br>
+    
+    <?php
+    
+    if (isset($_POST['BLAST'])){
+        
+        $seqtype=$_POST['Blast_seq'];
+        $database=$_POST['Blast_db'];
+        $blast_type=$_POST['Blast_type'];
+        
+        require('rebond.php');   
+    }
+    
+    
+    ?>
+    
+    <form class = "BLast" method = "post">
+        <select name = "Blast_seq">
+            <option value="Protein"> Protein Sequence</option>
+            <option value="Nucleic">Nucleic Acid Sequence</option>
+        </select>
+    
+    
+        <select name = "Blast_db">
+            <option value="pdb"> Protein Data Bank</option>
+            <option value="nt">Nucleotide collection</option>
+            <option value="nr"> Non-redundant Protein Sequence</option>
+            <option value="swissprot">UNIPROT</option>
+            <option value="refseq_rna">Transcript Reference Sequences</option>
+        </select>
+       
+         <select name = "Blast_type">
+            <option value=tblastn> tBLASTn </option>
+            <option value="blastp">BLASTp</option>
+            <option value="blastn"> BLASTn</option>
+            <option value="blastx">BLASTx</option>
+        </select>
+        
+        <button class="little_submit_button" type="submit" name ="BLAST">BLAST</button>
+    
+    </form>
+    
+    <br><br>
+    
+     
+       
+    
     
     <label for="database_link"><b>External links</b></label>
-    <select id="database_link">
-        <option value="Biocyc"> BioCyc</option>
-        <option value="Bacteria.Ensembl">Bacteria.Ensembl</option>
-        <option value="NCBI">NCBI</option>
-        <option value="PFAM">PFAM</option>
-        <option value="Uniprot">Uniprot</option>
-       
-    </select>
-    <button class="little_submit_button" type="submit">Access</button> <br><br/>
-    <div class="visu-part">
-        <p class="Visu"><b>Protein Visualisation (soon) </b></p><br><br>
-    </div>
     
+        <select id="database_link" onChange = "window.open(this.value)">
+            <option value="" disabled selected >Please choose a Database</option>
+            <option value=<?php echo $url_ensembl ?>>Bacteria.Ensembl</option>
+            <option value=<?php echo $goto_ncbi ?>>NCBI</option>
+            <option value=<?php echo $goto_pfam ?>>PFAM</option>
+            <option value=<?php echo $goto_uniprot ?>>Uniprot</option>
+           
+        </select>
+    
+        <p class="Visu"><b>Protein Visualisation via Sequence Viewer (NCBI)</b></p>
+        
+       <button class="button" onClick=<?php echo "window.open('${linker}');"?>> 
+        <span class="icon">Access Genome Page</span>
+       </button>
+</div>
+   
+        
+
+    
+
+        
+    <div id="sv2" class="SeqViewerApp">
+        
+       
+      <a href=<?php echo $lien_SV ?>></a> <!--lien vers seqViewerApp.js-->
+
+    </div>
+
+
 </div>
 
-<div id="sv2" class="SeqViewerApp">
-    
-        <?php 
-        
-        
-        $link = "embedded=true&id=AAN78503";
-        $appname = "&appname=IZEM";
-       
-        ?>        
-    
-      <a href="<?php echo $link.$id.$appname?>"></a> <!--lien vers seqViewerApp.js-->
+<div class="Script_SV">
 
-    </div>
-    <script>
+<script>
+      
       SeqViewOnReady(function() {
         var app = SeqView.App.findAppByDivId('sv2');
       });
       
-    </script>
+</script>
 
+</div>
 
+</div>
 
 
 <footer>

@@ -1,5 +1,6 @@
 <?php
         
+    $id=$_GET['id'];
     require('Genome_result.php');
     #require('test_2.php');
         
@@ -62,7 +63,7 @@
         <label for="database_link"><b>External links</b></label>
         
         <select id="database_link" onChange = "window.open(this.value)">
-            <option value="">Please choose a Database</option>
+            <option value="" disabled selected >Please choose a Database</option>
             <option value=<?php print $link_GTDB ?> > GTDB </option>
             <option value=<?php echo $link_Bensembl?>>Bacteria.Ensembl</option>
             <option value=<?php echo $link_ncbi ?>>NCBI</option>

@@ -4,7 +4,7 @@ require_once 'web/libphp/db_utils.php'; # faut les mettre dans le répetoire !!!
 connect_db();
 
 
-if (empty($_GET['prot'])){ # downlad cds sequence
+if (empty($_GET['prot'])){ # Download CDS sequence
    $gene=$_GET['gene'];
    $query_1 = "SELECT Id_genome,Genetic_support,LocBeginning,LocEnd,Sequence_nt,Sequence_p,Strand FROM website.transcript WHERE Id_transcript =$1"; 
 $result_1 = pg_query_params($db_conn, $query_1,array($gene)) or die("Error " . pg_last_error());
@@ -31,8 +31,7 @@ $transcript=$ligne[4];
 $big_line=">{$gene} cds {$support}:{$id_genome}:{$support}:{$loc}:{$strand} gene:{$gene_id} gene_biotype:{$biotype} transcript_biotype:{$transcript} gene_symbol:{$symbol} description:{$fonction}\n".$nt;
 
 
-$file=$gene."_cds.fasta";
-#echo $key=array_search($prefix, $array);
+$file=$gene."_cds.fasta";  #name the file
 file_put_contents($file,$big_line); 
 if(file_exists($file)) {
     header('Content-Description: File Transfer');
@@ -43,9 +42,9 @@ if(file_exists($file)) {
     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
     header('Pragma: public');
     header('Content-Length: ' . filesize($file));
-    ob_clean();
-    flush();
-    readfile($file);
+    ob_clean(); # Clean (erase) the output buffer
+    flush();  #Flush system output buffer
+    readfile($file); # Outputs the text contained in $file
     exit;
 
 }
@@ -80,8 +79,7 @@ else{
     $big_line=">{$prot_id} pep {$support}:{$id_genome}:{$support}:{$loc}:{$strand} gene:{$gene_id} gene_biotype:{$biotype} transcript_biotype:{$transcript} gene_symbol:{$symbol} description:{$fonction}\n".$prot;
 
 
-    $file=$prot_id."_pep.fasta";
-    #echo $key=array_search($prefix, $array);
+    $file=$prot_id."_pep.fasta"; #name the file
     file_put_contents($file,$big_line); 
     if(file_exists($file)) {
         header('Content-Description: File Transfer');
@@ -92,9 +90,9 @@ else{
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Pragma: public');
         header('Content-Length: ' . filesize($file));
-        ob_clean();
-        flush();
-        readfile($file);
+        ob_clean();# Clean (erase) the output buffer
+        flush();  #Flush system output buffer
+        readfile($file); # Outputs the text contained in $file
         exit;
 
     }

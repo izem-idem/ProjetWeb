@@ -27,36 +27,10 @@
 #
 # ===========================================================================
 
-// Path of the query sequence (modify)
-
-
-// Read FASTA sequence from the HTML textbox and encode
-//$encoded_query = urlencode($_POST["sequence"]);
-
-// Read FASTA file through HTML file upload or directly and encode
-#j'ai supprimé cette fonction mais tu peux la retrouver.
-	
-//$encoded_query = fas_read($_FILES["file"]["tmp_name"]);
-#$encoded_query = fas_read($file);
-
-
-#Mon test 
-
-
-#$encoded_query=file_get_contents($file); # avec ça ça marche donc on est bon. 
-#urlencode($file);
-
-####Hadou il marche (le query n'est valable que pour la séquence protéique. Pour la séquence nucléo il faut que je donne un toute la seq nuc dans 
-#### le paramétre query
-#$data = array('CMD' => 'Put', 'PROGRAM' => 'blastp', 'DATABASE' => 'nr', 'QUERY' => "AAN78503"); 
-#$data = array('CMD' => 'Put', 'PROGRAM' => 'blastp', 'DATABASE' => 'swissprot', 'QUERY' => "AAN78503");
-#$data = array('CMD' => 'Put', 'PROGRAM' => 'blastp', 'DATABASE' => 'pdb', 'QUERY' => "AAN78503");
-#$data = array('CMD' => 'Put', 'PROGRAM' => 'blastn', 'DATABASE' => 'refseq_rna', 'QUERY' => $encoded_query); je donne tous le fasta direct
-##$data = array('CMD' => 'Put', 'PROGRAM' => 'blastn', 'DATABASE' => 'nt', 'QUERY' => $encoded_query,'FILTER'=>'F','EXPECT'=> 30); je donne tous le fasta direct
-#$data = array('CMD' => 'Put', 'PROGRAM' => 'blastx', 'DATABASE' => 'swissprot', 'QUERY' => $encoded_query);
 
 // Build the request
 
+###Get the parameters.
 
 $querie=$_GET['seq'];
 
@@ -67,8 +41,9 @@ $program=$_GET['type'];
 $acc=$_GET['acc'];
 
 
-if ($querie == "Nucleic"){
-    require_once 'web/libphp/db_utils.php'; #je modifierai aprés ça 
+if ($querie == "Nucleic"){ # if it's nucleic I have to give to BLAST the entire sequence
+
+    require_once 'web/libphp/db_utils.php'; 
     connect_db();
     $query_1 = "SELECT Sequence_nt FROM website.transcript WHERE Id_transcript =$1"; 
     $result_1 = pg_query_params($db_conn, $query_1,array($acc)) or die("Error " . pg_last_error());
@@ -87,7 +62,7 @@ if ($querie == "Nucleic"){
     );
     $context  = stream_context_create($options);
 }
-else{
+else{ #if it's proteic then I only need to give him the accession number
 
     $data = array('CMD' => 'Put', 'PROGRAM' => $program, 'DATABASE' => $database, 'QUERY' => $acc);
     $options = array(

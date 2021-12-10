@@ -63,6 +63,9 @@ h3{
     background-color: lightsteelblue;
 }
 
+.annotation>tbody>tr>td>span{
+    color: red;
+}
 
 
 /* NAVIGATION TABS (https://www.w3schools.com/howto/howto_js_topnav.asp)*/
@@ -258,9 +261,10 @@ button:hover, .topnav a:hover, .menu_button input:hover, .tab button:hover {
 }
 
 
-/*EXTRA INFOS*/
+/*EXTRA INFOS : "?" on which to hover to see more infos*/
+/*https://codepen.io/EasyBoarder/pen/Lkzzjy*/
 .extra-info {
-    display: none;
+    display: none; /*Not displayed when not hovered*/
     line-height: 30px;
     font-size: 12px;
     position: relative;
@@ -286,7 +290,7 @@ button:hover, .topnav a:hover, .menu_button input:hover, .tab button:hover {
     text-align: left !important;
 }
 
-
+/*TABLE that takes all width and not too cramped*/
 .spaced_table{
     width: 100%;
 }

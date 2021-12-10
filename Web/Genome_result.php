@@ -1,7 +1,7 @@
 <?php
 
-require_once 'web/libphp/db_utils.php'; # faut les mettre dans le répetoire !!!
-require('simple_html_dom.php'); # faut les mettre dans le répetoire !!!
+require_once 'libphp/db_utils.php'; # faut les mettre dans le répetoire !!!
+require('libphp/simple_html_dom.php'); # faut les mettre dans le répetoire !!!
 connect_db();
 
 #$id = $_GET['id']; #ici je devrais récuperer l'id du génome ok ? 

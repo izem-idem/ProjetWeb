@@ -1,10 +1,17 @@
 <?php
-      
+/*
+ * Copyright (c) 2021. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
+
 #############################################################GET GENE-PROT INFO ##################################################################
-require_once 'web/libphp/db_utils.php'; # faut les mettre dans le répetoire !!!
+require_once 'libphp/db_utils.php'; # faut les mettre dans le répetoire !!!
 connect_db();
 
-#$idd = $_GET['id']; #ici je devrais récuperer l'id du géne-prot ok ? 
+$idd = $_GET['id']; #ici je devrais récuperer l'id du géne-prot ok ?
 
 ####FOR GENE-PROT DOWNLOAD
 
@@ -24,11 +31,11 @@ $strand=$line[7];
 $mail=$line[8];
 
 if (empty($mail)){ #check wether there is a annotator
-   $mail = "None";
+   $mail = "Unknown";
 }
 
 
-$query_2 = "SELECT Gene_biotype,Symbol,Description,Id_gene FROM website.annotate WHERE Id_transcript =$1"; 
+$query_2 = "SELECT Gene_biotype,Symbol,Description,Id_gene FROM website.annotate WHERE Id_transcript =$1";
 $result_2 = pg_query_params($db_conn, $query_2,array($idd)) or die("Error " . pg_last_error());
 $ligne = pg_fetch_row($result_2);
 
@@ -55,7 +62,7 @@ disconnect_db(); /*disconnect from the database*/
 $linkk = "https://www.ncbi.nlm.nih.gov/protein/?term="; #pour la séq nuclétidique y'a pas
 $goto_ncbi=$linkk.$idd;
 
-require('web/simple_html_dom.php');
+require('libphp/simple_html_dom.php');
 
 
 $id_transcrit = $idd;

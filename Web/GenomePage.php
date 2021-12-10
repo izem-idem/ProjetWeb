@@ -1,9 +1,19 @@
 <?php
-        
-    $id=$_GET['id'];
-    require('Genome_result.php');
+    session_start();
+if (!isset($_SESSION['Email'])) {
+    header("Location: LoginPage.php"); /*Si personne connectée redirige automatique vers Login*/
+}
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
+} else{ //https://stackoverflow.com/questions/20300789/show-404-error-page-from-php-file-without-redirecting/20300839
+    header("HTTP/1.0 404 Not Found");
+    echo "<h1>404 Not Found</h1>";
+    echo "The page that you have requested could not be found. No ID was given in the URL";
+    exit();
+}
+require('Genome_result.php');
     #require('test_2.php');
-        
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,19 +21,17 @@
     <meta charset="UTF-8">
     <title>Result Page for Genome</title>
     <script type="text/javascript" src="https://www.ncbi.nlm.nih.gov/projects/sviewer/js/sviewer.js" id ="autoload"></script>
-    <link rel="stylesheet" type="text/css" href="web/website.css">
+    <link rel="stylesheet" type="text/css" href="website.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--CSS for log out button-->
 </head>
 
 <body>
 <header>
     <h1>CALI</h1>
 </header>
-<div class="topnav">
-    <a href="AnnotatorArea.html"> Annotator area</a>
-    <a href="ValidatorArea.html"> Validator area</a>
-    <a href="usermanag.html"> User management</a>
-    <a href="Add_genome.html"> Add genome</a>
-    <button type="button" class="LogOut" onclick="window.location.href = 'LoginPage.html'">Log out </button>
+<div class="topnav"> <!--Menu-->
+    <?php require_once 'libphp/Menu.php';
+    echo Menu($_SESSION['Status'],"")?> <!--Affichera dans le menu toutes les pages accessibles par les lecteurs-->
 </div>
 
 <!------------------------------------------------------------PARTIE INFORMATION ---------------------------------------------------------->   
@@ -35,15 +43,23 @@
 <div class="center">
 
     <h2>Genome Information</h2>
-
+    <div class="container">
     <form class = "Inputs" method = "post">
-        <input class="info title" value= <?php echo $id_genome ?> disabled><br>
-        <label for="organism_name"> Organism name:</label>
-        <input class="info" id="organism_name" type="text" value=<?php echo $species   ?> disabled><br>
-        <label for="strain"> Strain:</label>
-        <input class="info" id="strain" type="text" value=<?php echo $strain ?> disabled><br>
-        <label for="seq_length"> Sequence length(nt):</label>
-        <input class="info" id="seq_length" type="text" value=<?php echo $size?> disabled><br><br>
+        <p class='title'><?php echo $id_genome ?></p>
+        <table class='spaced_table'>
+            <tr>
+                <td>Organism name: : </td>
+                <td><p class='info'><?php echo $species   ?></p></td>
+            </tr>
+            <tr>
+                <td>Strain : </td>
+                <td><p class='info'><?php echo $strain   ?></p></td>
+            </tr>
+            <tr>
+                <td>Sequence length (bp) : </td>
+                <td><p class='info'><?php echo $size   ?></p></td>
+            </tr>
+        </table>
        
         <svg alt="download" class="dlbtn-icon" x="0px" y="0px" width="15px" height="15px" viewBox="0 0 60 60"
              enable-background="new 0 0 60 60" xml:space="preserve">
@@ -92,10 +108,11 @@
       });
       
     </script>
- <!------------------------------------------------------------PARTIE VISUALISATION ---------------------------------------------------------->   
-
-<footer>
-    <a href="Contact.html">Contact</a><br>
+ <!------------------------------------------------------------PARTIE VISUALISATION ---------------------------------------------------------->
+    </div>
+</div>
+<footer class="footer_2">
+    <a href="Contact.php">Contact</a><br>
     <p>© CALI 2021</p>
 </footer>
 </body>

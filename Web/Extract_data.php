@@ -25,7 +25,7 @@ if (isset($_POST['ddl'])) {
             fputcsv($file, $row, ";");
         }
         fclose($file);
-        if (file_exists($filename)) {
+        if (file_exists($filename)) { /*https://www.php.net/manual/fr/function.readfile.php*/
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
             header('Content-Disposition: attachment; filename="'.basename($filename).'"');
